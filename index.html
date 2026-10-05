@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>LAPAC UFPI — Liga Acadêmica de Patologia e Análises Clínicas</title>
+  <meta name="description" content="LAPAC — Liga Acadêmica de Patologia e Análises Clínicas da Medicina Veterinária da UFPI, Teresina-PI. Ensino, pesquisa e extensão em patologia e diagnóstico laboratorial veterinário." />
+  <meta name="theme-color" content="#2a1236" />
+  <meta name="keywords" content="LAPAC, liga acadêmica, patologia veterinária, análises clínicas, UFPI, Teresina, medicina veterinária, hematologia, histopatologia, necropsia" />
+  <link rel="canonical" href="https://lapac-ufpi.example/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content="LAPAC UFPI — Liga Acadêmica de Patologia e Análises Clínicas" />
+  <meta property="og:description" content="O invisível tem muito a dizer. Ensino, pesquisa e extensão em patologia e análises clínicas veterinárias na UFPI." />
+  <meta property="og:image" content="assets/img/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="assets/img/icon-512.png" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <script>document.documentElement.classList.add("js");</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="assets/img/emblema.webp" />
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "LAPAC — Liga Acadêmica de Patologia e Análises Clínicas",
+    "alternateName": "LAPAC UFPI",
+    "description": "Liga acadêmica do curso de Medicina Veterinária da Universidade Federal do Piauí.",
+    "logo": "assets/img/logo-lapac.webp",
+    "parentOrganization": { "@type": "CollegeOrUniversity", "name": "Universidade Federal do Piauí" },
+    "address": { "@type": "PostalAddress", "addressLocality": "Teresina", "addressRegion": "PI", "addressCountry": "BR" }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+
+  <!-- ============ PRELOADER: "focando" ============ -->
+  <div class="preloader" aria-hidden="true">
+    <div class="preloader__field">
+      <svg class="preloader__ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="96" /></svg>
+      <img src="assets/img/emblema.webp" alt="" width="932" height="843" />
+    </div>
+    <div class="preloader__meta mono">
+      <span>Ajustando foco</span>
+      <span class="preloader__count">000</span>
+    </div>
+    <div class="preloader__panels">
+      <span class="pp pp--ouro"></span><span class="pp pp--magenta"></span><span class="pp pp--roxo"></span>
+    </div>
+  </div>
+
+  <!-- Cursor-retículo (só em mouse) -->
+  <div class="cursor" aria-hidden="true">
+    <span class="cursor__ring">
+      <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="27" /><path d="M30 0v10M30 50v10M0 30h10M50 30h10" /></svg>
+    </span>
+    <span class="cursor__dot"></span>
+    <span class="cursor__label mono"></span>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+  <!-- SVG reutilizável: ondas da identidade -->
+  <svg width="0" height="0" class="visually-hidden" aria-hidden="true">
+    <defs>
+      <symbol id="wave-cluster" viewBox="0 0 400 400">
+        <path class="w w--roxo" d="M30,0 C58,84 128,122 214,132 C296,142 336,202 356,282 C366,322 382,352 400,364 L400,0 Z" />
+        <path class="w w--magenta" d="M112,0 C136,58 190,88 256,98 C322,108 352,164 370,222 C380,252 390,272 400,282 L400,0 Z" />
+        <path class="w w--ouro" d="M196,0 C214,36 252,56 300,64 C350,72 380,112 400,152 L400,0 Z" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ============ NAV ============ -->
+  <header class="nav">
+    <div class="nav__inner">
+      <a href="#inicio" class="nav__brand" aria-label="LAPAC — início">
+        <img src="assets/img/emblema-sm.webp" alt="" width="44" height="40" />
+        <span class="nav__brand-text">LAPAC</span>
+      </a>
+      <nav class="nav__links" aria-label="Principal">
+        <a href="#sobre"><sup>01</sup>Sobre</a>
+        <a href="#areas"><sup>02</sup>Áreas</a>
+        <a href="#equipe"><sup>03</sup>Equipe</a>
+        <a href="#atividades"><sup>04</sup>Atividades</a>
+        <a href="#agenda"><sup>05</sup>Agenda</a>
+        <a href="#contato"><sup>06</sup>Contato</a>
+      </nav>
+      <a href="#selecao" class="btn btn--dark btn--sm nav__cta" data-magnetic><span>Seja ligante</span><i data-lucide="arrow-up-right"></i></a>
+      <button class="nav__toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-mobile">
+        <span class="mono nav__toggle-txt">Menu</span><span class="nav__toggle-lines"><span></span><span></span></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-menu" id="menu-mobile" aria-hidden="true">
+    <svg class="mobile-menu__wave" viewBox="0 0 400 400" aria-hidden="true"><use href="#wave-cluster" /></svg>
+    <p class="mono mobile-menu__kicker">Índice</p>
+    <nav class="mobile-menu__links" aria-label="Menu mobile">
+      <a href="#sobre"><span>01</span>Sobre</a>
+      <a href="#areas"><span>02</span>Áreas</a>
+      <a href="#equipe"><span>03</span>Equipe</a>
+      <a href="#atividades"><span>04</span>Atividades</a>
+      <a href="#agenda"><span>05</span>Agenda</a>
+      <a href="#selecao"><span>06</span>Seleção</a>
+      <a href="#documentos"><span>07</span>Documentos</a>
+      <a href="#contato"><span>08</span>Contato</a>
+    </nav>
+    <div class="mobile-menu__foot">
+      <a class="social-link js-instagram" href="#" target="_blank" rel="noopener"><i data-lucide="instagram"></i><span class="js-instagram-handle">@lapac.ufpi</span></a>
+      <span class="mono">UFPI · Teresina</span>
+    </div>
+  </div>
+
+  <main id="conteudo">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="inicio">
+      <svg class="hero__wave hero__wave--tr" viewBox="0 0 400 400" aria-hidden="true"><use href="#wave-cluster" /></svg>
+      <svg class="hero__wave hero__wave--bl" viewBox="0 0 400 400" aria-hidden="true"><use href="#wave-cluster" /></svg>
+      <div class="dot-grid hero__dots" aria-hidden="true"></div>
+
+      <div class="hero__top mono">
+        <span class="hero__rec"><span class="rec-dot"></span>Liga Acadêmica · <span class="hide-md">Medicina Veterinária · </span>UFPI</span>
+      </div>
+
+      <div class="hero__grid">
+        <div class="hero__copy">
+          <h1 class="hero__title">
+            <span class="line"><span>O invisível</span></span>
+            <span class="line"><span>tem <em>muito</em></span></span>
+            <span class="line"><span>a dizer<b class="hero__dot">.</b></span></span>
+          </h1>
+          <p class="hero__lead">
+            Somos a <strong>LAPAC</strong> — Liga Acadêmica de Patologia e Análises Clínicas.
+            Estudamos o que acontece entre a coleta e o laudo: células, tecidos, fluidos e tudo
+            o que eles revelam sobre a saúde dos animais.
+          </p>
+          <div class="hero__actions">
+            <a href="#selecao" class="btn btn--primary btn--lg" data-magnetic><span>Processo seletivo</span><i data-lucide="arrow-right"></i></a>
+            <a href="#manifesto" class="btn btn--line btn--lg" data-magnetic><span>Conheça a liga</span></a>
+          </div>
+        </div>
+
+        <div class="scope" role="img" aria-label="Ilustração animada de um esfregaço sanguíneo visto ao microscópio">
+          <svg class="scope__dial" viewBox="0 0 600 600" aria-hidden="true">
+            <g class="scope__ticks"></g>
+            <circle cx="300" cy="300" r="286" class="scope__dial-line" />
+          </svg>
+          <div class="scope__field">
+            <canvas class="smear"></canvas>
+            <div class="scope__vignette"></div>
+            <svg class="scope__reticle" viewBox="0 0 400 400" aria-hidden="true">
+              <path d="M200 0v400M0 200h400" />
+              <g class="scope__reticle-ticks"></g>
+            </svg>
+          </div>
+          <div class="scope__overlay" aria-hidden="true">
+            <svg class="scope__callouts" viewBox="0 0 400 400">
+              <g class="callout"><circle cx="120" cy="128" r="26" /><path d="M101 110 L70 80 H-6" /></g>
+              <g class="callout"><circle cx="284" cy="262" r="24" /><path d="M301 279 L330 308 H406" /></g>
+              <g class="callout"><circle cx="268" cy="104" r="18" /><path d="M281 91 L306 66 H406" /></g>
+            </svg>
+            <span class="callout-label mono callout-label--1">Neutrófilo</span>
+            <span class="callout-label mono callout-label--2">Eosinófilo</span>
+            <span class="callout-label mono callout-label--3">Linfócito</span>
+          </div>
+          <span class="scope__tag scope__tag--1 mono">OBJ 100× · imersão</span>
+          <span class="scope__tag scope__tag--2 mono">Esfregaço sanguíneo · Panótico</span>
+          <div class="scope__scale mono"><span></span>10 µm</div>
+        </div>
+      </div>
+
+      <div class="hero__bottom mono">
+        <span class="hide-md">Ensino · Pesquisa · Extensão</span>
+        <a href="#manifesto" class="hero__scroll"><span class="hero__scroll-line"></span>Role para focar</a>
+        <span class="hide-md">05°05′S · 42°48′O — Teresina, PI</span>
+      </div>
+    </section>
+
+    <!-- ============ MANIFESTO (zoom na lente) ============ -->
+    <section class="zoom" id="manifesto" aria-label="Manifesto">
+      <div class="zoom__pin">
+        <div class="zoom__circle">
+          <div class="zoom__inner">
+            <p class="mono zoom__kicker">Manifesto</p>
+            <p class="manifesto" data-words>
+              A patologia explica a doença. As análises clínicas a medem. A LAPAC existe para formar
+              quem domina as duas — com rigor, curiosidade e respeito por cada animal que chega
+              à bancada como uma amostra e merece sair com um diagnóstico.
+            </p>
+          </div>
+        </div>
+        <div class="zoom__mag mono" aria-hidden="true">Aumento <strong class="zoom__mag-num">4×</strong></div>
+      </div>
+    </section>
+
+    <!-- ============ SOBRE ============ -->
+    <section class="section about" id="sobre">
+      <div class="container about__grid">
+        <div class="about__sticky">
+          <div class="emblem-map">
+            <img src="assets/img/emblema.webp" alt="Emblema da LAPAC: cavalo, cão, bovino e gato ao redor de um microscópio" width="932" height="843" loading="lazy" />
+            <span class="hotspot" data-spot="0"></span>
+            <span class="hotspot" data-spot="1"></span>
+            <span class="hotspot" data-spot="2"></span>
+            <span class="hotspot" data-spot="3"></span>
+            <span class="hotspot" data-spot="4"></span>
+          </div>
+          <p class="mono about__caption">Fig. 1 — Emblema da LAPAC</p>
+        </div>
+
+        <div class="about__content">
+          <p class="kicker">Quem somos</p>
+          <h2 class="h2" data-reveal-words>Uma liga feita por quem gosta de <em>investigar</em>.</h2>
+          <p class="about__lead reveal">
+            A LAPAC é uma entidade acadêmica sem fins lucrativos, vinculada ao curso de Medicina Veterinária
+            da Universidade Federal do Piauí, em Teresina. Aprofundamos a <strong>patologia veterinária</strong> e as
+            <strong>análises clínicas</strong> — aproximando o estudante da rotina diagnóstica real.
+          </p>
+
+          <ol class="emblem-list">
+            <li class="emblem-item" data-spot="0"><span class="mono">01</span><div><h3>Equinos</h3><p>O cavalo representa a clínica e a patologia de grandes animais.</p></div></li>
+            <li class="emblem-item" data-spot="1"><span class="mono">02</span><div><h3>Cães</h3><p>A rotina de pequenos animais, onde o hemograma é o exame mais pedido.</p></div></li>
+            <li class="emblem-item" data-spot="2"><span class="mono">03</span><div><h3>Ruminantes</h3><p>Sanidade de rebanhos e o elo direto com a saúde pública.</p></div></li>
+            <li class="emblem-item" data-spot="3"><span class="mono">04</span><div><h3>Felinos</h3><p>Uma espécie com particularidades que exigem um olhar próprio.</p></div></li>
+            <li class="emblem-item" data-spot="4"><span class="mono">05</span><div><h3>O microscópio</h3><p>No centro de tudo: o diagnóstico começa pela observação cuidadosa.</p></div></li>
+          </ol>
+
+          <div class="he reveal">
+            <p class="mono he__title">Por que roxo e rosa?</p>
+            <div class="he__swatches">
+              <div class="he__swatch he__swatch--h"><span class="mono">H</span><strong>Hematoxilina</strong><small>cora os núcleos de roxo</small></div>
+              <div class="he__swatch he__swatch--e"><span class="mono">E</span><strong>Eosina</strong><small>cora o citoplasma de rosa</small></div>
+            </div>
+            <p class="he__text">As cores da LAPAC conversam com a coloração <strong>H&amp;E</strong>, a mais usada em histopatologia no mundo. Nossa identidade é, literalmente, uma lâmina corada.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="mvv">
+          <article class="mvv__item"><span class="mono">Missão</span><p>Promover formação complementar de qualidade em patologia e diagnóstico laboratorial, integrando ensino, pesquisa e extensão.</p></article>
+          <article class="mvv__item"><span class="mono">Visão</span><p>Ser referência entre as ligas da UFPI na formação de médicos-veterinários com raciocínio diagnóstico sólido.</p></article>
+          <article class="mvv__item"><span class="mono">Valores</span><p>Ética, rigor científico, curiosidade, colaboração e compromisso com a saúde animal e a saúde única.</p></article>
+        </div>
+
+        <!-- TODO: ajuste os números reais em data-count -->
+        <div class="stats">
+          <div class="stat"><strong data-count="8">0</strong><span class="mono">áreas de estudo</span></div>
+          <div class="stat"><strong data-count="20" data-prefix="+">0</strong><span class="mono">ligantes</span></div>
+          <div class="stat"><strong data-count="12" data-prefix="+">0</strong><span class="mono">eventos por ano</span></div>
+          <div class="stat"><strong data-count="100" data-prefix="+" data-suffix="h">0</strong><span class="mono">certificadas</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ÁREAS (lâminas deslizando) ============ -->
+    <section class="slides" id="areas">
+      <div class="slides__pin">
+        <header class="container slides__head">
+          <div>
+            <p class="kicker">Áreas de atuação</p>
+            <h2 class="h2" data-reveal-words>Oito lâminas, <em>uma bancada</em>.</h2>
+          </div>
+          <div class="slides__meter mono" aria-hidden="true">
+            <span><span class="slides__count">01</span> / 08</span>
+            <span class="slides__bar"><span></span></span>
+            <span class="slides__hint">Role <i data-lucide="arrow-right"></i></span>
+          </div>
+        </header>
+
+        <div class="slides__viewport">
+          <div class="slides__track">
+            <article class="slide" data-seed="11" data-kind="tissue">
+              <div class="glass"><div class="glass__label mono"><b>LAPAC</b><span>01</span><small>H&amp;E</small><i class="barcode"></i></div><div class="glass__sample"><svg class="specimen" viewBox="0 0 300 140" aria-hidden="true"></svg></div></div>
+              <h3>Patologia Geral</h3><p>Degenerações, inflamação, distúrbios circulatórios e do crescimento, neoplasias.</p>
+              <ul class="tags mono"><li>Inflamação</li><li>Neoplasias</li><li>Necrose</li></ul>
+            </article>
+            <article class="slide" data-seed="23" data-kind="tissue">
+              <div class="glass"><div class="glass__label mono"><b>LAPAC</b><span>02</span><small>H&amp;E</small><i class="barcode"></i></div><div class="glass__sample"><svg class="specimen" viewBox="0 0 300 140" aria-hidden="true"></svg></div></div>
+              <h3>Histopatologia</h3><p>Processamento, coloração e leitura de lâminas para interpretação tecidual.</p>
+              <ul class="tags mono"><li>Microtomia</li><li>Colorações</li><li>Laudo</li></ul>
+            </article>
+            <article class="slide" data-seed="37" data-kind="organ">
+              <div class="glass"><div class="glass__label mono"><b>LAPAC</b><span>03</span><small>MACRO</small><i class="barcode"></i></div><div class="glass__sample"><svg class="specimen" viewBox="0 0 300 140" aria-hidden="true"></svg></div></div>
+              <h3>Necropsia</h3><p>Técnica, descrição macroscópica e diagnóstico post mortem.</p>
+              <ul class="tags mono"><li>Técnica</li><li>Macroscopia</li><li>Coleta</li></ul>
+            </article>
+            <article class="slide" data-seed="41" data-kind="cyto">
+              <div class="glass"><div class="glass__label mono"><b>LAPAC</b><span>04</span><small>PANÓT.</small><i class="barcode"></i></div><div class="glass__sample"><svg class="specimen" viewBox="0 0 300 140" aria-hidden="true"></svg></div></div>
+              <h3>Citopatologia</h3><p>PAAF, imprint e citologia de efusões, pele e linfonodos.</p>
+              <ul class="tags mono"><li>PAAF</li><li>Efusões</li><li>Linfonodos</li></ul>
+            </article>
+            <article class="slide" data-seed="53" data-kind="smear">
+              <div class="glass"><div class="glass__label mono"><b>LAPAC</b><span>05</span><small>PANÓT.</small><i class="barcode"></i></div><div class="glass__sample"><svg class="specimen" viewBox="0 0 300 140" aria-hidden="true"></svg></div></div>
+              <h3>Hematologia</h3><p>Hemograma, esfregaço sanguíneo, morfologia celular e coagulação.</p>
+              <ul class="tags mono"><li>Hemograma</li><li>Esfregaço</li><li>Coagulação</li></ul>
+            </article>
+            <article class="slide" data-seed="67" data-kind="drop">
+              <div class="glass"><div class="glass__label mono"><b>LAPAC</b><span>06</span><small>SORO</small><i class="barcode"></i></div><div class="glass__sample"><svg class="specimen" viewBox="0 0 300 140" aria-hidden="true"></svg></div></div>
+              <h3>Bioquímica Clínica</h3><p>Perfis renal, hepático, muscular e metabólico em diferentes espécies.</p>
+              <ul class="tags mono"><li>Renal</li><li>Hepático</li><li>Metabólico</li></ul>
+            </article>
+            <article class="slide" data-seed="79" data-kind="crystal">
+              <div class="glass"><div class="glass__label mono"><b>LAPAC</b><span>07</span><small>SEDIM.</small><i class="barcode"></i></div><div class="glass__sample"><svg class="specimen" viewBox="0 0 300 140" aria-hidden="true"></svg></div></div>
+              <h3>Urinálise</h3><p>Exame físico, químico e sedimentoscopia — urina tipo I comentada.</p>
+              <ul class="tags mono"><li>Físico-químico</li><li>Sedimento</li><li>Cristais</li></ul>
+            </article>
+            <article class="slide" data-seed="97" data-kind="egg">
+              <div class="glass"><div class="glass__label mono"><b>LAPAC</b><span>08</span><small>LUGOL</small><i class="barcode"></i></div><div class="glass__sample"><svg class="specimen" viewBox="0 0 300 140" aria-hidden="true"></svg></div></div>
+              <h3>Parasitologia &amp; Microbiologia</h3><p>Coproparasitológico, hemoparasitas, cultura e antibiograma.</p>
+              <ul class="tags mono"><li>Ovos</li><li>Hemoparasitas</li><li>Cultura</li></ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ EQUIPE ============ -->
+    <section class="section team-sec" id="equipe">
+      <div class="container">
+        <header class="section-head section-head--row">
+          <div>
+            <p class="kicker">Equipe</p>
+            <h2 class="h2" data-reveal-words>As pessoas por trás das <em>lâminas</em>.</h2>
+          </div>
+          <div class="turret" role="tablist" aria-label="Equipe">
+            <button class="turret__btn is-active" role="tab" aria-selected="true" aria-controls="painel-orientacao" id="tab-orientacao"><span class="mono">4×</span>Orientação</button>
+            <button class="turret__btn" role="tab" aria-selected="false" aria-controls="painel-diretoria" id="tab-diretoria" tabindex="-1"><span class="mono">10×</span>Diretoria</button>
+            <button class="turret__btn" role="tab" aria-selected="false" aria-controls="painel-membros" id="tab-membros" tabindex="-1"><span class="mono">40×</span>Ligantes</button>
+            <span class="turret__indicator" aria-hidden="true"></span>
+          </div>
+        </header>
+
+        <div class="tab-panel is-active" id="painel-orientacao" role="tabpanel" aria-labelledby="tab-orientacao">
+          <div class="team team--lg" data-render="orientadores"></div>
+        </div>
+        <div class="tab-panel" id="painel-diretoria" role="tabpanel" aria-labelledby="tab-diretoria" hidden>
+          <div class="team" data-render="diretoria"></div>
+        </div>
+        <div class="tab-panel" id="painel-membros" role="tabpanel" aria-labelledby="tab-membros" hidden>
+          <div class="team team--sm" data-render="membros"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ATIVIDADES (cards empilhando) ============ -->
+    <section class="section stack-sec" id="atividades">
+      <div class="container">
+        <header class="section-head">
+          <p class="kicker kicker--light">O que fazemos</p>
+          <h2 class="h2" data-reveal-words>Ensino, pesquisa e extensão <em>na prática</em>.</h2>
+        </header>
+
+        <div class="stack">
+          <article class="stack__card">
+            <div class="stack__num"><span class="mono">Ensino</span><b>01</b></div>
+            <div class="stack__body"><h3>Grupos de estudo</h3><p>Encontros quinzenais com discussão de casos, artigos e lâminas. Cada ligante apresenta e debate — é aqui que o raciocínio diagnóstico é treinado.</p></div>
+            <div class="stack__art"><i data-lucide="book-open-text"></i></div>
+          </article>
+          <article class="stack__card">
+            <div class="stack__num"><span class="mono">Ensino</span><b>02</b></div>
+            <div class="stack__body"><h3>Ciclo de palestras</h3><p>Professores e profissionais convidados, em encontros abertos a toda a comunidade acadêmica.</p></div>
+            <div class="stack__art"><i data-lucide="presentation"></i></div>
+          </article>
+          <article class="stack__card">
+            <div class="stack__num"><span class="mono">Prática</span><b>03</b></div>
+            <div class="stack__body"><h3>Rotina laboratorial</h3><p>Acompanhamento supervisionado de exames, processamento de amostras e necropsias.</p></div>
+            <div class="stack__art"><i data-lucide="pipette"></i></div>
+          </article>
+          <article class="stack__card">
+            <div class="stack__num"><span class="mono">Pesquisa</span><b>04</b></div>
+            <div class="stack__body"><h3>Produção científica</h3><p>Projetos, relatos de caso e trabalhos apresentados em congressos regionais e nacionais.</p></div>
+            <div class="stack__art"><i data-lucide="flask-round"></i></div>
+          </article>
+          <article class="stack__card">
+            <div class="stack__num"><span class="mono">Extensão</span><b>05</b></div>
+            <div class="stack__body"><h3>Ações na comunidade</h3><p>Educação em saúde em Teresina: zoonoses, posse responsável, saúde única e o valor do diagnóstico laboratorial.</p></div>
+            <div class="stack__art"><i data-lucide="hand-heart"></i></div>
+          </article>
+          <article class="stack__card">
+            <div class="stack__num"><span class="mono">Instagram</span><b>06</b></div>
+            <div class="stack__body"><h3>Lâmina da semana</h3><p>Um achado por semana no nosso perfil. Você consegue identificar?</p><a class="btn btn--line-light btn--sm js-instagram" href="#" target="_blank" rel="noopener" data-magnetic><span>Seguir a LAPAC</span><i data-lucide="arrow-up-right"></i></a></div>
+            <div class="stack__art"><i data-lucide="sparkles"></i></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAIXAS (reagem à velocidade do scroll) ============ -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__row ticker__row--a"><div class="ticker__inner">
+        <span>Hematologia</span><span>Histopatologia</span><span>Necropsia</span><span>Citopatologia</span><span>Bioquímica</span><span>Urinálise</span><span>Parasitologia</span>
+      </div></div>
+      <div class="ticker__row ticker__row--b"><div class="ticker__inner">
+        <span>Ensino</span><span>Pesquisa</span><span>Extensão</span><span>UFPI</span><span>Teresina</span><span>Saúde única</span><span>Diagnóstico</span>
+      </div></div>
+    </div>
+
+    <!-- ============ AGENDA ============ -->
+    <section class="section" id="agenda">
+      <div class="container">
+        <header class="section-head section-head--row">
+          <div>
+            <p class="kicker">Agenda</p>
+            <h2 class="h2" data-reveal-words>Próximos <em>encontros</em>.</h2>
+          </div>
+          <div class="segmented" role="group" aria-label="Filtrar eventos">
+            <button class="is-active" data-filter="proximos" aria-pressed="true">Próximos</button>
+            <button data-filter="anteriores" aria-pressed="false">Anteriores</button>
+          </div>
+        </header>
+        <ol class="events" data-render="eventos"></ol>
+      </div>
+    </section>
+
+    <!-- ============ SELEÇÃO ============ -->
+    <section class="section selection-sec" id="selecao">
+      <svg class="selection__wave" viewBox="0 0 400 400" aria-hidden="true"><use href="#wave-cluster" /></svg>
+      <div class="container selection">
+        <div class="selection__intro">
+          <p class="kicker kicker--light">Processo seletivo</p>
+          <h2 class="h2" data-reveal-words>Quer fazer parte da <em>LAPAC</em>?</h2>
+          <p class="selection__lead">A seleção acontece por edital publicado aqui e no nosso Instagram. Acompanhe o cronograma e prepare-se.</p>
+          <div data-render="selecao-status"></div>
+          <div class="countdown" data-render="countdown" aria-live="polite"></div>
+          <div class="selection__actions" data-render="selecao-acoes"></div>
+        </div>
+
+        <div class="selection__steps">
+          <svg class="steps__path" viewBox="0 0 40 1000" preserveAspectRatio="none" aria-hidden="true">
+            <path class="steps__path-bg" d="M20 0 C 36 120, 4 220, 20 330 S 36 560, 20 660 S 4 880, 20 1000" />
+            <path class="steps__path-fg" d="M20 0 C 36 120, 4 220, 20 330 S 36 560, 20 660 S 4 880, 20 1000" />
+          </svg>
+          <ol class="steps" data-render="etapas"></ol>
+        </div>
+      </div>
+
+      <div class="container reports">
+        <div class="report reveal">
+          <p class="report__head mono"><span>Laudo Nº 01</span><span>Requisitos</span></p>
+          <ul class="report__list" data-render="requisitos"></ul>
+        </div>
+        <div class="report reveal">
+          <p class="report__head mono"><span>Laudo Nº 02</span><span>Por que entrar</span></p>
+          <ul class="report__list">
+            <li><span>Certificado de horas complementares</span><i></i><b class="mono">Sim</b></li>
+            <li><span>Contato com a rotina de diagnóstico</span><i></i><b class="mono">Sim</b></li>
+            <li><span>Produção científica e congressos</span><i></i><b class="mono">Sim</b></li>
+            <li><span>Networking com professores e profissionais</span><i></i><b class="mono">Sim</b></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PRODUÇÃO ============ -->
+    <section class="section" id="producao">
+      <div class="container">
+        <header class="section-head">
+          <p class="kicker">Produção científica</p>
+          <h2 class="h2" data-reveal-words>O que a liga <em>publica</em>.</h2>
+        </header>
+        <ul class="pubs" data-render="publicacoes"></ul>
+      </div>
+    </section>
+
+    <!-- ============ GALERIA (filme deslizante) ============ -->
+    <section class="gallery-sec" id="galeria">
+      <div class="container section-head section-head--row">
+        <div>
+          <p class="kicker">Galeria</p>
+          <h2 class="h2" data-reveal-words>Momentos da <em>liga</em>.</h2>
+        </div>
+        <a class="btn btn--line js-instagram" href="#" target="_blank" rel="noopener" data-magnetic><i data-lucide="instagram"></i><span>Ver no Instagram</span></a>
+      </div>
+      <div class="film" data-render="galeria"></div>
+    </section>
+
+    <!-- ============ DOCUMENTOS ============ -->
+    <section class="section" id="documentos">
+      <div class="container">
+        <header class="section-head">
+          <p class="kicker">Transparência</p>
+          <h2 class="h2" data-reveal-words>Documentos <em>oficiais</em>.</h2>
+        </header>
+        <div class="docs" data-render="documentos"></div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section faq-sec" id="faq">
+      <div class="container faq-wrap">
+        <header class="section-head faq-head">
+          <p class="kicker">Dúvidas frequentes</p>
+          <h2 class="h2" data-reveal-words>Perguntas <em>comuns</em>.</h2>
+          <p class="section-head__lead">Não achou sua dúvida? Fale com a gente pelo Instagram ou pelo formulário.</p>
+        </header>
+        <div class="faq">
+          <details class="faq__item"><summary><span class="mono">01</span>O que é uma liga acadêmica?<i class="faq__plus"></i></summary><div class="faq__body"><p>É uma entidade estudantil, sem fins lucrativos, orientada por docentes, que aprofunda o estudo de uma área por meio de atividades de ensino, pesquisa e extensão, complementando a graduação.</p></div></details>
+          <details class="faq__item"><summary><span class="mono">02</span>Quem pode participar da LAPAC?<i class="faq__plus"></i></summary><div class="faq__body"><p>Estudantes regularmente matriculados no curso de Medicina Veterinária da UFPI que atendam aos requisitos do edital vigente (como período mínimo e disciplinas cursadas).</p></div></details>
+          <details class="faq__item"><summary><span class="mono">03</span>Conta como horas complementares?<i class="faq__plus"></i></summary><div class="faq__body"><p>Sim. Ligantes com a frequência mínima exigida no regimento recebem certificado com a carga horária das atividades realizadas.</p></div></details>
+          <details class="faq__item"><summary><span class="mono">04</span>Preciso já saber patologia para entrar?<i class="faq__plus"></i></summary><div class="faq__body"><p>Não precisa ser especialista. A prova cobre conteúdos básicos indicados no edital — o mais importante é interesse e disponibilidade para aprender.</p></div></details>
+          <details class="faq__item"><summary><span class="mono">05</span>Os eventos são abertos ao público?<i class="faq__plus"></i></summary><div class="faq__body"><p>A maioria das palestras, minicursos e o simpósio são abertos à comunidade acadêmica. Fique de olho na agenda e no Instagram.</p></div></details>
+          <details class="faq__item"><summary><span class="mono">06</span>Quanto tempo dura o vínculo?<i class="faq__plus"></i></summary><div class="faq__body"><p>Permanência, renovação e desligamento estão descritos no estatuto e no regimento interno, disponíveis na seção Documentos.</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTATO ============ -->
+    <section class="section contact-sec" id="contato">
+      <div class="container">
+        <p class="kicker">Contato</p>
+        <h2 class="contact__big" data-reveal-words>Vamos <em>conversar</em>?</h2>
+        <a class="contact__mail js-email" href="#" data-cursor="escrever">lapac.ufpi@gmail.com</a>
+
+        <div class="contact">
+          <div class="contact__info">
+            <ul class="contact__list">
+              <li><span class="mono">Instagram</span><a class="js-instagram js-instagram-handle" href="#" target="_blank" rel="noopener">@lapac.ufpi</a></li>
+              <li><span class="mono">Endereço</span><span class="js-endereco">UFPI — Teresina, PI</span></li>
+            </ul>
+            <div class="map"><iframe class="js-map" title="Mapa — Centro de Ciências Agrárias da UFPI" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+          </div>
+
+          <form class="contact__form" id="form-contato" novalidate>
+            <p class="report__head mono"><span>Requisição</span><span>Nova mensagem</span></p>
+            <div class="field"><input id="f-nome" name="nome" type="text" placeholder=" " autocomplete="name" required /><label for="f-nome">Seu nome</label></div>
+            <div class="field"><input id="f-email" name="email" type="email" placeholder=" " autocomplete="email" required /><label for="f-email">Seu e-mail</label></div>
+            <div class="field field--select">
+              <select id="f-assunto" name="assunto" required>
+                <option value="Dúvida sobre o processo seletivo">Processo seletivo</option>
+                <option value="Convite / parceria">Convite ou parceria</option>
+                <option value="Eventos">Eventos</option>
+                <option value="Outro assunto">Outro assunto</option>
+              </select>
+              <label for="f-assunto">Assunto</label>
+              <i data-lucide="chevron-down"></i>
+            </div>
+            <div class="field"><textarea id="f-msg" name="mensagem" rows="4" placeholder=" " required></textarea><label for="f-msg">Mensagem</label></div>
+            <button class="btn btn--primary btn--block" type="submit"><span>Enviar mensagem</span><i data-lucide="send"></i></button>
+            <p class="form-note" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ RODAPÉ ============ -->
+  <footer class="footer">
+    <svg class="footer__wave" viewBox="0 0 400 400" aria-hidden="true"><use href="#wave-cluster" /></svg>
+    <div class="container footer__top">
+      <div class="footer__cta">
+        <p class="footer__cta-title">Pronto para olhar <em>mais de perto</em>?</p>
+        <a href="#selecao" class="btn btn--gold btn--lg" data-magnetic><span>Ver processo seletivo</span><i data-lucide="arrow-right"></i></a>
+      </div>
+      <div class="footer__cols">
+        <div>
+          <h4 class="mono">Navegação</h4>
+          <ul><li><a href="#sobre">Sobre</a></li><li><a href="#areas">Áreas</a></li><li><a href="#equipe">Equipe</a></li><li><a href="#atividades">Atividades</a></li><li><a href="#agenda">Agenda</a></li></ul>
+        </div>
+        <div>
+          <h4 class="mono">Liga</h4>
+          <ul><li><a href="#selecao">Seleção</a></li><li><a href="#producao">Produção</a></li><li><a href="#documentos">Documentos</a></li><li><a href="#faq">Dúvidas</a></li><li><a href="#contato">Contato</a></li></ul>
+        </div>
+        <div>
+          <h4 class="mono">Vínculos</h4>
+          <ul><li><a href="https://ufpi.br" target="_blank" rel="noopener">UFPI <i data-lucide="arrow-up-right"></i></a></li><li><span>Centro de Ciências Agrárias</span></li><li><span>Medicina Veterinária</span></li></ul>
+          <div class="footer__social">
+            <a class="js-instagram" href="#" target="_blank" rel="noopener" aria-label="Instagram da LAPAC"><i data-lucide="instagram"></i></a>
+            <a class="js-email" href="#" aria-label="E-mail da LAPAC"><i data-lucide="mail"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__word" aria-hidden="true"><span>L</span><span>A</span><span>P</span><span>A</span><span>C</span></div>
+
+    <div class="container footer__bottom mono">
+      <span>© <span class="js-year">2026</span> LAPAC · UFPI</span>
+      <span class="hide-md">Liga Acadêmica de Patologia e Análises Clínicas</span>
+      <a href="#inicio" class="footer__totop">Topo <i data-lucide="arrow-up"></i></a>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Foto ampliada">
+    <button class="lightbox__close" aria-label="Fechar"><i data-lucide="x"></i></button>
+    <img alt="" />
+    <p class="lightbox__caption mono"></p>
+  </dialog>
+
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/lenis.min.js" defer></script>
+  <script src="assets/js/icons.js" defer></script>
+  <script src="assets/js/data.js" defer></script>
+  <script src="assets/js/main.js" defer></script>
+</body>
+</html>

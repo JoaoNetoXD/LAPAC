@@ -1,0 +1,9 @@
+{
+  "name": "LAPAC — Liga Acadêmica de Patologia e Análises Clínicas",
+  "short_name": "LAPAC",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FBF9F7",
+  "theme_color": "#4A1F5C",
+  "icons": [{ "src": "assets/img/icon-512.png", "sizes": "512x512", "type": "image/png" }]
+}
