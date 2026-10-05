@@ -527,7 +527,7 @@
     walk(el);
   }
   const maskWord = (word) => { const m = document.createElement("span"); m.className = "w-mask"; const i = document.createElement("span"); i.className = "w-in"; i.textContent = word; m.appendChild(i); return m; };
-  const KEYS = /^(patologia|análises|clínicas|LAPAC|diagnóstico\.?|rigor,?|curiosidade|respeito)$/i;
+  const KEYS = /^(patologia|análises|clínicas|LAPAC,?|coletar|processar|interpretar|laudo)$/i;
   const fadeWord = (word) => { const s = document.createElement("span"); s.className = "mw" + (KEYS.test(word) ? " is-key" : ""); s.textContent = word; return s; };
 
   /* =====================================================================
@@ -781,8 +781,7 @@
       .from(".scope__reticle", { opacity: 0, scale: 1.3, duration: 1.2, transformOrigin: "50% 50%" }, 0.6)
       .from(".hero__lead", { y: 30, opacity: 0, duration: 1 }, 0.55)
       .from(".hero__actions > *", { y: 30, opacity: 0, duration: 1, stagger: 0.08 }, 0.65)
-      .from(".scope__tag, .scope__scale", { opacity: 0, y: 12, duration: 0.8, stagger: 0.12 }, 1.0)
-      .from(".hero__dots", { opacity: 0, scale: 0.6, duration: 1.2 }, 0.8);
+      .from(".scope__tag, .scope__scale", { opacity: 0, y: 12, duration: 0.8, stagger: 0.12 }, 1.0);
     callCircles.forEach((c, i) => {
       const at = 1.25 + i * 0.28;
       tl.to(c, { scale: 1, duration: 0.6, ease: "back.out(2)" }, at)
