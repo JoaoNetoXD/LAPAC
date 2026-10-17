@@ -819,7 +819,8 @@ button.film__item { cursor: zoom-in; }
    o JS apenas desliga o scroll suave (Lenis). */
 
 /* ---------- Ajustes de robustez e acessibilidade ---------- */
-.person__name, .person__role, .mentor__name { overflow-wrap: anywhere; hyphens: auto; }
+.person__name, .person__role, .mentor__name { overflow-wrap: break-word; hyphens: manual; -webkit-hyphens: manual; word-break: normal; }
+@media (max-width: 719px) { .person__role { letter-spacing: 0.04em; font-size: 0.62rem; line-height: 1.5; } }
 /* áreas de toque de pelo menos 44px */
 .btn--sm { --bh: 44px; }
 .person__links a { width: 44px; height: 44px; }
