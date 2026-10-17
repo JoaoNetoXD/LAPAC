@@ -154,8 +154,8 @@ window.LAPAC = {
 
   /* ---------------- TRANSPARÊNCIA ---------------- */
   documentos: [
+    { titulo: "Estatuto", descricao: "Natureza, finalidades, estrutura e regras gerais da liga.", arquivo: "" },
     { titulo: "Regimento Interno", descricao: "Funcionamento da liga, cargos, frequência, carga horária e certificação.", arquivo: "docs/regimento-interno-lapac.pdf" },
     { titulo: "Edital do Processo Seletivo", descricao: "Vagas, cronograma, etapas e critérios da seleção 2027.1.", arquivo: "" },
-    { titulo: "Estatuto", descricao: "Natureza, finalidades, estrutura e regras gerais da liga.", arquivo: "" },
   ],
 };
