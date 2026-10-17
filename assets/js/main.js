@@ -857,7 +857,6 @@
     // definição da liga
     gsap.from(".entry__senses li", { x: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".entry", start: "top 75%" } });
     gsap.from(".entry__word", { yPercent: 100, opacity: 0, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".entry", start: "top 80%" } });
-    gsap.from(".palette__chip", { y: 30, opacity: 0, stagger: 0.08, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: ".palette", start: "top 90%" } });
     // valores entram um a um
     gsap.from(".values li", { y: 24, opacity: 0, scale: 0.9, stagger: 0.06, duration: 0.7, ease: "back.out(1.6)", scrollTrigger: { trigger: ".values", start: "top 88%" } });
     gsap.from(".mvv__item", { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".mvv", start: "top 85%" } });
