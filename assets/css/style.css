@@ -755,7 +755,7 @@ button.film__item { cursor: zoom-in; }
 .contact__lead { max-width: 34em; color: var(--ink-2); font-size: 1.1rem; margin-bottom: 18px; }
 
 /* ---------- HUB: ícones da home ---------- */
-.hub { position: relative; padding: clamp(72px, 9vw, 130px) 0; background: #f4ead8; border-top: 1px solid var(--line); }
+.hub { position: relative; padding: clamp(72px, 9vw, 130px) 0; background: #f2edf3; border-top: 1px solid var(--line); }
 .hub__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 40px; margin-bottom: clamp(32px, 5vw, 56px); }
 .hub__head .h2 { margin-bottom: 0; }
 .hub__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
@@ -763,7 +763,7 @@ button.film__item { cursor: zoom-in; }
   position: relative; isolation: isolate; overflow: hidden;
   display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 18px;
   min-height: 168px; padding: 18px; border-radius: var(--r-lg);
-  background: #faf3e6; border: 1px solid var(--line); color: var(--roxo-900);
+  background: #fbf9fb; border: 1px solid var(--line); color: var(--roxo-900);
   transition: color 0.45s, border-color 0.45s, transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out);
 }
 .tile::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--roxo-900); clip-path: circle(0% at 38px 52px); transition: clip-path 0.7s var(--ease-out); }
