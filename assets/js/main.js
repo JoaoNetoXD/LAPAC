@@ -600,30 +600,109 @@
     menu.inert = true;
     toggle.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("is-open")) { setMenu(false); toggle.focus(); } });
-    window.addEventListener("resize", () => { if (window.innerWidth >= 1080 && menu.classList.contains("is-open")) setMenu(false); });
+    window.addEventListener("resize", () => { if (window.innerWidth >= 1000 && menu.classList.contains("is-open")) setMenu(false); });
 
-    // âncoras com scroll suave
+    // links internos: "#/pagina" troca de página (router); "#id" rola até o elemento
     document.addEventListener("click", (e) => {
       const a = e.target.closest('a[href^="#"]');
       if (!a) return;
       const id = a.getAttribute("href");
+      const menuOpen = menu.classList.contains("is-open");
+      if (id.startsWith("#/")) {
+        if (menuOpen) setMenu(false);
+        if (id === location.hash || (id === "#/" && !location.hash)) { e.preventDefault(); scrollTop(); }
+        return; // hashchange cuida do resto
+      }
+      if (a.hasAttribute("data-totop")) { e.preventDefault(); scrollTop(true); return; }
       if (id.length < 2) return;
       const target = $(id);
       if (!target) return;
       e.preventDefault();
-      if (menu.classList.contains("is-open")) { setMenu(false); setTimeout(() => scrollToTarget(target), 350); }
+      if (menuOpen) { setMenu(false); setTimeout(() => scrollToTarget(target), 350); }
       else scrollToTarget(target);
     });
+  }
 
-    // link ativo
-    const links = $$(".nav__links a");
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((en) => {
-        if (!en.isIntersecting) return;
-        links.forEach((l) => l.classList.toggle("is-active", l.getAttribute("href") === "#" + en.target.id));
-      });
-    }, { rootMargin: "-45% 0px -50% 0px" });
-    $$("main section[id]").forEach((s) => io.observe(s));
+  function scrollTop(smooth) {
+    if (lenis) lenis.scrollTo(0, smooth ? { duration: 1.2 } : { immediate: true });
+    else window.scrollTo({ top: 0, behavior: smooth && !reduceMotion ? "smooth" : "auto" });
+  }
+
+  /* =====================================================================
+     ROUTER: home com ícones + uma página por seção
+     ===================================================================== */
+  const PAGES = [
+    { id: "sobre", label: "Quem somos" },
+    { id: "identidade", label: "Identidade visual" },
+    { id: "missao", label: "Missão e valores" },
+    { id: "areas", label: "Áreas de atuação" },
+    { id: "equipe", label: "Integrantes" },
+    { id: "atividades", label: "Como funciona" },
+    { id: "agenda", label: "Agenda" },
+    { id: "selecao", label: "Processo seletivo" },
+    { id: "galeria", label: "Registros de bancada" },
+    { id: "documentos", label: "Transparência" },
+    { id: "contato", label: "Fale com a diretoria" },
+  ];
+  const BASE_TITLE = document.title;
+  let currentPage = null;
+
+  function currentRoute() {
+    const h = location.hash;
+    if (h.startsWith("#/")) return h.slice(2) || "home";
+    if (h.length > 1 && PAGES.some((p) => p.id === h.slice(1))) return h.slice(1); // links antigos (#selecao)
+    return "home";
+  }
+
+  function route() {
+    let id = currentRoute();
+    const idx = PAGES.findIndex((p) => p.id === id);
+    if (id !== "home" && idx < 0) id = "home";
+    if (id === currentPage) return;
+    const first = currentPage === null;
+    currentPage = id;
+
+    $$("[data-page]").forEach((el) => (el.hidden = el.dataset.page !== id));
+    root.classList.toggle("view-home", id === "home");
+    root.classList.toggle("view-page", id !== "home");
+
+    const bar = $(".pagebar"), pager = $(".pager");
+    bar.hidden = pager.hidden = id === "home";
+    if (id !== "home") {
+      const p = PAGES[idx];
+      $(".pagebar__title").textContent = p.label;
+      const prev = PAGES[idx - 1], next = PAGES[idx + 1];
+      const pl = $(".pager__prev"), nl = $(".pager__next");
+      pl.hidden = !prev; nl.hidden = !next;
+      if (prev) { pl.href = `#/${prev.id}`; $("b", pl).textContent = prev.label; }
+      if (next) { nl.href = `#/${next.id}`; $("b", nl).textContent = next.label; }
+      document.title = `${p.label} — LAPAC UFPI`;
+    } else document.title = BASE_TITLE;
+
+    $$(".nav__links a, .mobile-menu__links a").forEach((l) => l.classList.toggle("is-active", l.getAttribute("href") === `#/${id}`));
+
+    if (!first) scrollTop();
+    // recalcula medidas (abas, trilho de lâminas, gatilhos de scroll)
+    if (id !== "areas") unmountSlides();
+    requestAnimationFrame(() => {
+      window.dispatchEvent(new Event("resize"));
+      if (hasGsap) {
+        if (id === "areas") mountSlides();
+        ST.refresh();
+        if (!first) pageEnter(id);
+      }
+    });
+  }
+
+  function pageEnter(id) {
+    const els = $$(`[data-page="${id}"]`);
+    gsap.fromTo(".pagebar__inner > *", { y: -14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "power3.out" });
+    gsap.fromTo(els, { opacity: 0, y: 30, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out", clearProps: "filter,transform" });
+  }
+
+  function initRouter() {
+    window.addEventListener("hashchange", route);
+    route();
   }
 
   function initTabs() {
@@ -825,6 +904,40 @@
       .add(() => { pl.remove(); document.body.classList.remove("is-loading"); lenis?.start(); }, 3.4);
   }
 
+  /* lâminas: montadas só com a página Áreas visível (seção escondida mede 0 e quebra o pin) */
+  let slidesMM = null;
+  function mountSlides() {
+    if (!hasGsap || slidesMM) return;
+    slidesMM = gsap.matchMedia();
+    slidesMM.add("(min-width: 960px)", () => {
+      const track = $(".slides__track");
+      const count = $(".slides__count"), bar = $(".slides__bar span"), n = $$(".slide").length;
+      const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      const tween = gsap.to(track, {
+        x: () => -dist(), ease: "none",
+        scrollTrigger: {
+          trigger: ".slides", start: "top top", end: () => "+=" + dist(), pin: ".slides__pin", scrub: 0.9, invalidateOnRefresh: true, anticipatePin: 1,
+          onUpdate: (self) => { count.textContent = pad(Math.min(n, Math.floor(self.progress * n) + 1)); bar.style.transform = `scaleX(${Math.max(1 / n, self.progress)})`; },
+        },
+      });
+      $$(".slide").forEach((s) => {
+        gsap.fromTo($(".glass", s), { rotate: 3 }, { rotate: -2, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
+        gsap.fromTo($(".specimen", s), { scale: 1.25, rotate: -8 }, { scale: 1, rotate: 0, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left right", end: "center center", scrub: true } });
+        gsap.from($$(".exams li", s), { x: 40, opacity: 0, stagger: 0.1, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left 85%", end: "left 40%", scrub: true } });
+      });
+    });
+    slidesMM.add("(max-width: 959px)", () => {
+      gsap.from(".slide", { x: 80, opacity: 0, stagger: 0.1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".slides__viewport", start: "top 85%" } });
+      $$(".slide").forEach((sl) => gsap.from($$(".exams li", sl), { x: 30, opacity: 0, stagger: 0.08, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: sl, start: "top 80%" } }));
+    });
+
+  }
+  function unmountSlides() {
+    if (!slidesMM) return;
+    slidesMM.revert();
+    slidesMM = null;
+  }
+
   function initScenes() {
     const mm = gsap.matchMedia();
 
@@ -861,28 +974,8 @@
     gsap.from(".values li", { y: 24, opacity: 0, scale: 0.9, stagger: 0.06, duration: 0.7, ease: "back.out(1.6)", scrollTrigger: { trigger: ".values", start: "top 88%" } });
     gsap.from(".mvv__item", { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".mvv", start: "top 85%" } });
 
-    // áreas: trilho horizontal de lâminas (desktop)
-    mm.add("(min-width: 960px)", () => {
-      const track = $(".slides__track");
-      const count = $(".slides__count"), bar = $(".slides__bar span"), n = $$(".slide").length;
-      const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
-      const tween = gsap.to(track, {
-        x: () => -dist(), ease: "none",
-        scrollTrigger: {
-          trigger: ".slides", start: "top top", end: () => "+=" + dist(), pin: ".slides__pin", scrub: 0.9, invalidateOnRefresh: true, anticipatePin: 1,
-          onUpdate: (self) => { count.textContent = pad(Math.min(n, Math.floor(self.progress * n) + 1)); bar.style.transform = `scaleX(${Math.max(1 / n, self.progress)})`; },
-        },
-      });
-      $$(".slide").forEach((s) => {
-        gsap.fromTo($(".glass", s), { rotate: 3 }, { rotate: -2, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
-        gsap.fromTo($(".specimen", s), { scale: 1.25, rotate: -8 }, { scale: 1, rotate: 0, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left right", end: "center center", scrub: true } });
-        gsap.from($$(".exams li", s), { x: 40, opacity: 0, stagger: 0.1, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left 85%", end: "left 40%", scrub: true } });
-      });
-    });
-    mm.add("(max-width: 959px)", () => {
-      gsap.from(".slide", { x: 80, opacity: 0, stagger: 0.1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".slides__viewport", start: "top 85%" } });
-      $$(".slide").forEach((sl) => gsap.from($$(".exams li", sl), { x: 30, opacity: 0, stagger: 0.08, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: sl, start: "top 80%" } }));
-    });
+    // home: ícones entram em sequência, "focando"
+    gsap.fromTo(".tile", { opacity: 0, y: 40, scale: 0.94, filter: "blur(8px)" }, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.9, stagger: { each: 0.06, grid: "auto", from: "start" }, ease: "power3.out", clearProps: "filter,transform", scrollTrigger: { trigger: ".hub__grid", start: "top 85%" } });
 
     // equipe: entrada com "foco"
     ST.batch(".tab-panel.is-active .person", { start: "top 90%", once: true, onEnter: (b) => gsap.fromTo(b, { opacity: 0, y: 40, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1, stagger: 0.08, ease: "power3.out", clearProps: "filter" }) });
@@ -958,6 +1051,7 @@
   $$(".steps__path-bg").forEach((p) => (p.style.strokeDasharray = "none"));
 
   const smear = initSmear();
+  initRouter();
 
   if (hasGsap) {
     if (window.Lenis && !reduceMotion) {
