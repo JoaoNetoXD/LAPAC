@@ -14,7 +14,7 @@
 window.LAPAC = {
   /* ---------------- CONTATO & REDES ---------------- */
   contato: {
-    email: "lapac.ufpi@gmail.com",          // TODO: confirmar e-mail oficial
+    email: "ligaacademicadedepatologia.ufpi@gmail.com",
     instagram: "lapac.ufpi",                // TODO: confirmar @ (sem o @)
     endereco: "Centro de Ciências Agrárias (CCA) — Campus Universitário Ministro Petrônio Portella, Bairro Ininga, Teresina — PI",
     mapaBusca: "Centro de Ciências Agrárias UFPI Teresina",
@@ -93,7 +93,7 @@ window.LAPAC = {
       { titulo: "Inscrição", texto: "Preenchimento do formulário e envio dos documentos exigidos no edital." },
       { titulo: "Avaliação", texto: "Etapas de avaliação definidas no edital." },
       { titulo: "Resultado", texto: "Divulgação da lista de aprovados aqui no site e no Instagram." },
-      { titulo: "Integração", texto: "Apresentação da diretoria e início das atividades da liga." },
+      { titulo: "Integração", texto: "Início das atividades com os ligantes." },
     ],
     // TODO: conferir com o edital
     requisitos: [
@@ -156,7 +156,6 @@ window.LAPAC = {
   documentos: [
     { titulo: "Regimento Interno", descricao: "Funcionamento da liga, cargos, frequência, carga horária e certificação.", arquivo: "" },
     { titulo: "Edital do Processo Seletivo", descricao: "Vagas, cronograma, etapas e critérios da seleção 2027.1.", arquivo: "" },
-    { titulo: "Projeto de Ensino", descricao: "Registro das atividades de ensino da liga na UFPI.", arquivo: "" },
-    { titulo: "Projeto de Extensão", descricao: "Registro das ações de extensão da liga na UFPI.", arquivo: "" },
+    { titulo: "Estatuto", descricao: "Natureza, finalidades, estrutura e regras gerais da liga.", arquivo: "" },
   ],
 };

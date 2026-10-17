@@ -25,7 +25,7 @@ docs/                   coloque aqui os PDFs (edital, estatuto, resultado…)
 | Orientadora (currículo, Lattes), diretoria (8), ligantes (12) | `orientadores`, `diretoria`, `membros` — `nome: ""` mostra "Em breve" |
 | Agenda de eventos | `eventos` (vazio mostra "Em breve") |
 | Fotos da galeria | `galeria` |
-| Estatuto, regimento, editais | `documentos` |
+| Regimento, edital e estatuto | `documentos` |
 
 **Fotos da equipe:** salve em `assets/img/equipe/` (ideal: 600×750, `.webp` ou `.jpg`) e preencha `foto: "assets/img/equipe/nome.webp"`. Sem foto, aparecem as iniciais.
 
@@ -37,9 +37,9 @@ docs/                   coloque aqui os PDFs (edital, estatuto, resultado…)
 Pendências da reunião:
 - Identidade visual: revisar textos e imagens (Marília)
 - Requisitos e benefícios: conferir com o edital (Cecília e Ingrid)
-- Transparência: Projeto de Ensino e Projeto de Extensão (Cecília e Ingrid), Regimento Interno e Edital em PDF
+- Transparência: PDFs do Regimento Interno, Edital e Estatuto
 - Orientadora: nome, foto, formação e link do Lattes
-- Confirmar e-mail `lapac.ufpi@gmail.com` e Instagram `@lapac.ufpi`
+- Confirmar Instagram `@lapac.ufpi` (e-mail: `ligaacademicadedepatologia.ufpi@gmail.com`)
 
 ## Animações
 

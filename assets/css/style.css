@@ -333,7 +333,7 @@ body.menu-open .nav__toggle { background: var(--ouro); color: var(--roxo-950); }
 .mvv { display: grid; margin-top: clamp(64px, 9vw, 120px); border-top: 1px solid var(--roxo-900); }
 .mvv__item { padding: 26px 0; border-bottom: 1px solid var(--line); }
 .mvv__item .mono { display: block; color: var(--magenta); margin-bottom: 10px; }
-.mvv__item p { margin: 0; font-family: var(--f-display); font-size: clamp(1.15rem, 1.4vw, 1.4rem); line-height: 1.35; color: var(--roxo-900); }
+.mvv__item p { margin: 0; font-size: 1.05rem; line-height: 1.65; color: var(--ink-2); }
 @media (min-width: 900px) { .mvv { grid-template-columns: repeat(3, 1fr); } .mvv__item { padding: 30px 32px 30px 0; border-bottom: 0; } .mvv__item + .mvv__item { padding-left: 32px; border-left: 1px solid var(--line); } }
 
 /* ---------- Áreas: lâminas ---------- */
@@ -558,7 +558,7 @@ a.doc:hover { transform: translateY(-8px) rotate(-0.6deg); box-shadow: 0 30px 50
 .doc__action { margin-top: auto; display: inline-flex; align-items: center; gap: 6px; color: var(--magenta); }
 .doc--soon .doc__action { color: var(--ink-3); }
 @media (min-width: 640px) { .docs { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1080px) { .docs { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1080px) { .docs { grid-template-columns: repeat(3, 1fr); } }
 
 /* ---------- Contato ---------- */
 .contact__big { font-family: var(--f-display); font-weight: 500; font-size: clamp(3rem, 10vw, 9.5rem); line-height: 0.92; letter-spacing: -0.04em; color: var(--roxo-900); margin-bottom: 18px; }
@@ -635,7 +635,7 @@ a.doc:hover { transform: translateY(-8px) rotate(-0.6deg); box-shadow: 0 30px 50
 .mvv-sec { background: var(--paper); }
 .mvv-sec .mvv { margin-top: 0; }
 .values { display: flex; flex-wrap: wrap; gap: 8px; }
-.values li { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--roxo-900); font-family: var(--f-display); font-size: 1.05rem; color: var(--roxo-900); transition: background-color 0.3s, color 0.3s; }
+.values li { padding: 8px 14px; border-radius: 999px; border: 1px solid var(--roxo-900); font-size: 0.95rem; font-weight: 500; color: var(--roxo-900); transition: background-color 0.3s, color 0.3s; }
 .values li:hover { background: var(--roxo-900); color: #fff; }
 .values li:nth-child(3n+2) { border-color: var(--magenta); color: var(--magenta); }
 .values li:nth-child(3n+2):hover { background: var(--magenta); color: #fff; }

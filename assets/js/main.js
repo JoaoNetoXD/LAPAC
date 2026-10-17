@@ -633,7 +633,7 @@
      ===================================================================== */
   const PAGES = [
     { id: "sobre", label: "Quem somos" },
-    { id: "identidade", label: "Identidade visual" },
+    { id: "identidade", label: "Nossa logo" },
     { id: "missao", label: "Missão e valores" },
     { id: "areas", label: "Áreas de atuação" },
     { id: "equipe", label: "Integrantes" },
