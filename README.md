@@ -66,7 +66,7 @@ Depois abra http://localhost:5510
 - **GitHub Pages:** suba a pasta num repositório → Settings → Pages → branch `main`
 - **Vercel:** importe o repositório (sem configuração)
 
-Depois de publicar, troque `https://lapac-ufpi.example/` no `<link rel="canonical">` do `index.html` pelo endereço real.
+Depois de publicar, troque `https://lapac-ufpi.vercel.app/` no `<link rel="canonical">` do `index.html` pelo endereço real.
 
 ## Formulário de contato
 
