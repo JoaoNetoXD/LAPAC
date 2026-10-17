@@ -135,7 +135,7 @@ window.LAPAC = {
     { nome: "Ana Caroline", cargo: "Diretoria de Marketing", foto: "assets/img/equipe/ana-caroline.webp" },
     { nome: "Lara Machado", cargo: "Diretoria de Marketing", foto: "assets/img/equipe/lara-machado.webp" },
     { nome: "Maria Clara", cargo: "Diretoria de Eventos", foto: "assets/img/equipe/maria-clara.webp" },
-    { nome: "Ingrid Milena", cargo: "Diretoria", foto: "assets/img/equipe/ingrid.webp" },          // TODO: cargo exato
+    { nome: "Ingrid Milena", cargo: "Diretoria de Pesquisa e Extensão", foto: "assets/img/equipe/ingrid.webp" },        
   ],
 
   // 12 vagas de ligantes — preencha nome/foto quando houver
