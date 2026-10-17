@@ -3,7 +3,7 @@
   "short_name": "LAPAC",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#FBF9F7",
+  "background_color": "#F4EAD8",
   "theme_color": "#2A1236",
   "icons": [
     {
