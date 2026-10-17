@@ -600,7 +600,7 @@
     menu.inert = true;
     toggle.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("is-open")) { setMenu(false); toggle.focus(); } });
-    window.addEventListener("resize", () => { if (window.innerWidth >= 1080 && menu.classList.contains("is-open")) setMenu(false); });
+    window.addEventListener("resize", () => { if (window.innerWidth >= 1000 && menu.classList.contains("is-open")) setMenu(false); });
 
     // links internos: "#/pagina" troca de página (router); "#id" rola até o elemento
     document.addEventListener("click", (e) => {
@@ -683,9 +683,11 @@
 
     if (!first) scrollTop();
     // recalcula medidas (abas, trilho de lâminas, gatilhos de scroll)
+    if (id !== "areas") unmountSlides();
     requestAnimationFrame(() => {
       window.dispatchEvent(new Event("resize"));
       if (hasGsap) {
+        if (id === "areas") mountSlides();
         ST.refresh();
         if (!first) pageEnter(id);
       }
@@ -902,6 +904,40 @@
       .add(() => { pl.remove(); document.body.classList.remove("is-loading"); lenis?.start(); }, 3.4);
   }
 
+  /* lâminas: montadas só com a página Áreas visível (seção escondida mede 0 e quebra o pin) */
+  let slidesMM = null;
+  function mountSlides() {
+    if (!hasGsap || slidesMM) return;
+    slidesMM = gsap.matchMedia();
+    slidesMM.add("(min-width: 960px)", () => {
+      const track = $(".slides__track");
+      const count = $(".slides__count"), bar = $(".slides__bar span"), n = $$(".slide").length;
+      const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
+      const tween = gsap.to(track, {
+        x: () => -dist(), ease: "none",
+        scrollTrigger: {
+          trigger: ".slides", start: "top top", end: () => "+=" + dist(), pin: ".slides__pin", scrub: 0.9, invalidateOnRefresh: true, anticipatePin: 1,
+          onUpdate: (self) => { count.textContent = pad(Math.min(n, Math.floor(self.progress * n) + 1)); bar.style.transform = `scaleX(${Math.max(1 / n, self.progress)})`; },
+        },
+      });
+      $$(".slide").forEach((s) => {
+        gsap.fromTo($(".glass", s), { rotate: 3 }, { rotate: -2, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
+        gsap.fromTo($(".specimen", s), { scale: 1.25, rotate: -8 }, { scale: 1, rotate: 0, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left right", end: "center center", scrub: true } });
+        gsap.from($$(".exams li", s), { x: 40, opacity: 0, stagger: 0.1, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left 85%", end: "left 40%", scrub: true } });
+      });
+    });
+    slidesMM.add("(max-width: 959px)", () => {
+      gsap.from(".slide", { x: 80, opacity: 0, stagger: 0.1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".slides__viewport", start: "top 85%" } });
+      $$(".slide").forEach((sl) => gsap.from($$(".exams li", sl), { x: 30, opacity: 0, stagger: 0.08, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: sl, start: "top 80%" } }));
+    });
+
+  }
+  function unmountSlides() {
+    if (!slidesMM) return;
+    slidesMM.revert();
+    slidesMM = null;
+  }
+
   function initScenes() {
     const mm = gsap.matchMedia();
 
@@ -937,29 +973,6 @@
     // valores entram um a um
     gsap.from(".values li", { y: 24, opacity: 0, scale: 0.9, stagger: 0.06, duration: 0.7, ease: "back.out(1.6)", scrollTrigger: { trigger: ".values", start: "top 88%" } });
     gsap.from(".mvv__item", { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".mvv", start: "top 85%" } });
-
-    // áreas: trilho horizontal de lâminas (desktop)
-    mm.add("(min-width: 960px)", () => {
-      const track = $(".slides__track");
-      const count = $(".slides__count"), bar = $(".slides__bar span"), n = $$(".slide").length;
-      const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
-      const tween = gsap.to(track, {
-        x: () => -dist(), ease: "none",
-        scrollTrigger: {
-          trigger: ".slides", start: "top top", end: () => "+=" + dist(), pin: ".slides__pin", scrub: 0.9, invalidateOnRefresh: true, anticipatePin: 1,
-          onUpdate: (self) => { count.textContent = pad(Math.min(n, Math.floor(self.progress * n) + 1)); bar.style.transform = `scaleX(${Math.max(1 / n, self.progress)})`; },
-        },
-      });
-      $$(".slide").forEach((s) => {
-        gsap.fromTo($(".glass", s), { rotate: 3 }, { rotate: -2, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
-        gsap.fromTo($(".specimen", s), { scale: 1.25, rotate: -8 }, { scale: 1, rotate: 0, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left right", end: "center center", scrub: true } });
-        gsap.from($$(".exams li", s), { x: 40, opacity: 0, stagger: 0.1, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left 85%", end: "left 40%", scrub: true } });
-      });
-    });
-    mm.add("(max-width: 959px)", () => {
-      gsap.from(".slide", { x: 80, opacity: 0, stagger: 0.1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".slides__viewport", start: "top 85%" } });
-      $$(".slide").forEach((sl) => gsap.from($$(".exams li", sl), { x: 30, opacity: 0, stagger: 0.08, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: sl, start: "top 80%" } }));
-    });
 
     // home: ícones entram em sequência, "focando"
     gsap.fromTo(".tile", { opacity: 0, y: 40, scale: 0.94, filter: "blur(8px)" }, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.9, stagger: { each: 0.06, grid: "auto", from: "start" }, ease: "power3.out", clearProps: "filter,transform", scrollTrigger: { trigger: ".hub__grid", start: "top 85%" } });
