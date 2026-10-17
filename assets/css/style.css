@@ -345,7 +345,7 @@ body.menu-open .nav__toggle { background: var(--ouro); color: var(--roxo-950); }
 /* celular: lente pequena acima do título */
 @media (max-width: 719px) {
   .hero__grid { gap: 14px; padding-top: 8px; }
-  .scope { order: -1; width: min(52vw, 220px); }
+  .scope { order: -1; width: min(82vw, 340px); }
   .hero__top { display: none; }
   .scope__tag, .scope__scale { display: none; }
   .scope__dial text { display: none; }
