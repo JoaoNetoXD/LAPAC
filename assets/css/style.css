@@ -460,8 +460,6 @@ body.menu-open .nav__toggle { background: var(--ouro); color: var(--roxo-950); }
 .person__photo { position: absolute; inset: 6%; border-radius: 50%; overflow: hidden; background: var(--grad); }
 .person__photo img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease-out); }
 .person:hover .person__photo img { transform: scale(1.07); }
-.person__photo::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)) center / 1px 100% no-repeat, linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)) center / 100% 1px no-repeat; opacity: 0; transition: opacity 0.4s; }
-.person:hover .person__photo::after { opacity: 1; }
 .person__photo--empty { background: radial-gradient(circle at 30% 25%, var(--magenta-500), var(--roxo) 55%, var(--roxo-900)); }
 .person__photo--empty::before { content: ""; position: absolute; inset: 0; background-image: radial-gradient(circle, rgba(255,255,255,0.16) 1.4px, transparent 1.8px); background-size: 14px 14px; }
 .person__initials { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--f-display); font-style: italic; font-size: clamp(2rem, 5vw, 3.6rem); color: rgba(255,255,255,0.92); }
