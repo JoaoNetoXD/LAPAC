@@ -143,7 +143,40 @@
       for (let i = 0; i < 18; i++) { const x = cx + (r() - 0.5) * rx * 1.7, y = cy + (r() - 0.5) * ry * 1.5; body += `<rect x="${f1(x)}" y="${f1(y)}" width="5" height="1.8" rx=".9" transform="rotate(${Math.round(r() * 180)} ${f1(x)} ${f1(y)})" fill="#4a1f5c" opacity=".8"/>`; }
     }
 
+    if (kind === "plate") {
+      // placa de ágar com colônias e discos de antibiograma (halos de inibição)
+      const px = 150, py = 70, pr = 62;
+      defs = `<radialGradient id="${id}g" cx="45%" cy="40%" r="65%"><stop offset="0" stop-color="#f6c9db"/><stop offset=".8" stop-color="#e48bb5"/><stop offset="1" stop-color="#c4528a"/></radialGradient><clipPath id="${id}c"><circle cx="${px}" cy="${py}" r="${pr - 3}"/></clipPath>`;
+      body = `<circle cx="${px}" cy="${py}" r="${pr}" fill="#fffdfb" stroke="rgba(42,18,54,.35)" stroke-width="1.2"/><circle cx="${px}" cy="${py}" r="${pr - 3}" fill="url(#${id}g)"/>`;
+      const disks = [[-30, -24, 15], [30, -22, 10], [-26, 28, 20], [32, 26, 6], [0, 0, 13]];
+      let inner = "";
+      for (let i = 0; i < 140; i++) {
+        const a = r() * Math.PI * 2, d = Math.sqrt(r()) * (pr - 5);
+        const x = px + Math.cos(a) * d, y = py + Math.sin(a) * d;
+        if (disks.some(([dx, dy, h]) => Math.hypot(x - (px + dx), y - (py + dy)) < h + 5)) continue;
+        inner += `<circle cx="${f1(x)}" cy="${f1(y)}" r="${f1(1.2 + r() * 1.8)}" fill="#fbe7f0" stroke="#a3236b" stroke-width=".4" opacity=".95"/>`;
+      }
+      disks.forEach(([dx, dy, h]) => {
+        inner += `<circle cx="${px + dx}" cy="${py + dy}" r="${h + 5}" fill="#f8dbe7" opacity=".85"/><circle cx="${px + dx}" cy="${py + dy}" r="4.5" fill="#fff" stroke="#4a1f5c" stroke-width=".8"/>`;
+      });
+      body += `<g clip-path="url(#${id}c)">${inner}</g>`;
+    }
+
     return { defs, body };
+  }
+
+  function renderAreas() {
+    const el = $('[data-render="areas"]');
+    if (!el) return;
+    el.innerHTML = (D.areas || []).map((a, i) => `
+      <article class="slide" data-seed="${+a.seed || 11 + i * 13}" data-kind="${esc(a.arte || "tissue")}">
+        <div class="glass"><div class="glass__label mono"><b>LAPAC</b><span>${pad(i + 1)}</span><small>${esc(a.rotulo || "")}</small><i class="barcode"></i></div><div class="glass__sample"><svg class="specimen" viewBox="0 0 300 140" aria-hidden="true"></svg></div></div>
+        <h3>${esc(a.titulo)}</h3>
+        <p>${esc(a.resumo)}</p>
+        <ul class="exams">${(a.exames || []).map((x) => `<li><b class="mono">${esc(x.nome)}</b><span>${esc(x.pontos)}</span></li>`).join("")}</ul>
+      </article>`).join("");
+    const meter = $(".slides__meter > span:first-child");
+    if (meter) meter.innerHTML = `<span class="slides__count">01</span> / ${pad((D.areas || []).length)}`;
   }
 
   function paintSpecimens() {
@@ -173,25 +206,52 @@
     if (map && c.mapaBusca) map.src = `https://www.google.com/maps?q=${encodeURIComponent(c.mapaBusca)}&output=embed`;
   }
 
+  function personPhoto(p) {
+    const nome = (p.nome || "").trim();
+    if (p.foto) return `<div class="person__photo"><img src="${esc(p.foto)}" alt="Foto de ${esc(nome)}" loading="lazy" /></div>`;
+    if (!nome) return `<div class="person__photo person__photo--empty person__photo--soon"><span class="person__soon mono" aria-hidden="true">Em breve</span></div>`;
+    return `<div class="person__photo person__photo--empty"><span class="person__initials" aria-hidden="true">${esc(initials(nome))}</span></div>`;
+  }
+
   function personCard(p, prefix, i) {
-    const photo = p.foto
-      ? `<div class="person__photo"><img src="${esc(p.foto)}" alt="Foto de ${esc(p.nome)}" loading="lazy" /></div>`
-      : `<div class="person__photo person__photo--empty"><span class="person__initials" aria-hidden="true">${esc(initials(p.nome))}</span></div>`;
+    const nome = (p.nome || "").trim();
     const links = [];
-    if (p.instagram) links.push(`<a href="https://instagram.com/${esc(p.instagram.replace(/^@/, ""))}" target="_blank" rel="noopener" aria-label="Instagram de ${esc(p.nome)}">${icon("instagram")}</a>`);
-    if (p.lattes) links.push(`<a href="${esc(p.lattes)}" target="_blank" rel="noopener" aria-label="Currículo Lattes de ${esc(p.nome)}">${icon("graduation-cap")}</a>`);
+    if (p.instagram) links.push(`<a href="https://instagram.com/${esc(p.instagram.replace(/^@/, ""))}" target="_blank" rel="noopener" aria-label="Instagram de ${esc(nome)}">${icon("instagram")}</a>`);
+    if (p.lattes) links.push(`<a href="${esc(p.lattes)}" target="_blank" rel="noopener" aria-label="Currículo Lattes de ${esc(nome)}">${icon("graduation-cap")}</a>`);
     return `
-      <article class="person">
-        <div class="person__field">${photo}<span class="person__id mono">LAPAC-${prefix}${pad(i + 1)}</span></div>
+      <article class="person${nome ? "" : " person--soon"}">
+        <div class="person__field">${personPhoto(p)}<span class="person__id mono">LAPAC-${prefix}${pad(i + 1)}</span></div>
         ${p.cargo ? `<span class="person__role mono">${esc(p.cargo)}</span>` : ""}
-        <h3 class="person__name">${esc(p.nome)}</h3>
+        <h3 class="person__name">${nome ? esc(nome) : "Em breve"}</h3>
         ${p.detalhe ? `<p class="person__detail">${esc(p.detalhe)}</p>` : ""}
         ${links.length ? `<div class="person__links">${links.join("")}</div>` : ""}
       </article>`;
   }
 
+  /** Orientadora: card largo com currículo */
+  function mentorCard(p) {
+    const nome = (p.nome || "").trim() || "Em breve";
+    const formacao = (p.formacao || []).filter(Boolean);
+    const btns = [];
+    if (p.lattes) btns.push(`<a class="btn btn--dark btn--sm" href="${esc(p.lattes)}" target="_blank" rel="noopener" data-magnetic><span>Currículo Lattes</span>${icon("arrow-up-right")}</a>`);
+    if (p.email) btns.push(`<a class="btn btn--line btn--sm" href="mailto:${esc(p.email)}">${icon("mail")}<span>E-mail</span></a>`);
+    return `
+      <article class="mentor person">
+        <div class="person__field mentor__field">${personPhoto(p)}<span class="person__id mono">LAPAC-O01</span></div>
+        <div class="mentor__body">
+          <span class="person__role mono">${esc(p.cargo || "Orientadora")}</span>
+          <h3 class="mentor__name">${esc(nome)}</h3>
+          ${p.atuacao ? `<p class="mentor__text">${esc(p.atuacao)}</p>` : ""}
+          ${formacao.length ? `<p class="report__head mono"><span>Currículo</span><span>Formação</span></p><ul class="mentor__cv">${formacao.map((f) => `<li>${esc(f)}</li>`).join("")}</ul>` : ""}
+          ${btns.length ? `<div class="mentor__actions">${btns.join("")}</div>` : `<p class="mono mentor__note">Link do Currículo Lattes em breve</p>`}
+        </div>
+      </article>`;
+  }
+
   function renderEquipe() {
-    [["orientadores", "O"], ["diretoria", "D"], ["membros", "L"]].forEach(([key, prefix]) => {
+    const or = $('[data-render="orientadores"]');
+    if (or) or.innerHTML = (D.orientadores || []).map(mentorCard).join("");
+    [["diretoria", "D"], ["membros", "L"]].forEach(([key, prefix]) => {
       const el = $(`[data-render="${key}"]`);
       if (el) el.innerHTML = (D[key] || []).map((p, i) => personCard(p, prefix, i)).join("");
     });
@@ -216,7 +276,13 @@
     let list = (D.eventos || []).map((e) => ({ ...e, _d: parseDate(e.data) }));
     list = filtro === "proximos" ? list.filter((e) => e._d >= t).sort((a, b) => a._d - b._d) : list.filter((e) => e._d < t).sort((a, b) => b._d - a._d);
     if (!list.length) {
-      el.innerHTML = `<li class="events__empty mono">${filtro === "proximos" ? "Nenhum evento agendado — acompanhe o Instagram" : "Ainda não há eventos anteriores registrados"}</li>`;
+      el.innerHTML = `
+        <li class="events__empty">
+          <span class="events__empty-badge mono"><span class="rec-dot"></span>Em breve</span>
+          <p class="events__empty-title">Ainda não há eventos programados.</p>
+          <p class="events__empty-text">Palestras, capacitações e ações de extensão serão divulgadas aqui e no Instagram da liga.</p>
+          <a class="btn btn--line btn--sm js-instagram" href="#" target="_blank" rel="noopener">${icon("instagram")}<span>Acompanhar no Instagram</span></a>
+        </li>`;
       return;
     }
     el.innerHTML = list.map((e) => {
@@ -245,11 +311,10 @@
     const st = s.status || "em-breve";
     const statusEl = $('[data-render="selecao-status"]');
     if (statusEl) {
-      const periodo = s.inscricoesInicio && s.inscricoesFim ? `Inscrições de ${fmtDate(s.inscricoesInicio)} a ${fmtDate(s.inscricoesFim)}` : "";
       statusEl.innerHTML = `
         <span class="status-pill status-pill--${esc(st)} mono"><span class="rec-dot"></span>${STATUS[st] || esc(st)}</span>
         <span class="selection__title">${esc(s.titulo || "")}</span>
-        ${periodo ? `<span class="selection__dates">${periodo} · Vagas: ${esc(s.vagas || "—")}</span>` : ""}`;
+        ${s.previsao ? `<span class="selection__dates">${esc(s.previsao)}</span>` : ""}`;
     }
     const acoes = $('[data-render="selecao-acoes"]');
     if (acoes) {
@@ -265,47 +330,16 @@
     const etapas = $('[data-render="etapas"]');
     if (etapas) etapas.innerHTML = (s.etapas || []).map((e, i) => `<li><span class="mono">Etapa ${pad(i + 1)}</span><h4>${esc(e.titulo)}</h4><p>${esc(e.texto)}</p></li>`).join("");
     const req = $('[data-render="requisitos"]');
-    if (req) req.innerHTML = (s.requisitos || []).map((t) => `<li><span>${esc(t)}</span><i></i><b class="mono">Obrigatório</b></li>`).join("");
-    startCountdown(s);
-  }
-
-  function startCountdown(s) {
-    const el = $('[data-render="countdown"]');
-    if (!el) return;
-    let target, label;
-    if (s.status === "em-breve" && s.inscricoesInicio) { target = parseDate(s.inscricoesInicio); label = "As inscrições abrem em"; }
-    else if (s.status === "aberto" && s.inscricoesFim) { target = parseDate(s.inscricoesFim); target.setHours(23, 59, 59); label = "As inscrições encerram em"; }
-    if (!target) return;
-    el.innerHTML = `<span class="countdown__label mono">${label}</span>` + ["dias", "horas", "min", "seg"].map((u) => `<div class="countdown__cell"><strong data-u="${u}">00</strong><span class="mono">${u}</span></div>`).join("");
-    const cells = Object.fromEntries($$("[data-u]", el).map((c) => [c.dataset.u, c]));
-    const set = (c, v) => { if (c.textContent !== v) { c.textContent = v; c.classList.remove("tick"); void c.offsetWidth; c.classList.add("tick"); } };
-    let timer;
-    const tick = () => {
-      let diff = Math.max(0, target - Date.now());
-      if (diff === 0) { el.innerHTML = ""; clearInterval(timer); return; }
-      const dd = Math.floor(diff / 864e5); diff -= dd * 864e5;
-      const hh = Math.floor(diff / 36e5); diff -= hh * 36e5;
-      const mm = Math.floor(diff / 6e4); diff -= mm * 6e4;
-      set(cells.dias, pad(dd)); set(cells.horas, pad(hh)); set(cells.min, pad(mm)); set(cells.seg, pad(Math.floor(diff / 1e3)));
-    };
-    timer = setInterval(tick, 1000);
-    tick();
-  }
-
-  function renderPublicacoes() {
-    const el = $('[data-render="publicacoes"]');
-    if (!el) return;
-    el.innerHTML = (D.publicacoes || []).map((p) => {
-      const inner = `<div class="pub__meta mono"><span>${esc(p.ano)}</span><span>${esc(p.tipo)}</span></div><h3 class="pub__title">${esc(p.titulo)}</h3><p class="pub__venue">${esc(p.evento)}</p>${p.link ? `<span class="pub__arrow">${icon("arrow-right")}</span>` : ""}`;
-      return p.link ? `<li class="reveal"><a class="pub" href="${esc(p.link)}" target="_blank" rel="noopener">${inner}</a></li>` : `<li class="reveal"><div class="pub">${inner}</div></li>`;
-    }).join("");
+    if (req) req.innerHTML = (s.requisitos || []).map((t) => `<li><span>${esc(t)}</span><i></i><b class="mono">Requisito</b></li>`).join("");
+    const ben = $('[data-render="beneficios"]');
+    if (ben) ben.innerHTML = (s.beneficios || []).map((t) => `<li><span>${esc(t)}</span><i></i><b class="mono">Sim</b></li>`).join("");
   }
 
   function renderGaleria() {
     const el = $('[data-render="galeria"]');
     if (!el) return;
     const fotos = D.galeria || [];
-    const kinds = ["tissue", "smear", "cyto", "organ", "egg", "crystal"];
+    const kinds = ["tissue", "smear", "cyto", "plate", "egg", "crystal"];
     const bgs = ["#2a1236", "#4a1f5c", "#a3236b", "#3a1849"];
     let rows;
     if (!fotos.length) {
@@ -527,8 +561,6 @@
     walk(el);
   }
   const maskWord = (word) => { const m = document.createElement("span"); m.className = "w-mask"; const i = document.createElement("span"); i.className = "w-in"; i.textContent = word; m.appendChild(i); return m; };
-  const KEYS = /^(patologia|análises|clínicas|LAPAC,?|coletar|processar|interpretar|laudo)$/i;
-  const fadeWord = (word) => { const s = document.createElement("span"); s.className = "mw" + (KEYS.test(word) ? " is-key" : ""); s.textContent = word; return s; };
 
   /* =====================================================================
      INTERAÇÕES BÁSICAS (funcionam com ou sem GSAP)
@@ -643,25 +675,6 @@
     }));
   }
 
-  function initFaq() {
-    $$(".faq__item").forEach((det) => {
-      const summary = $("summary", det);
-      const body = $(".faq__body", det);
-      summary.addEventListener("click", (e) => {
-        if (!hasGsap) return;
-        e.preventDefault();
-        if (det.open) {
-          gsap.to(body, { height: 0, duration: 0.5, ease: "power3.inOut", onComplete: () => { det.open = false; gsap.set(body, { clearProps: "height" }); ST.refresh(); } });
-        } else {
-          $$(".faq__item[open]").forEach((o) => { if (o !== det) { const b = $(".faq__body", o); gsap.to(b, { height: 0, duration: 0.4, ease: "power3.inOut", onComplete: () => { o.open = false; gsap.set(b, { clearProps: "height" }); } }); } });
-          det.open = true;
-          gsap.from(body, { height: 0, duration: 0.6, ease: "power3.out", onComplete: () => ST.refresh() });
-          gsap.from($("p", body), { y: 16, opacity: 0, duration: 0.6, delay: 0.1, ease: "power3.out" });
-        }
-      });
-    });
-  }
-
   function initForm() {
     const form = $("#form-contato");
     if (!form) return;
@@ -718,7 +731,7 @@
       const lab = inter?.dataset?.cursor || (t.closest(".slide") ? "lâmina" : "");
       label.textContent = lab;
       cur.classList.toggle("has-label", !!lab);
-      cur.classList.toggle("is-dark", !!t.closest(".stack-sec, .selection-sec, .zoom, .footer, .mobile-menu"));
+      cur.classList.toggle("is-dark", !!t.closest(".stack-sec, .selection-sec, .footer, .mobile-menu"));
     });
     document.addEventListener("pointerleave", () => gsap.to(cur, { opacity: 0, duration: 0.2 }));
     document.addEventListener("pointerenter", () => gsap.to(cur, { opacity: 1, duration: 0.2 }));
@@ -825,17 +838,6 @@
       .to(".hero__copy", { yPercent: -16, opacity: 0.2, ease: "none" }, 0)
       .to(".hero__wave--tr", { y: "-14vh", ease: "none" }, 0);
 
-    // manifesto: a lente "abre" e as palavras acendem
-    const mag = $(".zoom__mag-num");
-    const words = $$(".manifesto .mw");
-    const zoomTl = gsap.timeline({ scrollTrigger: { trigger: ".zoom", start: "top top", end: "+=240%", pin: ".zoom__pin", scrub: 0.8, anticipatePin: 1 } });
-    const m = { v: 4 };
-    zoomTl.fromTo(".zoom__circle", { clipPath: "circle(9% at 50% 50%)" }, { clipPath: "circle(75% at 50% 50%)", ease: "power2.inOut", duration: 1 }, 0)
-      .to(m, { v: 100, ease: "power1.in", duration: 1, onUpdate: () => (mag.textContent = `${Math.round(m.v)}×`) }, 0)
-      .from(".zoom__kicker", { opacity: 0, y: 20, duration: 0.3 }, 0.7)
-      .to(words, { opacity: 1, stagger: 1.4 / words.length, duration: 0.1, ease: "none" }, 0.85)
-      .to({}, { duration: 0.25 });
-
     // títulos: palavras sobem por máscara
     $$("[data-reveal-words]").forEach((el) => {
       gsap.from($$(".w-in", el), { yPercent: 115, rotate: 3, duration: 1.1, stagger: 0.06, ease: "power4.out", scrollTrigger: { trigger: el, start: "top 88%" } });
@@ -852,13 +854,12 @@
     activate(0);
     gsap.fromTo(".emblem-map img", { rotate: -6, scale: 0.92 }, { rotate: 4, scale: 1, ease: "none", scrollTrigger: { trigger: ".about", start: "top bottom", end: "bottom top", scrub: true } });
 
-    // números
-    $$(".stat strong").forEach((el) => {
-      const end = +el.dataset.count, pre = el.dataset.prefix || "", suf = el.dataset.suffix || "";
-      const o = { v: 0 };
-      gsap.to(o, { v: end, duration: 2, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 85%" }, onUpdate: () => (el.textContent = pre + Math.round(o.v) + suf) });
-    });
-    gsap.from(".stat", { y: 50, opacity: 0, stagger: 0.1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".stats", start: "top 85%" } });
+    // definição da liga
+    gsap.from(".entry__senses li", { x: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".entry", start: "top 75%" } });
+    gsap.from(".entry__word", { yPercent: 100, opacity: 0, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".entry", start: "top 80%" } });
+    gsap.from(".palette__chip", { y: 30, opacity: 0, stagger: 0.08, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: ".palette", start: "top 90%" } });
+    // valores entram um a um
+    gsap.from(".values li", { y: 24, opacity: 0, scale: 0.9, stagger: 0.06, duration: 0.7, ease: "back.out(1.6)", scrollTrigger: { trigger: ".values", start: "top 88%" } });
     gsap.from(".mvv__item", { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".mvv", start: "top 85%" } });
 
     // áreas: trilho horizontal de lâminas (desktop)
@@ -876,10 +877,12 @@
       $$(".slide").forEach((s) => {
         gsap.fromTo($(".glass", s), { rotate: 3 }, { rotate: -2, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left right", end: "right left", scrub: true } });
         gsap.fromTo($(".specimen", s), { scale: 1.25, rotate: -8 }, { scale: 1, rotate: 0, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left right", end: "center center", scrub: true } });
+        gsap.from($$(".exams li", s), { x: 40, opacity: 0, stagger: 0.1, ease: "none", scrollTrigger: { trigger: s, containerAnimation: tween, start: "left 85%", end: "left 40%", scrub: true } });
       });
     });
     mm.add("(max-width: 959px)", () => {
       gsap.from(".slide", { x: 80, opacity: 0, stagger: 0.1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".slides__viewport", start: "top 85%" } });
+      $$(".slide").forEach((sl) => gsap.from($$(".exams li", sl), { x: 30, opacity: 0, stagger: 0.08, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: sl, start: "top 80%" } }));
     });
 
     // equipe: entrada com "foco"
@@ -923,7 +926,6 @@
 
     // documentos: pastas "caem" na mesa
     ST.batch(".doc", { start: "top 90%", onEnter: (b) => gsap.fromTo(b, { opacity: 0, y: 60, rotate: (i) => (i % 2 ? 3 : -3) }, { opacity: 1, y: 0, rotate: 0, duration: 1.1, stagger: 0.1, ease: "power3.out" }) });
-    gsap.from(".faq__item", { y: 30, opacity: 0, stagger: 0.07, duration: 0.8, ease: "power3.out", scrollTrigger: { trigger: ".faq", start: "top 85%" } });
 
     // contato
     gsap.from(".contact__mail", { y: 40, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".contact__mail", start: "top 90%" } });
@@ -940,13 +942,13 @@
   /* =====================================================================
      BOOT
      ===================================================================== */
-  renderContato();
+  renderAreas();
   renderEquipe();
   renderEventos();
   renderSelecao();
-  renderPublicacoes();
   renderGaleria();
   renderDocumentos();
+  renderContato();
   paintSpecimens();
   buildDial();
   refreshIcons();
@@ -967,7 +969,6 @@
       lenis.stop();
     }
     $$("[data-reveal-words]").forEach((el) => splitWords(el, maskWord));
-    $$("[data-words]").forEach((el) => splitWords(el, fadeWord));
     if (window.scrollY > 10) window.scrollTo(0, 0);
     preloader(() => heroIntro(smear));
     initScenes();
@@ -976,7 +977,6 @@
   } else {
     $(".preloader")?.remove();
     smear?.start();
-    $$("[data-words]").forEach((el) => splitWords(el, fadeWord));
     // faixas animadas mesmo sem GSAP (sem reduced motion)
     if (!reduceMotion) {
       $$(".ticker__row").forEach((row, i) => makeMarquee(row, i ? -50 : 50));
@@ -990,7 +990,6 @@
   initNav();
   initTabs();
   initEventFilter();
-  initFaq();
   initForm();
   initSlidesSwipeMeter();
   initCursor();

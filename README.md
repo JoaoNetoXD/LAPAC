@@ -20,10 +20,10 @@ docs/                   coloque aqui os PDFs (edital, estatuto, resultado…)
 | O que | Onde em `data.js` |
 |---|---|
 | E-mail, Instagram, endereço | `contato` |
-| Abrir/fechar seleção, datas, link do Forms, edital, resultado | `selecao` (`status`: `em-breve`, `aberto`, `encerrado`, `resultado`) |
-| Orientadores, diretoria, ligantes | `orientadores`, `diretoria`, `membros` |
-| Agenda de eventos | `eventos` (passados vão sozinhos para a aba "Anteriores") |
-| Trabalhos publicados | `publicacoes` |
+| As 6 áreas (texto e exames de cada lâmina) | `areas` |
+| Seleção: status, link do Forms, edital, resultado, etapas, requisitos, benefícios | `selecao` (`status`: `em-breve`, `aberto`, `encerrado`, `resultado`) |
+| Orientadora (currículo, Lattes), diretoria (8), ligantes (12) | `orientadores`, `diretoria`, `membros` — `nome: ""` mostra "Em breve" |
+| Agenda de eventos | `eventos` (vazio mostra "Em breve") |
 | Fotos da galeria | `galeria` |
 | Estatuto, regimento, editais | `documentos` |
 
@@ -31,23 +31,22 @@ docs/                   coloque aqui os PDFs (edital, estatuto, resultado…)
 
 **PDFs:** coloque em `docs/` e preencha, por exemplo, `edital: "docs/edital-2026-2.pdf"`.
 
-**Números da seção Sobre** (8 áreas, +20 ligantes…): no `index.html`, procure `data-count`.
 
 ## ⚠️ Conferir antes de publicar
 
-Estão com conteúdo provisório, só para exemplo:
-- e-mail `lapac.ufpi@gmail.com` e Instagram `@lapac.ufpi`
-- nomes da equipe, eventos e datas da agenda, datas da seleção
-- números da seção "Sobre"
-- publicações
+Pendências da reunião:
+- Identidade visual: revisar textos e imagens (Marília)
+- Requisitos e benefícios: conferir com o edital (Cecília e Ingrid)
+- Transparência: Projeto de Ensino e Projeto de Extensão (Cecília e Ingrid), Regimento Interno e Edital em PDF
+- Orientadora: nome, foto, formação e link do Lattes
+- Confirmar e-mail `lapac.ufpi@gmail.com` e Instagram `@lapac.ufpi`
 
 ## Animações
 
 - Preloader "ajustando foco" → abertura sincronizada (título, ondas, lente, legendas das células)
 - Lente com esfregaço sanguíneo animado em canvas (reage ao mouse)
-- Manifesto: a lente abre com o scroll e as palavras acendem
-- Áreas: lâminas de vidro deslizando na horizontal (no celular: arrastar com o dedo)
-- Atividades: cards que empilham; faixas de texto que aceleram com o scroll
+- Áreas: 6 lâminas de vidro deslizando na horizontal (no celular: arrastar com o dedo)
+- Como a liga funciona: cards que empilham; duas faixas com as áreas em sentidos opostos
 - Seleção: caminho que se desenha conforme rola
 - Cursor-retículo e botões magnéticos (só no computador)
 
