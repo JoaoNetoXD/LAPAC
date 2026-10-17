@@ -26,7 +26,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="assets/img/emblema.webp" />
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/style.css?v=4" />
 
   <script type="application/ld+json">
   {
@@ -85,19 +85,19 @@
   <!-- ============ NAV ============ -->
   <header class="nav">
     <div class="nav__inner">
-      <a href="#inicio" class="nav__brand" aria-label="LAPAC — início">
+      <a href="#/" class="nav__brand" aria-label="LAPAC — início">
         <img src="assets/img/emblema-sm.webp" alt="" width="44" height="40" />
         <span class="nav__brand-text">LAPAC</span>
       </a>
       <nav class="nav__links" aria-label="Principal">
-        <a href="#sobre"><sup>01</sup>Sobre</a>
-        <a href="#areas"><sup>02</sup>Áreas</a>
-        <a href="#equipe"><sup>03</sup>Equipe</a>
-        <a href="#atividades"><sup>04</sup>Como funciona</a>
-        <a href="#agenda"><sup>05</sup>Agenda</a>
-        <a href="#contato"><sup>06</sup>Contato</a>
+        <a href="#/sobre"><sup>01</sup>Sobre</a>
+        <a href="#/areas"><sup>02</sup>Áreas</a>
+        <a href="#/equipe"><sup>03</sup>Integrantes</a>
+        <a href="#/atividades"><sup>04</sup>Como funciona</a>
+        <a href="#/agenda"><sup>05</sup>Agenda</a>
+        <a href="#/contato"><sup>06</sup>Contato</a>
       </nav>
-      <a href="#selecao" class="btn btn--dark btn--sm nav__cta" data-magnetic><span>Seja ligante</span><i data-lucide="arrow-up-right"></i></a>
+      <a href="#/selecao" class="btn btn--dark btn--sm nav__cta" data-magnetic><span>Seja ligante</span><i data-lucide="arrow-up-right"></i></a>
       <button class="nav__toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-mobile">
         <span class="mono nav__toggle-txt">Menu</span><span class="nav__toggle-lines"><span></span><span></span></span>
       </button>
@@ -108,14 +108,14 @@
     <svg class="mobile-menu__wave" viewBox="0 0 400 400" aria-hidden="true"><use href="#wave-cluster" /></svg>
     <p class="mono mobile-menu__kicker">Índice</p>
     <nav class="mobile-menu__links" aria-label="Menu mobile">
-      <a href="#sobre"><span>01</span>Quem somos</a>
-      <a href="#identidade"><span>02</span>Identidade</a>
-      <a href="#areas"><span>03</span>Áreas</a>
-      <a href="#equipe"><span>04</span>Equipe</a>
-      <a href="#atividades"><span>05</span>Como funciona</a>
-      <a href="#agenda"><span>06</span>Agenda</a>
-      <a href="#selecao"><span>07</span>Seleção</a>
-      <a href="#contato"><span>08</span>Contato</a>
+      <a href="#/sobre"><span>01</span>Quem somos</a>
+      <a href="#/identidade"><span>02</span>Identidade</a>
+      <a href="#/areas"><span>03</span>Áreas</a>
+      <a href="#/equipe"><span>04</span>Integrantes</a>
+      <a href="#/atividades"><span>05</span>Como funciona</a>
+      <a href="#/agenda"><span>06</span>Agenda</a>
+      <a href="#/selecao"><span>07</span>Seleção</a>
+      <a href="#/contato"><span>08</span>Contato</a>
     </nav>
     <div class="mobile-menu__foot">
       <a class="social-link js-instagram" href="#" target="_blank" rel="noopener"><i data-lucide="instagram"></i><span class="js-instagram-handle">@lapac.ufpi</span></a>
@@ -124,8 +124,15 @@
   </div>
 
   <main id="conteudo">
+    <div class="pagebar" hidden>
+      <div class="container pagebar__inner">
+        <a href="#/" class="pagebar__back"><i data-lucide="arrow-left"></i><span>Início</span></a>
+        <span class="mono pagebar__crumb">LAPAC <span>/</span> <b class="pagebar__title"></b></span>
+      </div>
+    </div>
+
     <!-- ============ HERO ============ -->
-    <section class="hero" id="inicio">
+    <section class="hero" id="inicio" data-page="home">
       <svg class="hero__wave hero__wave--tr" viewBox="0 0 400 400" aria-hidden="true"><use href="#wave-cluster" /></svg>
       <svg class="hero__wave hero__wave--bl" viewBox="0 0 400 400" aria-hidden="true"><use href="#wave-cluster" /></svg>
 
@@ -147,8 +154,8 @@
             a coleta e o processamento da amostra até a interpretação dos resultados e a elaboração do laudo.
           </p>
           <div class="hero__actions">
-            <a href="#selecao" class="btn btn--primary btn--lg" data-magnetic><span>Processo seletivo</span><i data-lucide="arrow-right"></i></a>
-            <a href="#selecao" class="btn btn--line btn--lg" data-magnetic><i data-lucide="file-text"></i><span>Edital e seleção</span></a>
+            <a href="#/selecao" class="btn btn--primary btn--lg" data-magnetic><span>Processo seletivo</span><i data-lucide="arrow-right"></i></a>
+            <a href="#hub" class="btn btn--line btn--lg" data-magnetic><i data-lucide="layout-grid"></i><span>Explorar a liga</span></a>
           </div>
         </div>
 
@@ -183,13 +190,38 @@
 
       <div class="hero__bottom mono">
         <span class="hide-md">Ensino · Pesquisa · Extensão</span>
-        <a href="#sobre" class="hero__scroll"><span class="hero__scroll-line"></span>Role para conhecer</a>
+        <a href="#hub" class="hero__scroll"><span class="hero__scroll-line"></span>Role para conhecer</a>
         <span class="hide-md">05°05′S · 42°48′O — Teresina, PI</span>
       </div>
     </section>
 
+
+    <!-- ============ HUB: ícones de navegação ============ -->
+    <section class="hub" id="hub" data-page="home">
+      <div class="container">
+        <header class="hub__head">
+          <p class="kicker">Navegue pela liga</p>
+          <h2 class="h2" data-reveal-words>O que você <em>procura</em>?</h2>
+        </header>
+        <nav class="hub__grid" aria-label="Seções do site">
+          <a class="tile" href="#/sobre"><span class="tile__idx mono">01</span><span class="tile__lens"><i data-lucide="microscope"></i></span><span class="tile__label">Quem somos</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/identidade"><span class="tile__idx mono">02</span><span class="tile__lens"><i data-lucide="palette"></i></span><span class="tile__label">Identidade visual</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/missao"><span class="tile__idx mono">03</span><span class="tile__lens"><i data-lucide="target"></i></span><span class="tile__label">Missão e valores</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/areas"><span class="tile__idx mono">04</span><span class="tile__lens"><i data-lucide="layers"></i></span><span class="tile__label">Áreas de atuação</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/equipe"><span class="tile__idx mono">05</span><span class="tile__lens"><i data-lucide="users"></i></span><span class="tile__label">Integrantes</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/atividades"><span class="tile__idx mono">06</span><span class="tile__lens"><i data-lucide="book-open-text"></i></span><span class="tile__label">Como funciona</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/agenda"><span class="tile__idx mono">07</span><span class="tile__lens"><i data-lucide="calendar-days"></i></span><span class="tile__label">Agenda</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/selecao"><span class="tile__idx mono">08</span><span class="tile__lens"><i data-lucide="clipboard-list"></i></span><span class="tile__label">Processo seletivo</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/galeria"><span class="tile__idx mono">09</span><span class="tile__lens"><i data-lucide="camera"></i></span><span class="tile__label">Registros de bancada</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/documentos"><span class="tile__idx mono">10</span><span class="tile__lens"><i data-lucide="folder-open"></i></span><span class="tile__label">Transparência</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/contato"><span class="tile__idx mono">11</span><span class="tile__lens"><i data-lucide="mail"></i></span><span class="tile__label">Fale com a diretoria</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile tile--accent js-instagram" href="#" target="_blank" rel="noopener"><span class="tile__idx mono">12</span><span class="tile__lens"><i data-lucide="instagram"></i></span><span class="tile__label">Instagram</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+        </nav>
+      </div>
+    </section>
+
     <!-- ============ 2. QUEM SOMOS ============ -->
-    <section class="section who" id="sobre">
+    <section class="section who" id="sobre" data-page="sobre">
       <div class="container who__grid">
         <div class="who__head">
           <p class="kicker">Quem somos</p>
@@ -210,7 +242,7 @@
     </section>
 
     <!-- ============ 3. IDENTIDADE VISUAL ============ -->
-    <section class="section about" id="identidade">
+    <section class="section about" id="identidade" data-page="identidade">
       <div class="container about__grid">
         <div class="about__sticky">
           <div class="emblem-map">
@@ -242,7 +274,7 @@
     </section>
 
     <!-- ============ 4. MISSÃO · VISÃO · VALORES ============ -->
-    <section class="section mvv-sec" id="missao">
+    <section class="section mvv-sec" id="missao" data-page="missao">
       <div class="container">
         <header class="section-head">
           <p class="kicker">Missão · Visão · Valores</p>
@@ -261,7 +293,7 @@
     </section>
 
     <!-- ============ 5. ÁREAS (lâminas deslizando) ============ -->
-    <section class="slides" id="areas">
+    <section class="slides" id="areas" data-page="areas">
       <div class="slides__pin">
         <header class="container slides__head">
           <div>
@@ -281,7 +313,7 @@
     </section>
 
     <!-- ============ 6. EQUIPE ============ -->
-    <section class="section team-sec" id="equipe">
+    <section class="section team-sec" id="equipe" data-page="equipe">
       <div class="container">
         <header class="section-head section-head--row">
           <div>
@@ -309,7 +341,7 @@
     </section>
 
     <!-- ============ 7. COMO A LIGA FUNCIONA ============ -->
-    <section class="section stack-sec" id="atividades">
+    <section class="section stack-sec" id="atividades" data-page="atividades">
       <div class="container">
         <header class="section-head">
           <p class="kicker kicker--light">Como a liga funciona</p>
@@ -352,7 +384,7 @@
     </section>
 
     <!-- ============ 8. CARROSSEL DAS ÁREAS (duas linhas, sentidos opostos) ============ -->
-    <div class="ticker" aria-hidden="true">
+    <div class="ticker" aria-hidden="true" data-page="areas">
       <div class="ticker__row ticker__row--a"><div class="ticker__inner">
         <span>Hematologia</span><span>Citologia</span><span>Histopatologia</span><span>Urinálise</span><span>Parasitologia</span><span>Microbiologia</span>
       </div></div>
@@ -362,7 +394,7 @@
     </div>
 
     <!-- ============ 9. AGENDA ============ -->
-    <section class="section" id="agenda">
+    <section class="section" id="agenda" data-page="agenda">
       <div class="container">
         <header class="section-head">
           <p class="kicker">Agenda</p>
@@ -373,7 +405,7 @@
     </section>
 
     <!-- ============ 10–11. SELEÇÃO ============ -->
-    <section class="section selection-sec" id="selecao">
+    <section class="section selection-sec" id="selecao" data-page="selecao">
       <svg class="selection__wave" viewBox="0 0 400 400" aria-hidden="true"><use href="#wave-cluster" /></svg>
       <div class="container selection">
         <div class="selection__intro">
@@ -407,7 +439,7 @@
     </section>
 
     <!-- ============ 13. REGISTROS DE BANCADA ============ -->
-    <section class="gallery-sec" id="galeria">
+    <section class="gallery-sec" id="galeria" data-page="galeria">
       <div class="container section-head section-head--row">
         <div>
           <p class="kicker">Galeria</p>
@@ -419,7 +451,7 @@
     </section>
 
     <!-- ============ 14. TRANSPARÊNCIA ============ -->
-    <section class="section" id="documentos">
+    <section class="section" id="documentos" data-page="documentos">
       <div class="container">
         <header class="section-head">
           <p class="kicker">Transparência</p>
@@ -430,7 +462,7 @@
     </section>
 
     <!-- ============ 16. CONTATO ============ -->
-    <section class="section contact-sec" id="contato">
+    <section class="section contact-sec" id="contato" data-page="contato">
       <div class="container">
         <p class="kicker">Contato</p>
         <h2 class="contact__big" data-reveal-words>Fale com a <em>diretoria</em>.</h2>
@@ -468,6 +500,13 @@
         </div>
       </div>
     </section>
+    <nav class="pager" aria-label="Navegação entre seções" hidden>
+      <div class="container pager__inner">
+        <a class="pager__link pager__prev" href="#/"><span class="mono">Anterior</span><b></b></a>
+        <a class="pager__all" href="#/"><i data-lucide="layout-grid"></i><span>Todas as seções</span></a>
+        <a class="pager__link pager__next" href="#/"><span class="mono">Próxima</span><b></b></a>
+      </div>
+    </nav>
   </main>
 
   <!-- ============ 17. RODAPÉ ============ -->
@@ -476,16 +515,16 @@
     <div class="container footer__top">
       <div class="footer__cta">
         <p class="footer__cta-title">Seleção prevista para <em>2027.1</em>.</p>
-        <a href="#selecao" class="btn btn--gold btn--lg" data-magnetic><span>Ver processo seletivo</span><i data-lucide="arrow-right"></i></a>
+        <a href="#/selecao" class="btn btn--gold btn--lg" data-magnetic><span>Ver processo seletivo</span><i data-lucide="arrow-right"></i></a>
       </div>
       <div class="footer__cols">
         <div>
           <h4 class="mono">A liga</h4>
-          <ul><li><a href="#sobre">Quem somos</a></li><li><a href="#identidade">Identidade visual</a></li><li><a href="#missao">Missão e valores</a></li><li><a href="#areas">Áreas</a></li><li><a href="#equipe">Equipe</a></li></ul>
+          <ul><li><a href="#/sobre">Quem somos</a></li><li><a href="#/identidade">Identidade visual</a></li><li><a href="#/missao">Missão e valores</a></li><li><a href="#/areas">Áreas</a></li><li><a href="#/equipe">Equipe</a></li></ul>
         </div>
         <div>
           <h4 class="mono">Participe</h4>
-          <ul><li><a href="#atividades">Como funciona</a></li><li><a href="#agenda">Agenda</a></li><li><a href="#selecao">Seleção</a></li><li><a href="#documentos">Documentos</a></li><li><a href="#contato">Contato</a></li></ul>
+          <ul><li><a href="#/atividades">Como funciona</a></li><li><a href="#/agenda">Agenda</a></li><li><a href="#/selecao">Seleção</a></li><li><a href="#/documentos">Documentos</a></li><li><a href="#/contato">Contato</a></li></ul>
         </div>
         <div>
           <h4 class="mono">Vínculos</h4>
@@ -503,7 +542,7 @@
     <div class="container footer__bottom mono">
       <span>© <span class="js-year">2026</span> LAPAC · UFPI</span>
       <span class="hide-md">Liga Acadêmica de Patologia e Análises Clínicas</span>
-      <a href="#inicio" class="footer__totop">Topo <i data-lucide="arrow-up"></i></a>
+      <a href="#topo" class="footer__totop" data-totop>Topo <i data-lucide="arrow-up"></i></a>
     </div>
   </footer>
 
@@ -513,11 +552,11 @@
     <p class="lightbox__caption mono"></p>
   </dialog>
 
-  <script src="assets/vendor/gsap.min.js" defer></script>
-  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
-  <script src="assets/vendor/lenis.min.js" defer></script>
-  <script src="assets/js/icons.js" defer></script>
-  <script src="assets/js/data.js" defer></script>
-  <script src="assets/js/main.js" defer></script>
+  <script src="assets/vendor/gsap.min.js?v=4" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js?v=4" defer></script>
+  <script src="assets/vendor/lenis.min.js?v=4" defer></script>
+  <script src="assets/js/icons.js?v=4" defer></script>
+  <script src="assets/js/data.js?v=4" defer></script>
+  <script src="assets/js/main.js?v=4" defer></script>
 </body>
 </html>
