@@ -541,8 +541,7 @@
     const start = () => { if (running) return; running = true; last = performance.now(); requestAnimationFrame(loop); };
     const stop = () => { running = false; };
 
-    new ResizeObserver(resize).observe(canvas);
-    resize();
+    new ResizeObserver(resize).observe(canvas); // mede no ciclo normal de renderização (sem forçar layout no boot)
     new IntersectionObserver(([en]) => (en.isIntersecting ? start() : stop())).observe(canvas);
 
     const hero = $(".hero");
@@ -1113,6 +1112,7 @@
   renderGaleria();
   renderDocumentos();
   renderContato();
+  initRouter(); // esconde as outras páginas antes de qualquer medição de layout
   buildDial();
   refreshIcons();
   $$(".js-year").forEach((el) => (el.textContent = new Date().getFullYear()));
@@ -1122,7 +1122,6 @@
   $$(".steps__path-bg").forEach((p) => (p.style.strokeDasharray = "none"));
 
   const smear = initSmear();
-  initRouter();
 
   if (hasGsap) {
     if (window.Lenis && !reduceMotion) {
