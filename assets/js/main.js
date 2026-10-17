@@ -15,6 +15,13 @@
 
   const esc = (v = "") => String(v).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const icon = (name) => `<i data-lucide="${name}"></i>`;
+  /** aceita só http(s), mailto e caminhos relativos (bloqueia javascript: etc.) */
+  const safeUrl = (u = "") => {
+    const v = String(u).trim();
+    if (!v) return "#";
+    if (/^(https?:|mailto:)/i.test(v) || !/^[a-z][a-z0-9+.-]*:/i.test(v)) return esc(v);
+    return "#";
+  };
   const pad = (n, l = 2) => String(n).padStart(l, "0");
   const MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
   const parseDate = (s) => { const [y, m, d] = String(s).split("-").map(Number); return new Date(y, (m || 1) - 1, d || 1); };
@@ -170,7 +177,7 @@
     if (!el) return;
     el.innerHTML = (D.areas || []).map((a, i) => `
       <article class="slide" data-seed="${+a.seed || 11 + i * 13}" data-kind="${esc(a.arte || "tissue")}">
-        <div class="glass"><div class="glass__label mono"><b>LAPAC</b><span>${pad(i + 1)}</span><small>${esc(a.rotulo || "")}</small><i class="barcode"></i></div><div class="glass__sample"><svg class="specimen" viewBox="0 0 300 140" aria-hidden="true"></svg></div></div>
+        <div class="glass"><div class="glass__label mono"><b>LAPAC</b><span>${pad(i + 1)}</span><small>${esc(a.rotulo || "")}</small><i class="barcode"></i></div><div class="glass__sample"><img class="specimen" alt="" width="300" height="140" decoding="async" /></div></div>
         <h3>${esc(a.titulo)}</h3>
         <p>${esc(a.resumo)}</p>
         <ul class="exams">${(a.exames || []).map((x) => `<li><b class="mono">${esc(x.nome)}</b><span>${esc(x.pontos)}</span></li>`).join("")}</ul>
@@ -179,12 +186,23 @@
     if (meter) meter.innerHTML = `<span class="slides__count">01</span> / ${pad((D.areas || []).length)}`;
   }
 
+  /** Gera a amostra como UMA imagem (blob SVG) em vez de milhares de nós no DOM */
+  const svgCache = new Map();
+  function specimenURL(seed, kind, opts = {}) {
+    const key = `${seed}|${kind}|${opts.bg || ""}`;
+    if (svgCache.has(key)) return svgCache.get(key);
+    const { defs, body } = specimenSVG(seed, kind);
+    const inner = opts.bg
+      ? `<rect width="300" height="140" fill="${opts.bg}"/><g transform="translate(150 70) scale(1.35) translate(-150 -70)">${body}</g>`
+      : body;
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 140"${opts.bg ? ' preserveAspectRatio="xMidYMid slice"' : ""}><defs>${defs}</defs>${inner}</svg>`;
+    const url = URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" }));
+    svgCache.set(key, url);
+    return url;
+  }
+
   function paintSpecimens() {
-    $$(".slide").forEach((s) => {
-      const svg = $(".specimen", s);
-      const { defs, body } = specimenSVG(+s.dataset.seed, s.dataset.kind);
-      svg.innerHTML = `<defs>${defs}</defs>${body}`;
-    });
+    $$(".slide").forEach((s) => { $(".specimen", s).src = specimenURL(+s.dataset.seed, s.dataset.kind); });
   }
 
   /* =====================================================================
@@ -192,7 +210,7 @@
      ===================================================================== */
   function renderContato() {
     const c = D.contato || {};
-    const handle = (c.instagram || "").replace(/^@/, "");
+    const handle = (c.instagram || "").trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i, "").replace(/^@/, "").replace(/[/?#].*$/, "");
     const ig = handle ? `https://instagram.com/${handle}` : "";
     $$(".js-instagram").forEach((a) => (ig ? (a.href = ig) : a.setAttribute("hidden", "")));
     $$(".js-instagram-handle").forEach((el) => (el.textContent = `@${handle}`));
@@ -208,7 +226,7 @@
 
   function personPhoto(p) {
     const nome = (p.nome || "").trim();
-    if (p.foto) return `<div class="person__photo"><img src="${esc(p.foto)}" alt="Foto de ${esc(nome)}" loading="lazy" /></div>`;
+    if (p.foto) return `<div class="person__photo"><img src="${safeUrl(p.foto)}" alt="Foto de ${esc(nome)}" loading="lazy" /></div>`;
     if (!nome) return `<div class="person__photo person__photo--empty person__photo--soon"><span class="person__soon mono" aria-hidden="true">Em breve</span></div>`;
     return `<div class="person__photo person__photo--empty"><span class="person__initials" aria-hidden="true">${esc(initials(nome))}</span></div>`;
   }
@@ -217,7 +235,7 @@
     const nome = (p.nome || "").trim();
     const links = [];
     if (p.instagram) links.push(`<a href="https://instagram.com/${esc(p.instagram.replace(/^@/, ""))}" target="_blank" rel="noopener" aria-label="Instagram de ${esc(nome)}">${icon("instagram")}</a>`);
-    if (p.lattes) links.push(`<a href="${esc(p.lattes)}" target="_blank" rel="noopener" aria-label="Currículo Lattes de ${esc(nome)}">${icon("graduation-cap")}</a>`);
+    if (p.lattes) links.push(`<a href="${safeUrl(p.lattes)}" target="_blank" rel="noopener" aria-label="Currículo Lattes de ${esc(nome)}">${icon("graduation-cap")}</a>`);
     return `
       <article class="person${nome ? "" : " person--soon"}">
         <div class="person__field">${personPhoto(p)}<span class="person__id mono">LAPAC-${prefix}${pad(i + 1)}</span></div>
@@ -233,7 +251,7 @@
     const nome = (p.nome || "").trim() || "Em breve";
     const formacao = (p.formacao || []).filter(Boolean);
     const btns = [];
-    if (p.lattes) btns.push(`<a class="btn btn--dark btn--sm" href="${esc(p.lattes)}" target="_blank" rel="noopener" data-magnetic><span>Currículo Lattes</span>${icon("arrow-up-right")}</a>`);
+    if (p.lattes) btns.push(`<a class="btn btn--dark btn--sm" href="${safeUrl(p.lattes)}" target="_blank" rel="noopener" data-magnetic><span>Currículo Lattes</span>${icon("arrow-up-right")}</a>`);
     if (p.email) btns.push(`<a class="btn btn--line btn--sm" href="mailto:${esc(p.email)}">${icon("mail")}<span>E-mail</span></a>`);
     return `
       <article class="mentor person">
@@ -288,7 +306,7 @@
     el.innerHTML = list.map((e) => {
       const past = e._d < t;
       const cta = past ? "" : e.link
-        ? `<a class="btn btn--line btn--sm event__cta" href="${esc(e.link)}" target="_blank" rel="noopener"><span>Inscrever-se</span>${icon("arrow-up-right")}</a>`
+        ? `<a class="btn btn--line btn--sm event__cta" href="${safeUrl(e.link)}" target="_blank" rel="noopener"><span>Inscrever-se</span>${icon("arrow-up-right")}</a>`
         : `<a class="btn btn--line btn--sm event__cta" href="${gcalLink(e)}" target="_blank" rel="noopener">${icon("calendar-plus")}<span>Salvar na agenda</span></a>`;
       return `
         <li class="event${past ? " event--past" : ""}">
@@ -319,16 +337,16 @@
     const acoes = $('[data-render="selecao-acoes"]');
     if (acoes) {
       const b = [];
-      if (st === "aberto" && s.linkInscricao) b.push(`<a class="btn btn--gold" href="${esc(s.linkInscricao)}" target="_blank" rel="noopener" data-magnetic><span>Fazer inscrição</span>${icon("arrow-right")}</a>`);
+      if (st === "aberto" && s.linkInscricao) b.push(`<a class="btn btn--gold" href="${safeUrl(s.linkInscricao)}" target="_blank" rel="noopener" data-magnetic><span>Fazer inscrição</span>${icon("arrow-right")}</a>`);
       else b.push(`<span class="btn btn--gold is-disabled" aria-disabled="true"><span>${st === "em-breve" ? "Inscrições em breve" : "Inscrições fechadas"}</span></span>`);
       b.push(s.edital
-        ? `<a class="btn btn--line" href="${esc(s.edital)}" target="_blank" rel="noopener" data-magnetic>${icon("file-text")}<span>Ler edital</span></a>`
+        ? `<a class="btn btn--line" href="${safeUrl(s.edital)}" target="_blank" rel="noopener" data-magnetic>${icon("file-text")}<span>Ler edital</span></a>`
         : `<span class="btn btn--line is-disabled" aria-disabled="true">${icon("file-text")}<span>Edital em breve</span></span>`);
-      if (s.resultado) b.push(`<a class="btn btn--line" href="${esc(s.resultado)}" target="_blank" rel="noopener">${icon("award")}<span>Ver resultado</span></a>`);
+      if (s.resultado) b.push(`<a class="btn btn--line" href="${safeUrl(s.resultado)}" target="_blank" rel="noopener">${icon("award")}<span>Ver resultado</span></a>`);
       acoes.innerHTML = b.join("");
     }
     const etapas = $('[data-render="etapas"]');
-    if (etapas) etapas.innerHTML = (s.etapas || []).map((e, i) => `<li><span class="mono">Etapa ${pad(i + 1)}</span><h4>${esc(e.titulo)}</h4><p>${esc(e.texto)}</p></li>`).join("");
+    if (etapas) etapas.innerHTML = (s.etapas || []).map((e, i) => `<li><span class="mono">Etapa ${pad(i + 1)}</span><h3>${esc(e.titulo)}</h3><p>${esc(e.texto)}</p></li>`).join("");
     const req = $('[data-render="requisitos"]');
     if (req) req.innerHTML = (s.requisitos || []).map((t) => `<li><span>${esc(t)}</span><i></i><b class="mono">Requisito</b></li>`).join("");
     const ben = $('[data-render="beneficios"]');
@@ -344,12 +362,12 @@
     let rows;
     if (!fotos.length) {
       const tile = (i) => {
-        const { defs, body } = specimenSVG(200 + i * 7, kinds[i % kinds.length]);
-        return `<div class="film__item" data-bg="${i % bgs.length}"><svg viewBox="0 0 300 140" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="300" height="140" fill="${bgs[i % bgs.length]}"/><defs>${defs}</defs><g transform="translate(150 70) scale(1.35) translate(-150 -70)">${body}</g></svg><span class="film__soon mono">Foto em breve · ${pad(i + 1)}</span></div>`;
+        const src = specimenURL(200 + i * 7, kinds[i % kinds.length], { bg: bgs[i % bgs.length] });
+        return `<div class="film__item"><img src="${src}" alt="" width="300" height="140" loading="lazy" decoding="async" /><span class="film__soon mono">Foto em breve · ${pad(i + 1)}</span></div>`;
       };
       rows = [[0, 1, 2, 3, 4, 5].map(tile).join(""), [6, 7, 8, 9, 10, 11].map(tile).join("")];
     } else {
-      const item = (f, i) => `<button class="film__item" data-index="${i}" data-cursor="ampliar" aria-label="Ampliar foto: ${esc(f.legenda || "")}"><img src="${esc(f.src)}" alt="${esc(f.legenda || "Foto da LAPAC")}" loading="lazy" />${f.legenda ? `<figcaption class="mono">${esc(f.legenda)}</figcaption>` : ""}</button>`;
+      const item = (f, i) => `<button class="film__item" data-index="${i}" data-cursor="ampliar" aria-label="Ampliar foto: ${esc(f.legenda || "")}"><img src="${safeUrl(f.src)}" alt="${esc(f.legenda || "Foto da LAPAC")}" loading="lazy" />${f.legenda ? `<span class="film__caption mono">${esc(f.legenda)}</span>` : ""}</button>`;
       const a = [], b = [];
       fotos.forEach((f, i) => (i % 2 ? b : a).push(item(f, i)));
       rows = [a.join(""), (b.length ? b : a).join("")];
@@ -376,7 +394,7 @@
     el.innerHTML = (D.documentos || []).map((d, i) => {
       const body = `<h3>${esc(d.titulo)}</h3><p>${esc(d.descricao)}</p><span class="doc__action mono">${d.arquivo ? `Baixar ${icon("download")}` : "Disponível em breve"}</span>`;
       return d.arquivo
-        ? `<a class="doc" data-tab="DOC ${pad(i + 1)}" href="${esc(d.arquivo)}" target="_blank" rel="noopener">${body}</a>`
+        ? `<a class="doc" data-tab="DOC ${pad(i + 1)}" href="${safeUrl(d.arquivo)}" target="_blank" rel="noopener">${body}</a>`
         : `<div class="doc doc--soon" data-tab="DOC ${pad(i + 1)}">${body}</div>`;
     }).join("");
   }
@@ -392,7 +410,7 @@
         const a = ((d - 90) * Math.PI) / 180, major = d % 30 === 0;
         const r1 = 286, r2 = major ? 266 : 276;
         s += `<line class="${major ? "major" : ""}" x1="${f1(300 + Math.cos(a) * r1)}" y1="${f1(300 + Math.sin(a) * r1)}" x2="${f1(300 + Math.cos(a) * r2)}" y2="${f1(300 + Math.sin(a) * r2)}"/>`;
-        if (major) s += `<text x="${f1(300 + Math.cos(a) * 304)}" y="${f1(300 + Math.sin(a) * 304 + 4)}" text-anchor="middle">${d}</text>`;
+        if (major && d !== 150 && d !== 330) s += `<text x="${f1(300 + Math.cos(a) * 304)}" y="${f1(300 + Math.sin(a) * 304 + 4)}" text-anchor="middle">${d}</text>`;
       }
       g.innerHTML = s;
     }
@@ -597,6 +615,7 @@
       document.body.classList.toggle("menu-open", open);
       if (lenis) open ? lenis.stop() : lenis.start();
     };
+    closeMenu = () => { if (menu.classList.contains("is-open")) setMenu(false); };
     menu.inert = true;
     toggle.addEventListener("click", () => setMenu(toggle.getAttribute("aria-expanded") !== "true"));
     document.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("is-open")) { setMenu(false); toggle.focus(); } });
@@ -614,6 +633,7 @@
         return; // hashchange cuida do resto
       }
       if (a.hasAttribute("data-totop")) { e.preventDefault(); scrollTop(true); return; }
+      if (a.classList.contains("skip-link")) { e.preventDefault(); focusPage(); return; }
       if (id.length < 2) return;
       const target = $(id);
       if (!target) return;
@@ -623,9 +643,10 @@
     });
   }
 
-  function scrollTop(smooth) {
-    if (lenis) lenis.scrollTo(0, smooth ? { duration: 1.2 } : { immediate: true });
-    else window.scrollTo({ top: 0, behavior: smooth && !reduceMotion ? "smooth" : "auto" });
+  let closeMenu = () => {};
+  function scrollTop(smooth, y = 0) {
+    if (lenis) lenis.scrollTo(y, smooth ? { duration: 1.2, force: true } : { immediate: true, force: true });
+    else window.scrollTo({ top: y, behavior: smooth && !reduceMotion ? "smooth" : "auto" });
   }
 
   /* =====================================================================
@@ -654,12 +675,26 @@
     return "home";
   }
 
+  const savedY = {};
+  function focusPage() {
+    const sec = $(`[data-page="${currentPage}"]:not([hidden])`);
+    const target = (currentPage === "home" ? null : sec && $("h2, .h2", sec)) || $("#conteudo");
+    if (!target) return;
+    if (!target.hasAttribute("tabindex")) target.setAttribute("tabindex", "-1");
+    target.focus({ preventScroll: true });
+  }
+
   function route() {
     let id = currentRoute();
     const idx = PAGES.findIndex((p) => p.id === id);
     if (id !== "home" && idx < 0) id = "home";
+    // endereço canônico (#/id) — evita links "mortos" com #antigo ou #/desconhecido
+    const canon = id === "home" ? "" : `#/${id}`;
+    if (location.hash && location.hash !== canon && !(id === "home" && location.hash === "#/")) history.replaceState(null, "", canon || location.pathname + location.search);
     if (id === currentPage) return;
     const first = currentPage === null;
+    if (currentPage !== null) savedY[currentPage] = window.scrollY;
+    closeMenu();
     currentPage = id;
 
     $$("[data-page]").forEach((el) => (el.hidden = el.dataset.page !== id));
@@ -679,9 +714,16 @@
       document.title = `${p.label} — LAPAC UFPI`;
     } else document.title = BASE_TITLE;
 
-    $$(".nav__links a, .mobile-menu__links a").forEach((l) => l.classList.toggle("is-active", l.getAttribute("href") === `#/${id}`));
+    $$(".nav__links a, .mobile-menu__links a").forEach((l) => {
+      const on = l.getAttribute("href") === `#/${id}`;
+      l.classList.toggle("is-active", on);
+      on ? l.setAttribute("aria-current", "page") : l.removeAttribute("aria-current");
+    });
 
-    if (!first) scrollTop();
+    if (!first) {
+      scrollTop(false, id === "home" ? savedY.home || 0 : 0);
+      focusPage();
+    }
     // recalcula medidas (abas, trilho de lâminas, gatilhos de scroll)
     if (id !== "areas") unmountSlides();
     requestAnimationFrame(() => {
@@ -697,7 +739,7 @@
   function pageEnter(id) {
     const els = $$(`[data-page="${id}"]`);
     gsap.fromTo(".pagebar__inner > *", { y: -14, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: "power3.out" });
-    gsap.fromTo(els, { opacity: 0, y: 30, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.8, ease: "power3.out", clearProps: "filter,transform" });
+    gsap.fromTo(els, { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out", clearProps: "opacity" });
   }
 
   function initRouter() {
@@ -708,7 +750,7 @@
   function initTabs() {
     const tabs = $$(".turret__btn");
     const ind = $(".turret__indicator");
-    const move = (tab) => { if (!ind || !tab) return; ind.style.width = `${tab.offsetWidth}px`; ind.style.transform = `translateX(${tab.offsetLeft - 5}px)`; };
+    const move = (tab) => { if (!ind || !tab) return; ind.style.width = `${tab.offsetWidth}px`; ind.style.transform = `translateX(${tab.offsetLeft}px)`; };
     const activate = (tab, focus) => {
       let shown;
       tabs.forEach((t) => {
@@ -764,6 +806,7 @@
       $$("input, textarea", form).forEach((f) => {
         const valid = f.checkValidity() && f.value.trim() !== "";
         f.closest(".field").classList.toggle("is-invalid", !valid);
+        f.setAttribute("aria-invalid", String(!valid));
         if (!valid) ok = false;
       });
       if (!ok) {
@@ -776,7 +819,7 @@
       const subject = `[Site LAPAC] ${data.assunto} — ${data.nome}`;
       const body = `${data.mensagem}\n\n—\n${data.nome}\n${data.email}`;
       window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      note.textContent = "Abrimos seu app de e-mail com a mensagem pronta. É só enviar!"; note.className = "form-note is-ok";
+      note.textContent = `Tentamos abrir seu app de e-mail com a mensagem pronta. Se nada abriu, envie para ${to}.`; note.className = "form-note is-ok";
     });
     $$("input, textarea", form).forEach((f) => f.addEventListener("input", () => f.closest(".field").classList.remove("is-invalid")));
   }
@@ -784,7 +827,7 @@
   function initSlidesSwipeMeter() {
     const vp = $(".slides__viewport");
     if (!vp) return;
-    const count = $(".slides__count"), bar = $(".slides__bar span"), n = $$(".slide").length;
+    const count = $(".slides__count"), bar = $(".slides__bar span"), n = Math.max(1, $$(".slide").length);
     vp.addEventListener("scroll", () => {
       const p = vp.scrollLeft / Math.max(1, vp.scrollWidth - vp.clientWidth);
       count.textContent = pad(Math.min(n, Math.round(p * (n - 1)) + 1));
@@ -802,7 +845,7 @@
     const rx = gsap.quickTo(ring, "x", { duration: 0.45, ease: "power3" }), ry = gsap.quickTo(ring, "y", { duration: 0.45, ease: "power3" });
     const dx = gsap.quickTo(dot, "x", { duration: 0.1 }), dy = gsap.quickTo(dot, "y", { duration: 0.1 });
     const lx = gsap.quickTo(label, "x", { duration: 0.3 }), ly = gsap.quickTo(label, "y", { duration: 0.3 });
-    window.addEventListener("pointermove", (e) => { rx(e.clientX); ry(e.clientY); dx(e.clientX); dy(e.clientY); lx(e.clientX); ly(e.clientY); });
+    window.addEventListener("pointermove", (e) => { cur.classList.add("is-on"); rx(e.clientX); ry(e.clientY); dx(e.clientX); dy(e.clientY); lx(e.clientX); ly(e.clientY); });
     document.addEventListener("pointerover", (e) => {
       const t = e.target;
       const inter = t.closest("a, button, summary, [data-cursor], .slide, .film__item");
@@ -812,8 +855,7 @@
       cur.classList.toggle("has-label", !!lab);
       cur.classList.toggle("is-dark", !!t.closest(".stack-sec, .selection-sec, .footer, .mobile-menu"));
     });
-    document.addEventListener("pointerleave", () => gsap.to(cur, { opacity: 0, duration: 0.2 }));
-    document.addEventListener("pointerenter", () => gsap.to(cur, { opacity: 1, duration: 0.2 }));
+    document.documentElement.addEventListener("pointerleave", () => cur.classList.remove("is-on"));
   }
 
   function initMagnetic() {
@@ -833,21 +875,32 @@
   function makeMarquee(row, speed) {
     const inner = $(":scope > div", row);
     if (!inner) return;
+    const m = { row, inner, items: [inner], speed, x: 0, w: 0, filled: false };
     const kids = [...inner.children];
-    for (let k = 0; k < 6 && kids.length && inner.offsetWidth < window.innerWidth * 1.2; k++) kids.forEach((c) => inner.appendChild(c.cloneNode(true)));
-    const clone = inner.cloneNode(true); clone.setAttribute("aria-hidden", "true");
-    row.appendChild(clone);
-    marquees.push({ row, items: [inner, clone], speed, x: 0 });
+    // mede só quando muda de tamanho (sem forçar layout a cada quadro)
+    new ResizeObserver(() => {
+      m.w = inner.offsetWidth;
+      if (!m.w || m.filled) return;
+      // completa a faixa até cobrir a tela e cria a cópia para o loop contínuo
+      for (let k = 0; k < 6 && kids.length && inner.offsetWidth < window.innerWidth * 1.2; k++) kids.forEach((c) => inner.appendChild(c.cloneNode(true)));
+      const clone = inner.cloneNode(true); clone.setAttribute("aria-hidden", "true");
+      row.appendChild(clone);
+      m.items.push(clone);
+      m.w = inner.offsetWidth;
+      m.filled = true;
+    }).observe(inner);
+    marquees.push(m);
   }
   function tickMarquees(dt) {
     const boost = Math.min(6, Math.abs(scrollVel) / 300);
     for (const m of marquees) {
-      const wdt = m.items[0].offsetWidth;
-      if (!wdt) continue;
+      const wdt = m.w;
+      if (!wdt || !m.filled) continue;
       m.x -= (m.speed * (1 + boost) * scrollDir) * dt;
       if (m.x <= -wdt) m.x += wdt;
       if (m.x > 0) m.x -= wdt;
-      m.items.forEach((it) => (it.style.transform = `translate3d(${m.x}px,0,0)`));
+      const t = `translate3d(${m.x.toFixed(1)}px,0,0)`;
+      for (const it of m.items) it.style.transform = t;
     }
   }
 
@@ -880,28 +933,30 @@
         .to(callPaths[i], { strokeDashoffset: 0, duration: 0.6, ease: "power2.inOut" }, at + 0.15)
         .to(`.callout-label--${i + 1}`, { opacity: 1, duration: 0.5 }, at + 0.5);
     });
-    smear?.start();
     return tl;
   }
 
   function preloader(onReveal) {
     const pl = $(".preloader");
-    if (!pl) { onReveal(); return; }
+    // a animação de "foco" roda só na primeira visita da sessão
+    const seen = root.classList.contains("intro-seen");
+    try { sessionStorage.setItem("lapac-intro", "1"); } catch (e) { /* modo privado */ }
+    if (!pl || seen) { pl?.remove(); lenis?.start(); onReveal(); return; }
     document.body.classList.add("is-loading");
     const ring = $(".preloader__ring circle"), img = $(".preloader__field img"), count = $(".preloader__count");
     const n = { v: 0 };
     gsap.set(".pp", { yPercent: 100 });
     const tl = gsap.timeline();
-    tl.to(ring, { strokeDashoffset: 0, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to(img, { filter: "blur(0px)", opacity: 1, scale: 1, duration: 1.5, ease: "power2.inOut" }, 0)
-      .to(n, { v: 100, duration: 1.5, ease: "power2.inOut", onUpdate: () => (count.textContent = pad(Math.round(n.v), 3)) }, 0)
-      .to(".preloader__field", { scale: 0.92, duration: 0.3, ease: "power2.in" }, 1.5)
-      .to(".pp", { yPercent: 0, duration: 0.75, stagger: 0.09, ease: "power4.inOut" }, 1.6)
-      .set([".preloader__field", ".preloader__meta"], { autoAlpha: 0 }, 2.3)
-      .set(pl, { backgroundColor: "transparent" }, 2.3)
-      .add(() => onReveal(), 2.3)
-      .to(".pp", { yPercent: -100, duration: 0.9, stagger: { each: 0.08, from: "end" }, ease: "power4.inOut" }, 2.32)
-      .add(() => { pl.remove(); document.body.classList.remove("is-loading"); lenis?.start(); }, 3.4);
+    tl.to(ring, { strokeDashoffset: 0, duration: 1, ease: "power2.inOut" }, 0)
+      .to(img, { filter: "blur(0px)", opacity: 1, scale: 1, duration: 1, ease: "power2.inOut" }, 0)
+      .to(n, { v: 100, duration: 1, ease: "power2.inOut", onUpdate: () => (count.textContent = pad(Math.round(n.v), 3)) }, 0)
+      .to(".preloader__field", { scale: 0.92, duration: 0.25, ease: "power2.in" }, 1)
+      .to(".pp", { yPercent: 0, duration: 0.6, stagger: 0.07, ease: "power4.inOut" }, 1.05)
+      .set([".preloader__field", ".preloader__meta"], { autoAlpha: 0 }, 1.6)
+      .set(pl, { backgroundColor: "transparent" }, 1.6)
+      .add(() => onReveal(), 1.6)
+      .to(".pp", { yPercent: -100, duration: 0.7, stagger: { each: 0.06, from: "end" }, ease: "power4.inOut" }, 1.62)
+      .add(() => { pl.remove(); document.body.classList.remove("is-loading"); lenis?.start(); }, 2.45);
   }
 
   /* lâminas: montadas só com a página Áreas visível (seção escondida mede 0 e quebra o pin) */
@@ -911,7 +966,7 @@
     slidesMM = gsap.matchMedia();
     slidesMM.add("(min-width: 960px)", () => {
       const track = $(".slides__track");
-      const count = $(".slides__count"), bar = $(".slides__bar span"), n = $$(".slide").length;
+      const count = $(".slides__count"), bar = $(".slides__bar span"), n = Math.max(1, $$(".slide").length);
       const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
       const tween = gsap.to(track, {
         x: () => -dist(), ease: "none",
@@ -1069,7 +1124,6 @@
     window.addEventListener("load", () => ST.refresh());
   } else {
     $(".preloader")?.remove();
-    smear?.start();
     // faixas animadas mesmo sem GSAP (sem reduced motion)
     if (!reduceMotion) {
       $$(".ticker__row").forEach((row, i) => makeMarquee(row, i ? -50 : 50));

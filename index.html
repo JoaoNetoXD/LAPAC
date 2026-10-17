@@ -24,12 +24,11 @@
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
   <link rel="manifest" href="site.webmanifest" />
 
-  <script>document.documentElement.classList.add("js");</script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..800;1,6..72,400..700&family=Instrument+Sans:wght@400..700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="preload" as="image" href="assets/img/emblema.webp" />
-  <link rel="stylesheet" href="assets/css/style.css?v=10" />
+  <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("lapac-intro"))document.documentElement.classList.add("intro-seen")}catch(e){}</script>
+  <link rel="preload" href="assets/fonts/newsreader-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/instrument-sans-normal-400-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" as="image" href="assets/img/emblema-640.png" />
+  <link rel="stylesheet" href="assets/css/style.css?v=12" />
 
   <script type="application/ld+json">
   {
@@ -52,7 +51,7 @@
   <div class="preloader" aria-hidden="true">
     <div class="preloader__field">
       <svg class="preloader__ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="96" /></svg>
-      <img src="assets/img/emblema.webp" alt="" width="932" height="843" />
+      <img src="assets/img/emblema-640.png" alt="" width="640" height="579" />
     </div>
     <div class="preloader__meta mono">
       <span>Ajustando foco</span>
@@ -90,7 +89,7 @@
   <header class="nav">
     <div class="nav__inner">
       <a href="#/" class="nav__brand" aria-label="LAPAC — início">
-        <img src="assets/img/emblema-sm.webp" alt="" width="44" height="40" />
+        <img src="assets/img/emblema-96.png" alt="" width="44" height="40" />
         <span class="nav__brand-text">LAPAC</span>
       </a>
       <nav class="nav__links" aria-label="Principal">
@@ -108,7 +107,7 @@
     </div>
   </header>
 
-  <div class="mobile-menu" id="menu-mobile" aria-hidden="true">
+  <div class="mobile-menu" id="menu-mobile" aria-hidden="true" data-lenis-prevent>
     <svg class="mobile-menu__wave" viewBox="0 0 400 400" aria-hidden="true"><use href="#wave-cluster" /></svg>
     <p class="mono mobile-menu__kicker">Índice</p>
     <nav class="mobile-menu__links" aria-label="Menu mobile">
@@ -250,7 +249,7 @@
       <div class="container about__grid">
         <div class="about__sticky">
           <div class="emblem-map">
-            <img src="assets/img/emblema.webp" alt="Logo da LAPAC: cavalo, cão, bovino e gato ao redor de um microscópio" width="932" height="843" loading="lazy" />
+            <img src="assets/img/emblema-640.png" srcset="assets/img/emblema-640.png 640w, assets/img/emblema.webp 932w" sizes="(min-width: 960px) 520px, 90vw" alt="Logo da LAPAC: cavalo, cão, bovino e gato ao redor de um microscópio" width="932" height="843" loading="lazy" />
             <span class="hotspot" data-spot="0"></span>
             <span class="hotspot" data-spot="1"></span>
             <span class="hotspot" data-spot="2"></span>
@@ -521,15 +520,15 @@
       </div>
       <div class="footer__cols">
         <div>
-          <h4 class="mono">A liga</h4>
+          <p class="footer__h mono">A liga</p>
           <ul><li><a href="#/sobre">Quem somos</a></li><li><a href="#/identidade">Nossa logo</a></li><li><a href="#/missao">Missão e valores</a></li><li><a href="#/areas">Áreas</a></li><li><a href="#/equipe">Equipe</a></li></ul>
         </div>
         <div>
-          <h4 class="mono">Participe</h4>
+          <p class="footer__h mono">Participe</p>
           <ul><li><a href="#/atividades">Como funciona</a></li><li><a href="#/agenda">Agenda</a></li><li><a href="#/selecao">Seleção</a></li><li><a href="#/documentos">Documentos</a></li><li><a href="#/contato">Contato</a></li></ul>
         </div>
         <div>
-          <h4 class="mono">Vínculos</h4>
+          <p class="footer__h mono">Vínculos</p>
           <ul><li><a href="https://ufpi.br" target="_blank" rel="noopener">UFPI <i data-lucide="arrow-up-right"></i></a></li><li><span>Centro de Ciências Agrárias</span></li><li><span>Medicina Veterinária</span></li></ul>
           <div class="footer__social">
             <a class="js-instagram" href="#" target="_blank" rel="noopener" aria-label="Instagram da LAPAC"><i data-lucide="instagram"></i></a>
@@ -554,11 +553,11 @@
     <p class="lightbox__caption mono"></p>
   </dialog>
 
-  <script src="assets/vendor/gsap.min.js?v=10" defer></script>
-  <script src="assets/vendor/ScrollTrigger.min.js?v=10" defer></script>
-  <script src="assets/vendor/lenis.min.js?v=10" defer></script>
-  <script src="assets/js/icons.js?v=10" defer></script>
-  <script src="assets/js/data.js?v=10" defer></script>
-  <script src="assets/js/main.js?v=10" defer></script>
+  <script src="assets/vendor/gsap.min.js?v=12" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js?v=12" defer></script>
+  <script src="assets/vendor/lenis.min.js?v=12" defer></script>
+  <script src="assets/js/icons.js?v=12" defer></script>
+  <script src="assets/js/data.js?v=12" defer></script>
+  <script src="assets/js/main.js?v=12" defer></script>
 </body>
 </html>
