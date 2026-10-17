@@ -221,7 +221,7 @@
     });
     $$(".js-endereco").forEach((el) => (el.textContent = c.endereco || ""));
     const map = $(".js-map");
-    if (map && c.mapaBusca) map.src = `https://www.google.com/maps?q=${encodeURIComponent(c.mapaBusca)}&output=embed`;
+    if (map && c.mapaBusca) map.dataset.src = `https://www.google.com/maps?q=${encodeURIComponent(c.mapaBusca)}&output=embed`;
   }
 
   function personPhoto(p) {
@@ -362,8 +362,7 @@
     let rows;
     if (!fotos.length) {
       const tile = (i) => {
-        const src = specimenURL(200 + i * 7, kinds[i % kinds.length], { bg: bgs[i % bgs.length] });
-        return `<div class="film__item"><img src="${src}" alt="" width="300" height="140" loading="lazy" decoding="async" /><span class="film__soon mono">Foto em breve · ${pad(i + 1)}</span></div>`;
+        return `<div class="film__item"><img data-spec="${200 + i * 7}|${kinds[i % kinds.length]}|${bgs[i % bgs.length]}" alt="" width="300" height="140" decoding="async" /><span class="film__soon mono">Foto em breve · ${pad(i + 1)}</span></div>`;
       };
       rows = [[0, 1, 2, 3, 4, 5].map(tile).join(""), [6, 7, 8, 9, 10, 11].map(tile).join("")];
     } else {
@@ -726,9 +725,11 @@
     }
     // recalcula medidas (abas, trilho de lâminas, gatilhos de scroll)
     if (id !== "areas") unmountSlides();
+    pageAssets(id);
     requestAnimationFrame(() => {
       window.dispatchEvent(new Event("resize"));
       if (hasGsap) {
+        pageScenes(id);
         if (id === "areas") mountSlides();
         ST.refresh();
         if (!first) pageEnter(id);
@@ -993,9 +994,8 @@
     slidesMM = null;
   }
 
+  /* cenas globais (sempre visíveis): progresso, hero, faixas, rodapé */
   function initScenes() {
-    const mm = gsap.matchMedia();
-
     // progresso de leitura
     gsap.to(".scroll-progress span", { scaleX: 1, ease: "none", scrollTrigger: { trigger: document.body, start: "top top", end: "bottom bottom", scrub: 0.3 } });
 
@@ -1005,45 +1005,6 @@
       .to(".scope__ticks", { rotation: 90, svgOrigin: "300 300", ease: "none" }, 0)
       .to(".hero__copy", { yPercent: -16, opacity: 0.2, ease: "none" }, 0)
       .to(".hero__wave--tr", { y: "-14vh", ease: "none" }, 0);
-
-    // títulos: palavras sobem por máscara
-    $$("[data-reveal-words]").forEach((el) => {
-      gsap.from($$(".w-in", el), { yPercent: 115, rotate: 3, duration: 1.1, stagger: 0.06, ease: "power4.out", scrollTrigger: { trigger: el, start: "top 88%" } });
-    });
-    $$(".kicker").forEach((k) => gsap.from(k, { opacity: 0, x: -20, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: k, start: "top 90%" } }));
-
-    // reveals genéricos em lote
-    ST.batch(".reveal", { start: "top 88%", onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out", overwrite: true }) });
-
-    // sobre: hotspots do emblema sincronizados com a lista
-    const spots = $$(".hotspot"), items = $$(".emblem-item");
-    const activate = (i) => { spots.forEach((s) => s.classList.toggle("is-active", +s.dataset.spot === i)); items.forEach((it) => it.classList.toggle("is-active", +it.dataset.spot === i)); };
-    items.forEach((it) => ST.create({ trigger: it, start: "top 62%", end: "bottom 62%", onToggle: (self) => self.isActive && activate(+it.dataset.spot) }));
-    activate(0);
-    gsap.fromTo(".emblem-map img", { rotate: -6, scale: 0.92 }, { rotate: 4, scale: 1, ease: "none", scrollTrigger: { trigger: ".about", start: "top bottom", end: "bottom top", scrub: true } });
-
-    // definição da liga
-    gsap.from(".entry__senses li", { x: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".entry", start: "top 75%" } });
-    gsap.from(".entry__word", { yPercent: 100, opacity: 0, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".entry", start: "top 80%" } });
-    // valores entram um a um
-    gsap.from(".values li", { y: 24, opacity: 0, scale: 0.9, stagger: 0.06, duration: 0.7, ease: "back.out(1.6)", scrollTrigger: { trigger: ".values", start: "top 88%" } });
-    gsap.from(".mvv__item", { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".mvv", start: "top 85%" } });
-
-    // home: ícones entram em sequência, "focando"
-    gsap.fromTo(".tile", { opacity: 0, y: 40, scale: 0.94, filter: "blur(8px)" }, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.9, stagger: { each: 0.06, grid: "auto", from: "start" }, ease: "power3.out", clearProps: "filter,transform", scrollTrigger: { trigger: ".hub__grid", start: "top 85%" } });
-
-    // equipe: entrada com "foco"
-    ST.batch(".tab-panel.is-active .person", { start: "top 90%", once: true, onEnter: (b) => gsap.fromTo(b, { opacity: 0, y: 40, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1, stagger: 0.08, ease: "power3.out", clearProps: "filter" }) });
-
-    // atividades: cards empilhando
-    const cards = $$(".stack__card");
-    cards.forEach((card, i) => {
-      gsap.from($$(".stack__num b, .stack__body > *, .stack__art", card), { y: 50, opacity: 0, stagger: 0.08, duration: 1, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 75%" } });
-      gsap.from($(".stack__art", card), { rotate: -90, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "top top", scrub: true } });
-      const next = cards[i + 1];
-      if (!next) return;
-      gsap.to(card, { scale: 0.9, "--dim": 0.55, ease: "none", scrollTrigger: { trigger: next, start: "top bottom", end: "top 20%", scrub: true } });
-    });
 
     // faixas e galeria: marquee reage à velocidade e skew
     $$(".ticker__row").forEach((row, i) => makeMarquee(row, i ? -60 : 60));
@@ -1060,28 +1021,84 @@
     });
     gsap.ticker.add((time, deltaMS) => { tickMarquees(deltaMS / 1000); scrollVel *= 0.92; });
 
-    // agenda
-    ST.batch(".event", { start: "top 92%", onEnter: (b) => gsap.from(b, { y: 40, opacity: 0, duration: 0.9, stagger: 0.08, ease: "power3.out" }) });
-
-    // seleção: caminho desenhado pelo scroll
-    gsap.fromTo(".steps__path-fg", { strokeDashoffset: 1 }, { strokeDashoffset: 0, ease: "none", scrollTrigger: { trigger: ".selection__steps", start: "top 70%", end: "bottom 60%", scrub: 0.6 } });
-    $$(".steps li").forEach((li) => {
-      ST.create({ trigger: li, start: "top 68%", onEnter: () => li.classList.add("is-on"), onLeaveBack: () => li.classList.remove("is-on") });
-      gsap.from(li, { x: 40, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: li, start: "top 85%" } });
-    });
-    gsap.from(".report__list li", { opacity: 0, x: -20, stagger: 0.06, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: ".reports", start: "top 80%" } });
-
-    // documentos: pastas "caem" na mesa
-    ST.batch(".doc", { start: "top 90%", onEnter: (b) => gsap.fromTo(b, { opacity: 0, y: 60, rotate: (i) => (i % 2 ? 3 : -3) }, { opacity: 1, y: 0, rotate: 0, duration: 1.1, stagger: 0.1, ease: "power3.out" }) });
-
-    // contato
-    gsap.from(".contact__mail", { y: 40, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".contact__mail", start: "top 90%" } });
-    gsap.from(".contact__form, .contact__info", { y: 60, opacity: 0, duration: 1.1, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: ".contact", start: "top 85%" } });
-
     // rodapé: LAPAC gigante sobe letra por letra
     gsap.from(".footer__word span", { yPercent: 100, duration: 1.4, stagger: 0.07, ease: "expo.out", scrollTrigger: { trigger: ".footer__word", start: "top 95%" } });
     gsap.from(".footer__wave", { xPercent: 50, yPercent: -50, duration: 1.6, ease: "expo.out", scrollTrigger: { trigger: ".footer", start: "top 80%" } });
     gsap.from(".footer__cta > *", { y: 40, opacity: 0, stagger: 0.1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".footer", start: "top 75%" } });
+  }
+
+  /* cenas de cada página: criadas só na primeira visita (o site abre mais rápido) */
+  const SCENES = {
+    home() {
+      gsap.fromTo(".tile", { opacity: 0, y: 40, scale: 0.94, filter: "blur(8px)" }, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.9, stagger: { each: 0.06, grid: "auto", from: "start" }, ease: "power3.out", clearProps: "filter,transform", scrollTrigger: { trigger: ".hub__grid", start: "top 85%" } });
+    },
+    sobre() {
+      gsap.from(".entry__senses li", { x: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".entry", start: "top 75%" } });
+      gsap.from(".entry__word", { yPercent: 100, opacity: 0, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".entry", start: "top 80%" } });
+    },
+    identidade() {
+      const spots = $$(".hotspot"), items = $$(".emblem-item");
+      const activate = (i) => { spots.forEach((el) => el.classList.toggle("is-active", +el.dataset.spot === i)); items.forEach((it) => it.classList.toggle("is-active", +it.dataset.spot === i)); };
+      items.forEach((it) => ST.create({ trigger: it, start: "top 62%", end: "bottom 62%", onToggle: (self) => self.isActive && activate(+it.dataset.spot) }));
+      activate(0);
+      gsap.fromTo(".emblem-map img", { rotate: -6, scale: 0.92 }, { rotate: 4, scale: 1, ease: "none", scrollTrigger: { trigger: ".about", start: "top bottom", end: "bottom top", scrub: true } });
+    },
+    missao() {
+      gsap.from(".values li", { y: 24, opacity: 0, scale: 0.9, stagger: 0.06, duration: 0.7, ease: "back.out(1.6)", scrollTrigger: { trigger: ".values", start: "top 88%" } });
+      gsap.from(".mvv__item", { y: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".mvv", start: "top 85%" } });
+    },
+    equipe() {
+      ST.batch(".tab-panel.is-active .person", { start: "top 90%", once: true, onEnter: (els) => gsap.fromTo(els, { opacity: 0, y: 40, filter: "blur(10px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1, stagger: 0.08, ease: "power3.out", clearProps: "filter" }) });
+    },
+    atividades() {
+      const cards = $$(".stack__card");
+      cards.forEach((card, i) => {
+        gsap.from($$(".stack__num b, .stack__body > *, .stack__art", card), { y: 50, opacity: 0, stagger: 0.08, duration: 1, ease: "power3.out", scrollTrigger: { trigger: card, start: "top 75%" } });
+        gsap.from($(".stack__art", card), { rotate: -90, ease: "none", scrollTrigger: { trigger: card, start: "top bottom", end: "top top", scrub: true } });
+        const next = cards[i + 1];
+        if (!next) return;
+        gsap.to(card, { scale: 0.9, "--dim": 0.55, ease: "none", scrollTrigger: { trigger: next, start: "top bottom", end: "top 20%", scrub: true } });
+      });
+    },
+    agenda() {
+      ST.batch(".event", { start: "top 92%", onEnter: (els) => gsap.from(els, { y: 40, opacity: 0, duration: 0.9, stagger: 0.08, ease: "power3.out" }) });
+    },
+    selecao() {
+      gsap.fromTo(".steps__path-fg", { strokeDashoffset: 1 }, { strokeDashoffset: 0, ease: "none", scrollTrigger: { trigger: ".selection__steps", start: "top 70%", end: "bottom 60%", scrub: 0.6 } });
+      $$(".steps li").forEach((li) => {
+        ST.create({ trigger: li, start: "top 68%", onEnter: () => li.classList.add("is-on"), onLeaveBack: () => li.classList.remove("is-on") });
+        gsap.from(li, { x: 40, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: li, start: "top 85%" } });
+      });
+      gsap.from(".report__list li", { opacity: 0, x: -20, stagger: 0.06, duration: 0.7, ease: "power3.out", scrollTrigger: { trigger: ".reports", start: "top 80%" } });
+    },
+    documentos() {
+      ST.batch(".doc", { start: "top 90%", onEnter: (els) => gsap.fromTo(els, { opacity: 0, y: 60, rotate: (i) => (i % 2 ? 3 : -3) }, { opacity: 1, y: 0, rotate: 0, duration: 1.1, stagger: 0.1, ease: "power3.out" }) });
+    },
+    contato() {
+      gsap.from(".contact__mail", { y: 40, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".contact__mail", start: "top 90%" } });
+      gsap.from(".contact__form, .contact__info", { y: 60, opacity: 0, duration: 1.1, stagger: 0.12, ease: "power3.out", scrollTrigger: { trigger: ".contact", start: "top 85%" } });
+    },
+  };
+  const scenesDone = new Set();
+  function pageScenes(id) {
+    if (!hasGsap || scenesDone.has(id)) return;
+    scenesDone.add(id);
+    const roots = $$(`[data-page="${id}"]`);
+    const q = (sel) => roots.flatMap((r) => [...(r.matches(sel) ? [r] : []), ...$$(sel, r)]);
+    q("[data-reveal-words]").forEach((el) => {
+      gsap.from($$(".w-in", el), { yPercent: 115, rotate: 3, duration: 1.1, stagger: 0.06, ease: "power4.out", scrollTrigger: { trigger: el, start: "top 88%" } });
+    });
+    q(".kicker").forEach((k) => gsap.from(k, { opacity: 0, x: -20, duration: 0.9, ease: "power3.out", scrollTrigger: { trigger: k, start: "top 90%" } }));
+    const rev = q(".reveal");
+    if (rev.length) ST.batch(rev, { start: "top 88%", onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 1, stagger: 0.1, ease: "power3.out", overwrite: true }) });
+    if (SCENES[id]) SCENES[id]();
+  }
+
+  /* conteúdo pesado só quando a página abre: amostras, galeria e mapa */
+  function pageAssets(id) {
+    if (id === "areas") paintSpecimens();
+    if (id === "galeria") $$(".film__item img[data-spec]:not([src])").forEach((img) => { const [seed, kind, bg] = img.dataset.spec.split("|"); img.src = specimenURL(+seed, kind, { bg }); });
+    if (id === "contato") { const m = $(".js-map"); if (m && !m.getAttribute("src") && m.dataset.src) m.src = m.dataset.src; }
   }
 
   function refreshIcons() { if (window.lucide?.createIcons) window.lucide.createIcons({ attrs: { "aria-hidden": "true" } }); }
@@ -1096,7 +1113,6 @@
   renderGaleria();
   renderDocumentos();
   renderContato();
-  paintSpecimens();
   buildDial();
   refreshIcons();
   $$(".js-year").forEach((el) => (el.textContent = new Date().getFullYear()));
