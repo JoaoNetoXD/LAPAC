@@ -652,6 +652,7 @@
      ===================================================================== */
   const PAGES = [
     { id: "sobre", label: "Quem somos" },
+    { id: "identidade", label: "Nossa logo" },
     { id: "missao", label: "Missão e valores" },
     { id: "areas", label: "Áreas de atuação" },
     { id: "equipe", label: "Integrantes" },
@@ -1033,6 +1034,13 @@
     sobre() {
       gsap.from(".entry__senses li", { x: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".entry", start: "top 75%" } });
       gsap.from(".entry__word", { yPercent: 100, opacity: 0, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".entry", start: "top 80%" } });
+    },
+    identidade() {
+      const tl = gsap.timeline({ scrollTrigger: { trigger: ".logo-map", start: "top 75%" } });
+      tl.from(".logo-map img", { scale: 0.9, opacity: 0, duration: 1, ease: "expo.out" })
+        .fromTo(".note__line", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 0.7, stagger: 0.12, ease: "power2.inOut" }, 0.3)
+        .from(".note__dot", { scale: 0, transformOrigin: "50% 50%", duration: 0.5, stagger: 0.12, ease: "back.out(2)" }, 0.7)
+        .from(".note text, .note__underline", { opacity: 0, duration: 0.5, stagger: 0.06 }, 0.6);
     },
     missao() {
       gsap.from(".values li", { y: 24, opacity: 0, scale: 0.9, stagger: 0.06, duration: 0.7, ease: "back.out(1.6)", scrollTrigger: { trigger: ".values", start: "top 88%" } });

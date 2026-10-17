@@ -35,10 +35,10 @@ docs/                   coloque aqui os PDFs (edital, estatuto, resultado…)
 ## ⚠️ Conferir antes de publicar
 
 Pendências da reunião:
-- Identidade visual: revisar textos e imagens (Marília)
 - Requisitos e benefícios: conferir com o edital (Cecília e Ingrid)
 - Transparência: PDFs do Regimento Interno, Edital e Estatuto
-- Orientadora: nome, foto, formação e link do Lattes
+- Fotos da diretoria: Ana Caroline, Lara Machado, Maria Clara (e cargo da Ingrid)
+- Orientadora: link do Lattes (opcional)
 - Confirmar Instagram `@lapac.ufpi` (e-mail: `ligaacademicadedepatologia.ufpi@gmail.com`)
 
 ## Animações

@@ -113,29 +113,28 @@ window.LAPAC = {
   /* ---------------- EQUIPE ---------------- */
   orientadores: [
     {
-      nome: "Nome da Professora",            // TODO
+      nome: "Prof.ª Dra. Janaina de Fátima Saraiva Cardoso",
       cargo: "Orientadora",
-      foto: "",
-      formacao: [                             // TODO: preencher com o currículo real
-        "Graduação em Medicina Veterinária",
-        "Mestrado em …",
-        "Doutorado em …",
+      foto: "assets/img/equipe/janaina-cardoso.webp",
+      formacao: [
+        "Médica Veterinária pela Universidade Estadual do Ceará (UECE)",
+        "Mestre em Ciências Veterinárias (Sanidade e Reprodução Animal) pelo Programa de Pós-Graduação em Ciências Veterinárias da UECE",
+        "Doutora pela Rede Nordeste de Biotecnologia (RENORBIO)",
       ],
-      atuacao: "Docente do curso de Medicina Veterinária da UFPI. Área de atuação: …",
-      lattes: "",                             // link do Currículo Lattes
+      atuacao: "Professora associada e chefe do Departamento de Clínica e Cirurgia Veterinária do Centro de Ciências Agrárias da UFPI, onde leciona Patologia Clínica Veterinária e Bioquímica Clínica Veterinária. Chefe do Laboratório de Patologia Clínica Veterinária do HVU/UFPI Teresina.",
+      lattes: "",                             // link do Currículo Lattes (opcional)
       email: "",
     },
   ],
 
   diretoria: [
-    { nome: "", cargo: "Presidente" },
-    { nome: "", cargo: "Vice-presidente" },
-    { nome: "", cargo: "Secretaria" },
-    { nome: "", cargo: "Tesouraria" },
-    { nome: "", cargo: "Diretoria de Ensino" },
-    { nome: "", cargo: "Diretoria de Pesquisa" },
-    { nome: "", cargo: "Diretoria de Extensão" },
-    { nome: "", cargo: "Diretoria de Comunicação" },
+    { nome: "Anderson César", cargo: "Presidente", foto: "assets/img/equipe/anderson-cesar.webp" },
+    { nome: "Marília Lula", cargo: "Vice-presidente", foto: "assets/img/equipe/marilia-lula.webp" },
+    { nome: "Giovanna Maria", cargo: "Secretaria", foto: "assets/img/equipe/giovanna-maria.webp" },
+    { nome: "Maria Cecília", cargo: "Diretoria de Pesquisa e Extensão", foto: "assets/img/equipe/maria-cecilia.webp" },
+    { nome: "Ana Caroline", cargo: "Diretoria de Marketing", foto: "" },      // TODO: foto
+    { nome: "Lara Machado", cargo: "Diretoria de Marketing", foto: "" },      // TODO: foto
+    { nome: "Maria Clara", cargo: "Diretoria de Eventos", foto: "" },         // TODO: foto
   ],
 
   // 12 vagas de ligantes — preencha nome/foto quando houver

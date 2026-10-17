@@ -27,8 +27,9 @@
   <script>document.documentElement.classList.add("js");try{if(sessionStorage.getItem("lapac-intro"))document.documentElement.classList.add("intro-seen")}catch(e){}</script>
   <link rel="preload" href="assets/fonts/newsreader-normal-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/instrument-sans-normal-400-700-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/bodoni-lapac.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" as="image" href="assets/img/emblema-640.png" />
-  <link rel="stylesheet" href="assets/css/style.css?v=15" />
+  <link rel="stylesheet" href="assets/css/style.css?v=19" />
 
   <script type="application/ld+json">
   {
@@ -112,12 +113,13 @@
     <p class="mono mobile-menu__kicker">Índice</p>
     <nav class="mobile-menu__links" aria-label="Menu mobile">
       <a href="#/sobre"><span>01</span>Quem somos</a>
-      <a href="#/areas"><span>02</span>Áreas</a>
-      <a href="#/equipe"><span>03</span>Integrantes</a>
-      <a href="#/atividades"><span>04</span>Como funciona</a>
-      <a href="#/agenda"><span>05</span>Agenda</a>
-      <a href="#/selecao"><span>06</span>Seleção</a>
-      <a href="#/contato"><span>07</span>Contato</a>
+      <a href="#/identidade"><span>02</span>Nossa logo</a>
+      <a href="#/areas"><span>03</span>Áreas</a>
+      <a href="#/equipe"><span>04</span>Integrantes</a>
+      <a href="#/atividades"><span>05</span>Como funciona</a>
+      <a href="#/agenda"><span>06</span>Agenda</a>
+      <a href="#/selecao"><span>07</span>Seleção</a>
+      <a href="#/contato"><span>08</span>Contato</a>
     </nav>
     <div class="mobile-menu__foot">
       <a class="social-link js-instagram" href="#" target="_blank" rel="noopener"><i data-lucide="instagram"></i><span class="js-instagram-handle">@lapac.ufpi</span></a>
@@ -207,16 +209,17 @@
         </header>
         <nav class="hub__grid" aria-label="Seções do site">
           <a class="tile" href="#/sobre"><span class="tile__idx mono">01</span><span class="tile__lens"><i data-lucide="microscope"></i></span><span class="tile__label">Quem somos</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
-          <a class="tile" href="#/missao"><span class="tile__idx mono">02</span><span class="tile__lens"><i data-lucide="target"></i></span><span class="tile__label">Missão e valores</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
-          <a class="tile" href="#/areas"><span class="tile__idx mono">03</span><span class="tile__lens"><i data-lucide="layers"></i></span><span class="tile__label">Áreas de atuação</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
-          <a class="tile" href="#/equipe"><span class="tile__idx mono">04</span><span class="tile__lens"><i data-lucide="users"></i></span><span class="tile__label">Integrantes</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
-          <a class="tile" href="#/atividades"><span class="tile__idx mono">05</span><span class="tile__lens"><i data-lucide="book-open-text"></i></span><span class="tile__label">Como funciona</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
-          <a class="tile" href="#/agenda"><span class="tile__idx mono">06</span><span class="tile__lens"><i data-lucide="calendar-days"></i></span><span class="tile__label">Agenda</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
-          <a class="tile" href="#/selecao"><span class="tile__idx mono">07</span><span class="tile__lens"><i data-lucide="clipboard-list"></i></span><span class="tile__label">Processo seletivo</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
-          <a class="tile" href="#/galeria"><span class="tile__idx mono">08</span><span class="tile__lens"><i data-lucide="camera"></i></span><span class="tile__label">Registros de bancada</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
-          <a class="tile" href="#/documentos"><span class="tile__idx mono">09</span><span class="tile__lens"><i data-lucide="folder-open"></i></span><span class="tile__label">Transparência</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
-          <a class="tile" href="#/contato"><span class="tile__idx mono">10</span><span class="tile__lens"><i data-lucide="mail"></i></span><span class="tile__label">Fale com a diretoria</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
-          <a class="tile tile--accent js-instagram" href="#" target="_blank" rel="noopener"><span class="tile__idx mono">11</span><span class="tile__lens"><i data-lucide="instagram"></i></span><span class="tile__label">Instagram</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/identidade"><span class="tile__idx mono">02</span><span class="tile__lens"><i data-lucide="palette"></i></span><span class="tile__label">Nossa logo</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/missao"><span class="tile__idx mono">03</span><span class="tile__lens"><i data-lucide="target"></i></span><span class="tile__label">Missão e valores</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/areas"><span class="tile__idx mono">04</span><span class="tile__lens"><i data-lucide="layers"></i></span><span class="tile__label">Áreas de atuação</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/equipe"><span class="tile__idx mono">05</span><span class="tile__lens"><i data-lucide="users"></i></span><span class="tile__label">Integrantes</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/atividades"><span class="tile__idx mono">06</span><span class="tile__lens"><i data-lucide="book-open-text"></i></span><span class="tile__label">Como funciona</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/agenda"><span class="tile__idx mono">07</span><span class="tile__lens"><i data-lucide="calendar-days"></i></span><span class="tile__label">Agenda</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/selecao"><span class="tile__idx mono">08</span><span class="tile__lens"><i data-lucide="clipboard-list"></i></span><span class="tile__label">Processo seletivo</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/galeria"><span class="tile__idx mono">09</span><span class="tile__lens"><i data-lucide="camera"></i></span><span class="tile__label">Registros de bancada</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/documentos"><span class="tile__idx mono">10</span><span class="tile__lens"><i data-lucide="folder-open"></i></span><span class="tile__label">Transparência</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile" href="#/contato"><span class="tile__idx mono">11</span><span class="tile__lens"><i data-lucide="mail"></i></span><span class="tile__label">Fale com a diretoria</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
+          <a class="tile tile--accent js-instagram" href="#" target="_blank" rel="noopener"><span class="tile__idx mono">12</span><span class="tile__lens"><i data-lucide="instagram"></i></span><span class="tile__label">Instagram</span><span class="tile__go"><i data-lucide="arrow-up-right"></i></span></a>
         </nav>
       </div>
     </section>
@@ -239,6 +242,27 @@
             <li><span class="mono">3</span><p>Espaço de <strong>ensino</strong>, <strong>pesquisa</strong> e <strong>extensão</strong> em Patologia e Análises Clínicas Veterinárias.</p></li>
           </ol>
         </article>
+      </div>
+    </section>
+
+    <!-- ============ 3. NOSSA LOGO (só a logo e setas) ============ -->
+    <section class="section logo-sec" id="identidade" data-page="identidade">
+      <div class="container">
+        <header class="section-head">
+          <p class="kicker">Nossa logo</p>
+          <h2 class="visually-hidden">Nossa logo</h2>
+        </header>
+        <figure class="logo-map">
+          <img src="assets/img/emblema-640.png" srcset="assets/img/emblema-640.png 640w, assets/img/emblema.webp 932w" sizes="(min-width: 960px) 640px, 72vw" alt="Logo da LAPAC: cavalo, cão, bovino e gato ao redor de um microscópio" width="932" height="843" loading="lazy" />
+          <svg class="logo-map__notes" viewBox="0 0 1000 800" aria-hidden="true">
+            <defs><marker id="seta" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" /></marker></defs>
+          <g class="note"><path class="note__underline" d="M40 168H210" /><path class="note__line" d="M210 168L285 222" marker-end="url(#seta)" pathLength="1" /><circle class="note__dot" cx="300" cy="232" r="9" /><text x="40" y="150" text-anchor="start">Equinos</text></g>
+          <g class="note"><path class="note__underline" d="M40 658H170" /><path class="note__line" d="M170 658L221 487" marker-end="url(#seta)" pathLength="1" /><circle class="note__dot" cx="226" cy="470" r="9" /><text x="40" y="640" text-anchor="start">Cães</text></g>
+          <g class="note"><path class="note__underline" d="M960 188H800" /><path class="note__line" d="M800 188L759 283" marker-end="url(#seta)" pathLength="1" /><circle class="note__dot" cx="752" cy="300" r="9" /><text x="960" y="170" text-anchor="end">Ruminantes</text></g>
+          <g class="note"><path class="note__underline" d="M960 678H830" /><path class="note__line" d="M830 678L769 532" marker-end="url(#seta)" pathLength="1" /><circle class="note__dot" cx="762" cy="515" r="9" /><text x="960" y="660" text-anchor="end">Felinos</text></g>
+          <g class="note"><path class="note__underline" d="M390 70H610" /><path class="note__line" d="M540 70L585 235" marker-end="url(#seta)" pathLength="1" /><circle class="note__dot" cx="590" cy="252" r="9" /><text x="500" y="50" text-anchor="middle">Microscópio</text></g>
+          </svg>
+        </figure>
       </div>
     </section>
 
@@ -488,7 +512,7 @@
       <div class="footer__cols">
         <div>
           <p class="footer__h mono">A liga</p>
-          <ul><li><a href="#/sobre">Quem somos</a></li><li><a href="#/missao">Missão e valores</a></li><li><a href="#/areas">Áreas</a></li><li><a href="#/equipe">Equipe</a></li></ul>
+          <ul><li><a href="#/sobre">Quem somos</a></li><li><a href="#/identidade">Nossa logo</a></li><li><a href="#/missao">Missão e valores</a></li><li><a href="#/areas">Áreas</a></li><li><a href="#/equipe">Equipe</a></li></ul>
         </div>
         <div>
           <p class="footer__h mono">Participe</p>
@@ -520,11 +544,11 @@
     <p class="lightbox__caption mono"></p>
   </dialog>
 
-  <script src="assets/vendor/gsap.min.js?v=15" defer></script>
-  <script src="assets/vendor/ScrollTrigger.min.js?v=15" defer></script>
-  <script src="assets/vendor/lenis.min.js?v=15" defer></script>
-  <script src="assets/js/icons.js?v=15" defer></script>
-  <script src="assets/js/data.js?v=15" defer></script>
-  <script src="assets/js/main.js?v=15" defer></script>
+  <script src="assets/vendor/gsap.min.js?v=19" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js?v=19" defer></script>
+  <script src="assets/vendor/lenis.min.js?v=19" defer></script>
+  <script src="assets/js/icons.js?v=19" defer></script>
+  <script src="assets/js/data.js?v=19" defer></script>
+  <script src="assets/js/main.js?v=19" defer></script>
 </body>
 </html>
