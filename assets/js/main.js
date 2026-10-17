@@ -652,7 +652,6 @@
      ===================================================================== */
   const PAGES = [
     { id: "sobre", label: "Quem somos" },
-    { id: "identidade", label: "Nossa logo" },
     { id: "missao", label: "Missão e valores" },
     { id: "areas", label: "Áreas de atuação" },
     { id: "equipe", label: "Integrantes" },
@@ -1034,13 +1033,6 @@
     sobre() {
       gsap.from(".entry__senses li", { x: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".entry", start: "top 75%" } });
       gsap.from(".entry__word", { yPercent: 100, opacity: 0, duration: 1.2, ease: "expo.out", scrollTrigger: { trigger: ".entry", start: "top 80%" } });
-    },
-    identidade() {
-      const spots = $$(".hotspot"), items = $$(".emblem-item");
-      const activate = (i) => { spots.forEach((el) => el.classList.toggle("is-active", +el.dataset.spot === i)); items.forEach((it) => it.classList.toggle("is-active", +it.dataset.spot === i)); };
-      items.forEach((it) => ST.create({ trigger: it, start: "top 62%", end: "bottom 62%", onToggle: (self) => self.isActive && activate(+it.dataset.spot) }));
-      activate(0);
-      gsap.fromTo(".emblem-map img", { rotate: -6, scale: 0.92 }, { rotate: 4, scale: 1, ease: "none", scrollTrigger: { trigger: ".about", start: "top bottom", end: "bottom top", scrub: true } });
     },
     missao() {
       gsap.from(".values li", { y: 24, opacity: 0, scale: 0.9, stagger: 0.06, duration: 0.7, ease: "back.out(1.6)", scrollTrigger: { trigger: ".values", start: "top 88%" } });
