@@ -329,9 +329,8 @@
     const st = s.status || "em-breve";
     const statusEl = $('[data-render="selecao-status"]');
     if (statusEl) {
-      statusEl.innerHTML = `
-        <span class="status-pill status-pill--${esc(st)} mono"><span class="rec-dot"></span>${STATUS[st] || esc(st)}</span>
-`;
+      // selo só quando diz algo que o botão não diz (ex.: resultado disponível)
+      statusEl.innerHTML = st === "resultado" ? `<span class="status-pill status-pill--${esc(st)} mono"><span class="rec-dot"></span>${STATUS[st]}</span>` : "";
     }
     const acoes = $('[data-render="selecao-acoes"]');
     if (acoes) {
