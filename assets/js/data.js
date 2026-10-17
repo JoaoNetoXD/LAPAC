@@ -122,7 +122,7 @@ window.LAPAC = {
         "Doutora pela Rede Nordeste de Biotecnologia (RENORBIO)",
       ],
       atuacao: "Professora associada e chefe do Departamento de Clínica e Cirurgia Veterinária do Centro de Ciências Agrárias da UFPI, onde leciona Patologia Clínica Veterinária e Bioquímica Clínica Veterinária. Chefe do Laboratório de Patologia Clínica Veterinária do HVU/UFPI Teresina.",
-      lattes: "",                             // link do Currículo Lattes (opcional)
+      lattes: "http://lattes.cnpq.br/8058580165551218",
       email: "",
     },
   ],
@@ -132,9 +132,10 @@ window.LAPAC = {
     { nome: "Marília Lula", cargo: "Vice-presidente", foto: "assets/img/equipe/marilia-lula.webp" },
     { nome: "Giovanna Maria", cargo: "Secretaria", foto: "assets/img/equipe/giovanna-maria.webp" },
     { nome: "Maria Cecília", cargo: "Diretoria de Pesquisa e Extensão", foto: "assets/img/equipe/maria-cecilia.webp" },
-    { nome: "Ana Caroline", cargo: "Diretoria de Marketing", foto: "" },      // TODO: foto
-    { nome: "Lara Machado", cargo: "Diretoria de Marketing", foto: "" },      // TODO: foto
-    { nome: "Maria Clara", cargo: "Diretoria de Eventos", foto: "" },         // TODO: foto
+    { nome: "Ana Caroline", cargo: "Diretoria de Marketing", foto: "assets/img/equipe/ana-caroline.webp" },
+    { nome: "Lara Machado", cargo: "Diretoria de Marketing", foto: "" },      // TODO: foto (sentada no microscópio)
+    { nome: "Maria Clara", cargo: "Diretoria de Eventos", foto: "assets/img/equipe/maria-clara.webp" },
+    { nome: "Ingrid", cargo: "Diretoria", foto: "assets/img/equipe/ingrid.webp" },          // TODO: cargo exato
   ],
 
   // 12 vagas de ligantes — preencha nome/foto quando houver
