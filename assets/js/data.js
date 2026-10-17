@@ -133,7 +133,7 @@ window.LAPAC = {
     { nome: "Giovanna Maria", cargo: "Secretaria", foto: "assets/img/equipe/giovanna-maria.webp" },
     { nome: "Maria Cecília", cargo: "Diretoria de Pesquisa e Extensão", foto: "assets/img/equipe/maria-cecilia.webp" },
     { nome: "Ana Caroline", cargo: "Diretoria de Marketing", foto: "assets/img/equipe/ana-caroline.webp" },
-    { nome: "Lara Machado", cargo: "Diretoria de Marketing", foto: "" },      // TODO: foto (sentada no microscópio)
+    { nome: "Lara Machado", cargo: "Diretoria de Marketing", foto: "assets/img/equipe/lara-machado.webp" },
     { nome: "Maria Clara", cargo: "Diretoria de Eventos", foto: "assets/img/equipe/maria-clara.webp" },
     { nome: "Ingrid Milena", cargo: "Diretoria", foto: "assets/img/equipe/ingrid.webp" },          // TODO: cargo exato
   ],
