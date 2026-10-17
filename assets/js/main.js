@@ -331,8 +331,7 @@
     if (statusEl) {
       statusEl.innerHTML = `
         <span class="status-pill status-pill--${esc(st)} mono"><span class="rec-dot"></span>${STATUS[st] || esc(st)}</span>
-        <span class="selection__title">${esc(s.titulo || "")}</span>
-        ${s.previsao ? `<span class="selection__dates">${esc(s.previsao)}</span>` : ""}`;
+`;
     }
     const acoes = $('[data-render="selecao-acoes"]');
     if (acoes) {
