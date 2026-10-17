@@ -846,7 +846,11 @@ button.film__item { cursor: zoom-in; }
 
 .mobile-menu__links a:last-child { border-bottom: 0; }
 
-/* ícone "Nossa logo" = a própria logo da liga */
-.tile__lens--logo { background: #fff; }
-.tile__lens--logo img { width: 72%; height: auto; transition: transform 0.6s var(--ease-out); }
-.tile:hover .tile__lens--logo img { transform: scale(1.08) rotate(-6deg); }
+/* ícone "Nossa logo" = logo da liga em traço (vazada), na cor dos outros ícones */
+.tile__logo { display: block; width: 36px; aspect-ratio: 160 / 145; background: currentColor;
+  -webkit-mask: url(../img/emblema-traco.png) center / contain no-repeat; mask: url(../img/emblema-traco.png) center / contain no-repeat;
+  transition: transform 0.6s var(--ease-out); }
+.tile:hover .tile__logo { transform: scale(1.08) rotate(-6deg); }
+
+/* foco programático (troca de página) sem moldura visível */
+[tabindex="-1"]:focus, [tabindex="-1"]:focus-visible { outline: none; }

@@ -716,10 +716,11 @@
       on ? l.setAttribute("aria-current", "page") : l.removeAttribute("aria-current");
     });
 
-    if (!first) {
-      scrollTop(false, id === "home" ? savedY.home || 0 : 0);
-      focusPage();
-    }
+    // sempre abre a página no topo (home volta para onde estava)
+    const targetY = first ? (id === "home" ? window.scrollY : 0) : (id === "home" ? savedY.home || 0 : 0);
+    const toTarget = () => { scrollTop(false, targetY); if (window.scrollY !== targetY) window.scrollTo(0, targetY); };
+    if (!first) focusPage(); // foco antes; a rolagem vem depois (iOS rola até o elemento focado)
+    toTarget();
     // recalcula medidas (abas, trilho de lâminas, gatilhos de scroll)
     if (id !== "areas") unmountSlides();
     pageAssets(id);
@@ -731,6 +732,10 @@
         ST.refresh();
         if (!first) pageEnter(id);
       }
+      // o ScrollTrigger/iOS podem restaurar a rolagem antiga depois do refresh: reaplica
+      toTarget();
+      setTimeout(toTarget, 80);
+      setTimeout(toTarget, 350);
     });
   }
 
@@ -741,6 +746,7 @@
   }
 
   function initRouter() {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
     window.addEventListener("hashchange", route);
     route();
   }
