@@ -1021,7 +1021,7 @@
     gsap.ticker.add((time, deltaMS) => { tickMarquees(deltaMS / 1000); scrollVel *= 0.92; });
 
     // rodapé: LAPAC gigante sobe letra por letra
-    gsap.from(".footer__word span", { yPercent: 100, duration: 1.4, stagger: 0.07, ease: "expo.out", scrollTrigger: { trigger: ".footer__word", start: "top 95%" } });
+    gsap.from(".footer__word-img", { yPercent: 60, opacity: 0, duration: 1.4, ease: "expo.out", scrollTrigger: { trigger: ".footer__word", start: "top 95%" } });
     gsap.from(".footer__wave", { xPercent: 50, yPercent: -50, duration: 1.6, ease: "expo.out", scrollTrigger: { trigger: ".footer", start: "top 80%" } });
     gsap.from(".footer__cta > *", { y: 40, opacity: 0, stagger: 0.1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".footer", start: "top 75%" } });
   }

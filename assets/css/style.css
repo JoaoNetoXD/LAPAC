@@ -660,8 +660,10 @@ a.doc:hover { transform: translateY(-8px) rotate(-0.6deg); box-shadow: 0 30px 50
 .footer__social a { width: 42px; height: 42px; justify-content: center; border-radius: 50%; border: 1px solid var(--line-light); transition: background-color 0.3s, border-color 0.3s; }
 .footer__social a:hover { background: var(--magenta); border-color: var(--magenta); }
 .footer__social .lucide { width: 18px; height: 18px; }
-.footer__word { display: flex; justify-content: center; margin-top: clamp(48px, 7vw, 90px); font-family: "LAPAC Wordmark", var(--f-display); font-weight: 800; font-size: 20vw; line-height: 0.8; letter-spacing: -0.04em; overflow: hidden; padding-bottom: 0.04em; }
-.footer__word span { font-variation-settings: "opsz" 18; display: inline-block; background: linear-gradient(180deg, var(--magenta-500), var(--roxo) 75%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.footer__word { margin-top: clamp(48px, 7vw, 90px); padding: 0 var(--gutter); overflow: hidden; }
+.footer__word-img { display: block; width: min(100%, 1100px); margin: 0 auto; aspect-ratio: 1304 / 294;
+  background: linear-gradient(180deg, var(--magenta-500), var(--roxo) 80%);
+  -webkit-mask: url(../img/lapac-wordmark.png) center / contain no-repeat; mask: url(../img/lapac-wordmark.png) center / contain no-repeat; }
 .footer__bottom { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--line-light); }
 .footer__totop { gap: 6px; }
 @media (min-width: 900px) { .footer__top { grid-template-columns: 1.1fr 1fr; } .footer__cols { grid-template-columns: repeat(3, 1fr); } }
