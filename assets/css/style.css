@@ -28,7 +28,7 @@
 
   --grad: linear-gradient(120deg, var(--roxo) 0%, var(--magenta) 65%, var(--magenta-500) 100%);
 
-  --f-display: "Bodoni Moda", "Didot", Georgia, serif;
+  --f-display: "Newsreader", "Iowan Old Style", Georgia, serif;
   --f-body: "Instrument Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
 
@@ -83,10 +83,10 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- Tipografia ---------- */
 .h2 {
-  font-family: var(--f-display); font-weight: 500; font-size: clamp(2.3rem, 5.2vw + 0.3rem, 5rem);
-  letter-spacing: -0.025em; line-height: 0.98; color: var(--roxo-900); margin-bottom: 0.4em; text-wrap: balance;
+  font-family: var(--f-display); font-weight: 600; font-size: clamp(2.3rem, 5.2vw + 0.3rem, 5rem);
+  letter-spacing: -0.02em; line-height: 0.98; color: var(--roxo-900); margin-bottom: 0.4em; text-wrap: balance;
 }
-.h2 em, .contact__big em, .footer__cta-title em { font-style: italic; font-weight: 400; color: var(--magenta); }
+.h2 em, .contact__big em, .footer__cta-title em { font-style: italic; font-weight: 500; color: var(--magenta); }
 .kicker { display: flex; align-items: center; gap: 12px; font-family: var(--f-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--magenta); margin-bottom: 18px; }
 .kicker::before { content: ""; width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid currentColor; background: radial-gradient(circle, currentColor 0 30%, transparent 34%); }
 .kicker--light { color: var(--ouro-300); }
@@ -228,10 +228,10 @@ body.menu-open .nav__toggle { background: var(--ouro); color: var(--roxo-950); }
 .rec-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--magenta); animation: blink 1.6s steps(2, start) infinite; flex-shrink: 0; }
 @keyframes blink { to { visibility: hidden; } }
 .hero__grid { flex: 1; display: grid; align-items: center; gap: 28px; padding: 28px 0; max-width: 1600px; width: 100%; margin-inline: auto; }
-.hero__title { font-family: var(--f-display); font-weight: 500; font-size: clamp(2.9rem, 6.6vw, 7.2rem); line-height: 0.92; letter-spacing: -0.035em; color: var(--roxo-900); margin-bottom: 0.32em; }
+.hero__title { font-family: var(--f-display); font-weight: 600; font-size: clamp(2.8rem, 6.2vw, 6.8rem); line-height: 0.95; letter-spacing: -0.025em; color: var(--roxo-900); margin-bottom: 0.32em; }
 .hero__title .line { display: block; overflow: hidden; padding-bottom: 0.07em; margin-bottom: -0.07em; }
 .hero__title .line > span { display: inline-block; }
-.hero__title em { font-style: italic; font-weight: 400; color: var(--magenta); }
+.hero__title em { font-style: italic; font-weight: 500; color: var(--magenta); }
 .hero__dot { color: var(--ouro); font-weight: 700; }
 .hero__lead { max-width: 30em; color: var(--ink-2); font-size: clamp(1rem, 0.4vw + 0.94rem, 1.15rem); }
 .hero__lead strong { color: var(--roxo-900); }
@@ -562,7 +562,7 @@ a.doc:hover { transform: translateY(-8px) rotate(-0.6deg); box-shadow: 0 30px 50
 
 /* ---------- Contato ---------- */
 .contact__big { font-family: var(--f-display); font-weight: 500; font-size: clamp(3rem, 10vw, 9.5rem); line-height: 0.92; letter-spacing: -0.04em; color: var(--roxo-900); margin-bottom: 18px; }
-.contact__mail { position: relative; display: inline-block; font-family: var(--f-display); font-style: italic; font-size: clamp(1.4rem, 3.6vw, 3rem); color: var(--magenta); word-break: break-all; }
+.contact__mail { position: relative; display: inline-block; max-width: 100%; font-family: var(--f-display); font-style: italic; font-weight: 500; font-size: clamp(1rem, 4.3vw, 2.6rem); color: var(--magenta); overflow-wrap: anywhere; }
 .contact__mail::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0.04em; height: 2px; background: currentColor; transform-origin: right; transition: transform 0.6s var(--ease-out); }
 .contact__mail:hover::after { transform: scaleX(0); }
 .contact { display: grid; gap: 40px; margin-top: clamp(48px, 6vw, 80px); }
