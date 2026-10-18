@@ -15,7 +15,11 @@ assets/img/             logo, emblema, favicon, imagem de compartilhamento
 docs/                   coloque aqui os PDFs (edital, estatuto, resultado…)
 ```
 
-## Como editar (só o `assets/js/data.js`)
+## Painel de edição (sem programador)
+
+A diretoria edita tudo em **/admin** — veja [ADMIN.md](ADMIN.md) (uso e ativação).
+
+## Como editar manualmente (`assets/js/data.js`)
 
 | O que | Onde em `data.js` |
 |---|---|

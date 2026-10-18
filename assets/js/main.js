@@ -8,6 +8,7 @@
   const root = document.documentElement;
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  const lowPower = !finePointer || (navigator.hardwareConcurrency || 8) <= 4;
   const gsap = window.gsap;
   const ST = window.ScrollTrigger;
   const hasGsap = !!(gsap && ST);
@@ -269,10 +270,13 @@
   function renderEquipe() {
     const or = $('[data-render="orientadores"]');
     if (or) or.innerHTML = (D.orientadores || []).map(mentorCard).join("");
-    [["diretoria", "D"], ["membros", "L"]].forEach(([key, prefix]) => {
-      const el = $(`[data-render="${key}"]`);
-      if (el) el.innerHTML = (D[key] || []).map((p, i) => personCard(p, prefix, i)).join("");
-    });
+    const dir = $('[data-render="diretoria"]');
+    if (dir) dir.innerHTML = (D.diretoria || []).map((p, i) => personCard(p, "D", i)).join("");
+    const mem = $('[data-render="membros"]');
+    const reais = (D.membros || []).filter((p) => (p.nome || "").trim());
+    if (mem) mem.innerHTML = reais.length
+      ? reais.map((p, i) => personCard(p, "L", i)).join("")
+      : `<div class="team-soon"><span class="events__empty-badge mono"><span class="rec-dot"></span>Em breve</span><p class="events__empty-title">Os ligantes serão apresentados após o processo seletivo.</p><a class="btn btn--line btn--sm js-instagram" href="#" target="_blank" rel="noopener">${icon("instagram")}<span>Acompanhar no Instagram</span></a></div>`;
   }
 
   function gcalLink(ev) {
@@ -326,6 +330,7 @@
 
   function renderSelecao() {
     const s = D.selecao || {};
+    if (s.semestre) $$(".js-semestre").forEach((el) => (el.textContent = s.semestre));
     const st = s.status || "em-breve";
     const statusEl = $('[data-render="selecao-status"]');
     if (statusEl) {
@@ -439,7 +444,7 @@
     ];
     anchors.forEach((a) => { a.gr = Array.from({ length: 80 }, () => [R() * TAU, Math.sqrt(R()) * 0.86, R()]); a.rot = R() * TAU; });
 
-    const cells = Array.from({ length: 95 }, () => ({
+    const cells = Array.from({ length: lowPower ? 60 : 95 }, () => ({
       x: R(), y: R(), s: 0.82 + R() * 0.32, depth: 0.4 + R() * 0.9,
       vx: (R() - 0.5) * 0.012, vy: (R() - 0.5) * 0.012, rot: R() * TAU,
     }));
@@ -530,11 +535,15 @@
       }
     }
 
+    let scrolling = 0;
+    window.addEventListener("scroll", () => { scrolling = performance.now(); }, { passive: true });
     function loop(now) {
       if (!running) return;
+      requestAnimationFrame(loop);
+      // celular: 30 quadros/s e pausa durante a rolagem (rolagem mais fluida)
+      if (lowPower && (now - last < 32 || now - scrolling < 140)) return;
       const dt = Math.min(0.05, (now - last) / 1000); last = now; t += dt;
       draw(dt);
-      requestAnimationFrame(loop);
     }
     const start = () => { if (running) return; running = true; last = performance.now(); requestAnimationFrame(loop); };
     const stop = () => { running = false; };
@@ -725,7 +734,7 @@
     if (id !== "areas") unmountSlides();
     pageAssets(id);
     requestAnimationFrame(() => {
-      window.dispatchEvent(new Event("resize"));
+      window.dispatchEvent(new Event("lapac:page"));
       if (hasGsap) {
         pageScenes(id);
         if (id === "areas") mountSlides();
@@ -734,8 +743,10 @@
       }
       // o ScrollTrigger/iOS podem restaurar a rolagem antiga depois do refresh: reaplica
       toTarget();
-      setTimeout(toTarget, 80);
-      setTimeout(toTarget, 350);
+      const timers = [setTimeout(toTarget, 80), setTimeout(toTarget, 350)];
+      const cancel = () => { timers.forEach(clearTimeout); ["wheel", "touchstart", "keydown"].forEach((ev) => window.removeEventListener(ev, cancel)); };
+      ["wheel", "touchstart", "keydown"].forEach((ev) => window.addEventListener(ev, cancel, { passive: true, once: true }));
+      setTimeout(cancel, 400);
     });
   }
 
@@ -783,6 +794,7 @@
     });
     const init = () => move($(".turret__btn.is-active"));
     window.addEventListener("resize", init);
+    window.addEventListener("lapac:page", init);
     document.fonts?.ready.then(init);
     init();
   }
@@ -823,7 +835,12 @@
       const subject = `[Site LAPAC] ${data.assunto} — ${data.nome}`;
       const body = `${data.mensagem}\n\n—\n${data.nome}\n${data.email}`;
       window.location.href = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      note.textContent = `Tentamos abrir seu app de e-mail com a mensagem pronta. Se nada abriu, envie para ${to}.`; note.className = "form-note is-ok";
+      const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(to)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      note.className = "form-note is-ok";
+      note.innerHTML = `Abrimos seu app de e-mail com a mensagem pronta. Não abriu? <a href="${gmail}" target="_blank" rel="noopener">Enviar pelo Gmail</a> ou <button type="button" class="form-copy">copiar o e-mail</button>.`;
+      note.querySelector(".form-copy").addEventListener("click", async (ev) => {
+        try { await navigator.clipboard.writeText(to); ev.target.textContent = "e-mail copiado ✓"; } catch { ev.target.textContent = to; }
+      });
     });
     $$("input, textarea", form).forEach((f) => f.addEventListener("input", () => f.closest(".field").classList.remove("is-invalid")));
   }
@@ -946,21 +963,22 @@
     const seen = root.classList.contains("intro-seen");
     try { sessionStorage.setItem("lapac-intro", "1"); } catch (e) { /* modo privado */ }
     if (!pl || seen) { pl?.remove(); lenis?.start(); onReveal(); return; }
+    const k = lowPower ? 0.45 : 1; // celular: abertura bem mais curta
     document.body.classList.add("is-loading");
     const ring = $(".preloader__ring circle"), img = $(".preloader__field img"), count = $(".preloader__count");
     const n = { v: 0 };
     gsap.set(".pp", { yPercent: 100 });
     const tl = gsap.timeline();
-    tl.to(ring, { strokeDashoffset: 0, duration: 1, ease: "power2.inOut" }, 0)
-      .to(img, { filter: "blur(0px)", opacity: 1, scale: 1, duration: 1, ease: "power2.inOut" }, 0)
-      .to(n, { v: 100, duration: 1, ease: "power2.inOut", onUpdate: () => (count.textContent = pad(Math.round(n.v), 3)) }, 0)
-      .to(".preloader__field", { scale: 0.92, duration: 0.25, ease: "power2.in" }, 1)
-      .to(".pp", { yPercent: 0, duration: 0.6, stagger: 0.07, ease: "power4.inOut" }, 1.05)
-      .set([".preloader__field", ".preloader__meta"], { autoAlpha: 0 }, 1.6)
-      .set(pl, { backgroundColor: "transparent" }, 1.6)
-      .add(() => onReveal(), 1.6)
-      .to(".pp", { yPercent: -100, duration: 0.7, stagger: { each: 0.06, from: "end" }, ease: "power4.inOut" }, 1.62)
-      .add(() => { pl.remove(); document.body.classList.remove("is-loading"); lenis?.start(); }, 2.45);
+    tl.to(ring, { strokeDashoffset: 0, duration: 1 * k, ease: "power2.inOut" }, 0 * k)
+      .to(img, { filter: "blur(0px)", opacity: 1, scale: 1, duration: 1 * k, ease: "power2.inOut" }, 0 * k)
+      .to(n, { v: 100, duration: 1 * k, ease: "power2.inOut", onUpdate: () => (count.textContent = pad(Math.round(n.v), 3)) }, 0 * k)
+      .to(".preloader__field", { scale: 0.92, duration: 0.25 * k, ease: "power2.in" }, 1 * k)
+      .to(".pp", { yPercent: 0, duration: 0.6 * k, stagger: 0.07 * k, ease: "power4.inOut" }, 1.05 * k)
+      .set([".preloader__field", ".preloader__meta"], { autoAlpha: 0 }, 1.6 * k)
+      .set(pl, { backgroundColor: "transparent" }, 1.6 * k)
+      .add(() => onReveal(), 1.6 * k)
+      .to(".pp", { yPercent: -100, duration: 0.7 * k, stagger: { each: 0.06 * k, from: "end" }, ease: "power4.inOut" }, 1.62 * k)
+      .add(() => { pl.remove(); document.body.classList.remove("is-loading"); lenis?.start(); }, 2.45 * k);
   }
 
   /* lâminas: montadas só com a página Áreas visível (seção escondida mede 0 e quebra o pin) */
@@ -1004,7 +1022,7 @@
 
     // hero: parallax ao sair
     gsap.timeline({ scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } })
-      .to(".scope", { yPercent: 18, scale: 1.08, ease: "none" }, 0)
+      .to(".scope", lowPower ? { yPercent: 12, ease: "none" } : { yPercent: 18, scale: 1.08, ease: "none" }, 0)
       .to(".scope__ticks", { rotation: 90, svgOrigin: "300 300", ease: "none" }, 0)
       .to(".hero__copy", { yPercent: -16, opacity: 0.2, ease: "none" }, 0)
       .to(".hero__wave--tr", { y: "-14vh", ease: "none" }, 0);
@@ -1022,7 +1040,10 @@
         skewTo.forEach((fn) => fn(sk));
       },
     });
-    gsap.ticker.add((time, deltaMS) => { tickMarquees(deltaMS / 1000); scrollVel *= 0.92; });
+    gsap.ticker.add((time, deltaMS) => {
+      tickMarquees(deltaMS / 1000); scrollVel *= 0.92;
+      if (Math.abs(scrollVel) < 20) skewTo.forEach((fn) => fn(0)); // endireita ao parar
+    });
 
     // rodapé: LAPAC gigante sobe letra por letra
     gsap.from(".footer__word-img", { yPercent: 60, opacity: 0, duration: 1.4, ease: "expo.out", scrollTrigger: { trigger: ".footer__word", start: "top 95%" } });
@@ -1033,7 +1054,7 @@
   /* cenas de cada página: criadas só na primeira visita (o site abre mais rápido) */
   const SCENES = {
     home() {
-      gsap.fromTo(".tile", { opacity: 0, y: 40, scale: 0.94, filter: "blur(8px)" }, { opacity: 1, y: 0, scale: 1, filter: "blur(0px)", duration: 0.9, stagger: { each: 0.06, grid: "auto", from: "start" }, ease: "power3.out", clearProps: "filter,transform", scrollTrigger: { trigger: ".hub__grid", start: "top 85%" } });
+      gsap.fromTo(".tile", { opacity: 0, y: 40, scale: 0.94 }, { opacity: 1, y: 0, scale: 1, duration: 0.9, stagger: { each: 0.06, grid: "auto", from: "start" }, ease: "power3.out", clearProps: "filter,transform", scrollTrigger: { trigger: ".hub__grid", start: "top 85%" } });
     },
     sobre() {
       gsap.from(".entry__senses li", { x: 40, opacity: 0, stagger: 0.12, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".entry", start: "top 75%" } });

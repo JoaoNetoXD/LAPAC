@@ -20,7 +20,7 @@
   <meta name="twitter:card" content="summary_large_image" />
 
   <link rel="icon" href="favicon.ico" sizes="any" />
-  <link rel="icon" type="image/png" href="assets/img/icon-512.png" />
+  <link rel="icon" type="image/png" sizes="48x48" href="assets/img/icon-48.png" />
   <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
   <link rel="manifest" href="site.webmanifest" />
 
@@ -29,7 +29,7 @@
   <link rel="preload" href="assets/fonts/instrument-sans-normal-400-700-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/bodoni-lapac.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" as="image" href="assets/img/emblema-640.png" />
-  <link rel="stylesheet" href="assets/css/style.css?v=49" />
+  <link rel="stylesheet" href="assets/css/style.css?v=52" />
 
   <script type="application/ld+json">
   {
@@ -114,12 +114,15 @@
     <nav class="mobile-menu__links" aria-label="Menu mobile">
       <a href="#/sobre"><span>01</span>Quem somos</a>
       <a href="#/identidade"><span>02</span>Nossa logo</a>
-      <a href="#/areas"><span>03</span>Áreas</a>
-      <a href="#/equipe"><span>04</span>Integrantes</a>
-      <a href="#/atividades"><span>05</span>Como funciona</a>
-      <a href="#/agenda"><span>06</span>Agenda</a>
-      <a href="#/selecao"><span>07</span>Seleção</a>
-      <a href="#/contato"><span>08</span>Contato</a>
+      <a href="#/missao"><span>03</span>Missão e valores</a>
+      <a href="#/areas"><span>04</span>Áreas</a>
+      <a href="#/equipe"><span>05</span>Integrantes</a>
+      <a href="#/atividades"><span>06</span>Como funciona</a>
+      <a href="#/agenda"><span>07</span>Agenda</a>
+      <a href="#/selecao"><span>08</span>Seleção</a>
+      <a href="#/galeria"><span>09</span>Galeria</a>
+      <a href="#/documentos"><span>10</span>Documentos</a>
+      <a href="#/contato"><span>11</span>Contato</a>
     </nav>
     <div class="mobile-menu__foot">
       <a class="social-link js-instagram" href="#" target="_blank" rel="noopener"><i data-lucide="instagram"></i><span class="js-instagram-handle">@lapac.ufpi</span></a>
@@ -296,7 +299,7 @@
           <div class="slides__meter mono" aria-hidden="true">
             <span><span class="slides__count">01</span> / 06</span>
             <span class="slides__bar"><span></span></span>
-            <span class="slides__hint">Role <i data-lucide="arrow-right"></i></span>
+            <span class="slides__hint"><span class="hint-desk">Role</span><span class="hint-touch">Deslize</span> <i data-lucide="arrow-right"></i></span>
           </div>
         </header>
         <div class="slides__viewport">
@@ -314,9 +317,9 @@
             <h2 class="h2" data-reveal-words>Quem está <em>na bancada</em>.</h2>
           </div>
           <div class="turret" role="tablist" aria-label="Equipe">
-            <button class="turret__btn is-active" role="tab" aria-selected="true" aria-controls="painel-orientacao" id="tab-orientacao"><span class="mono">4×</span>Orientação</button>
-            <button class="turret__btn" role="tab" aria-selected="false" aria-controls="painel-diretoria" id="tab-diretoria" tabindex="-1"><span class="mono">10×</span>Diretoria</button>
-            <button class="turret__btn" role="tab" aria-selected="false" aria-controls="painel-membros" id="tab-membros" tabindex="-1"><span class="mono">40×</span>Ligantes</button>
+            <button class="turret__btn is-active" role="tab" aria-selected="true" aria-controls="painel-orientacao" id="tab-orientacao">Orientação</button>
+            <button class="turret__btn" role="tab" aria-selected="false" aria-controls="painel-diretoria" id="tab-diretoria" tabindex="-1">Diretoria</button>
+            <button class="turret__btn" role="tab" aria-selected="false" aria-controls="painel-membros" id="tab-membros" tabindex="-1">Ligantes</button>
             <span class="turret__indicator" aria-hidden="true"></span>
           </div>
         </header>
@@ -404,7 +407,7 @@
         <div class="selection__intro">
           <p class="kicker kicker--light">Processo seletivo</p>
           <h2 class="h2" data-reveal-words>Como entrar na <em>LAPAC</em>.</h2>
-          <p class="selection__lead">A próxima seleção está prevista para <strong>2027.1</strong>. O edital, com as etapas e o cronograma, será publicado aqui e no nosso Instagram.</p>
+          <p class="selection__lead">A próxima seleção está prevista para <strong class="js-semestre">2027.1</strong>. O edital, com as etapas e o cronograma, será publicado aqui e no nosso Instagram.</p>
           <div data-render="selecao-status"></div>
           <div class="selection__actions" data-render="selecao-acoes"></div>
         </div>
@@ -506,13 +509,13 @@
     <svg class="footer__wave" viewBox="0 0 400 400" aria-hidden="true"><use href="#wave-cluster" /></svg>
     <div class="container footer__top">
       <div class="footer__cta">
-        <p class="footer__cta-title">Seleção prevista para <em>2027.1</em>.</p>
+        <p class="footer__cta-title">Seleção prevista para <em class="js-semestre">2027.1</em>.</p>
         <a href="#/selecao" class="btn btn--gold btn--lg" data-magnetic><span>Ver processo seletivo</span><i data-lucide="arrow-right"></i></a>
       </div>
       <div class="footer__cols">
         <div>
           <p class="footer__h mono">A liga</p>
-          <ul><li><a href="#/sobre">Quem somos</a></li><li><a href="#/identidade">Nossa logo</a></li><li><a href="#/missao">Missão e valores</a></li><li><a href="#/areas">Áreas</a></li><li><a href="#/equipe">Equipe</a></li></ul>
+          <ul><li><a href="#/sobre">Quem somos</a></li><li><a href="#/identidade">Nossa logo</a></li><li><a href="#/missao">Missão e valores</a></li><li><a href="#/areas">Áreas</a></li><li><a href="#/galeria">Galeria</a></li><li><a href="#/equipe">Equipe</a></li></ul>
         </div>
         <div>
           <p class="footer__h mono">Participe</p>
@@ -544,11 +547,11 @@
     <p class="lightbox__caption mono"></p>
   </dialog>
 
-  <script src="assets/vendor/gsap.min.js?v=49" defer></script>
-  <script src="assets/vendor/ScrollTrigger.min.js?v=49" defer></script>
-  <script src="assets/vendor/lenis.min.js?v=49" defer></script>
-  <script src="assets/js/icons.js?v=49" defer></script>
-  <script src="assets/js/data.js?v=49" defer></script>
-  <script src="assets/js/main.js?v=49" defer></script>
+  <script src="assets/vendor/gsap.min.js?v=52" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js?v=52" defer></script>
+  <script src="assets/vendor/lenis.min.js?v=52" defer></script>
+  <script src="assets/js/icons.js?v=52" defer></script>
+  <script src="assets/js/data.js?v=52" defer></script>
+  <script src="assets/js/main.js?v=52" defer></script>
 </body>
 </html>

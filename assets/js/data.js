@@ -1,161 +1,307 @@
-/* =========================================================================
-   LAPAC — CONTEÚDO EDITÁVEL DO SITE
-   -------------------------------------------------------------------------
-   Tudo que muda com frequência fica aqui. Não precisa mexer no HTML.
-
-   FOTOS: coloque o arquivo em assets/img/equipe/ (ex.: maria.webp, 600x600)
-          e preencha  foto: "assets/img/equipe/maria.webp"
-          Sem foto, o site mostra as iniciais com o degradê da marca.
-   NOMES: deixe nome: "" para mostrar "Em breve".
-   LINKS: deixe "" (vazio) para esconder o botão.
-   DATAS: formato "AAAA-MM-DD" (ex.: "2027-03-14").
-   ========================================================================= */
-
+/* LAPAC — conteúdo do site.
+   Edite pelo painel: https://lapac-ufpi.vercel.app/admin
+   (este arquivo é regravado pelo painel; mantenha o formato JSON abaixo) */
 window.LAPAC = {
-  /* ---------------- CONTATO & REDES ---------------- */
-  contato: {
-    email: "ligaacademicadedepatologia.ufpi@gmail.com",
-    instagram: "lapac.ufpi",                // TODO: confirmar @ (sem o @)
-    endereco: "Centro de Ciências Agrárias (CCA) — Campus Universitário Ministro Petrônio Portella, Bairro Ininga, Teresina — PI",
-    mapaBusca: "Centro de Ciências Agrárias UFPI Teresina",
+  "contato": {
+    "email": "ligaacademicadedepatologia.ufpi@gmail.com",
+    "instagram": "lapac.ufpi",
+    "endereco": "Centro de Ciências Agrárias (CCA) — Campus Universitário Ministro Petrônio Portella, Bairro Ininga, Teresina — PI",
+    "mapaBusca": "Centro de Ciências Agrárias UFPI Teresina"
   },
-
-  /* ---------------- ÁREAS DE ATUAÇÃO (lâminas) ----------------
-     arte: "smear" | "cyto" | "tissue" | "crystal" | "egg" | "plate"   */
-  areas: [
+  "areas": [
     {
-      titulo: "Hematologia", rotulo: "PANÓT.", arte: "smear", seed: 53,
-      resumo: "Avaliação do sangue e de seus componentes, base de quase todo diagnóstico clínico.",
-      exames: [
-        { nome: "Hemograma", pontos: "Eritrograma (hematócrito, hemoglobina, hemácias e índices), leucograma total e diferencial, plaquetas." },
-        { nome: "Esfregaço sanguíneo", pontos: "Morfologia de hemácias, leucócitos e plaquetas; confirmação das contagens." },
-        { nome: "Pesquisa de hemoparasitas", pontos: "Identificação de Babesia, Anaplasma e mórulas de Ehrlichia." },
-      ],
+      "titulo": "Hematologia",
+      "rotulo": "PANÓT.",
+      "arte": "smear",
+      "seed": 53,
+      "resumo": "Avaliação do sangue e de seus componentes, base de quase todo diagnóstico clínico.",
+      "exames": [
+        {
+          "nome": "Hemograma",
+          "pontos": "Eritrograma (hematócrito, hemoglobina, hemácias e índices), leucograma total e diferencial, plaquetas."
+        },
+        {
+          "nome": "Esfregaço sanguíneo",
+          "pontos": "Morfologia de hemácias, leucócitos e plaquetas; confirmação das contagens."
+        },
+        {
+          "nome": "Pesquisa de hemoparasitas",
+          "pontos": "Identificação de Babesia, Anaplasma e mórulas de Ehrlichia."
+        }
+      ]
     },
     {
-      titulo: "Citologia", rotulo: "PANÓT.", arte: "cyto", seed: 41,
-      resumo: "Estudo de células coletadas de lesões, órgãos e líquidos, com resultado rápido e coleta pouco invasiva.",
-      exames: [
-        { nome: "PAAF", pontos: "Punção aspirativa por agulha fina de nódulos, massas e linfonodos." },
-        { nome: "Imprint e raspado", pontos: "Lesões de pele e superfícies; diferencia inflamação, hiperplasia e neoplasia." },
-        { nome: "Análise de efusões", pontos: "Líquidos cavitários classificados em transudato, transudato modificado ou exsudato." },
-      ],
+      "titulo": "Citologia",
+      "rotulo": "PANÓT.",
+      "arte": "cyto",
+      "seed": 41,
+      "resumo": "Estudo de células coletadas de lesões, órgãos e líquidos, com resultado rápido e coleta pouco invasiva.",
+      "exames": [
+        {
+          "nome": "PAAF",
+          "pontos": "Punção aspirativa por agulha fina de nódulos, massas e linfonodos."
+        },
+        {
+          "nome": "Imprint e raspado",
+          "pontos": "Lesões de pele e superfícies; diferencia inflamação, hiperplasia e neoplasia."
+        },
+        {
+          "nome": "Análise de efusões",
+          "pontos": "Líquidos cavitários classificados em transudato, transudato modificado ou exsudato."
+        }
+      ]
     },
     {
-      titulo: "Histopatologia", rotulo: "H&E", arte: "tissue", seed: 23,
-      resumo: "Análise microscópica de tecidos, padrão para o diagnóstico definitivo de muitas lesões.",
-      exames: [
-        { nome: "Biópsia", pontos: "Incisional ou excisional, fixada em formol a 10% logo após a coleta." },
-        { nome: "Processamento e coloração", pontos: "Inclusão em parafina, microtomia e coloração por hematoxilina e eosina (H&E)." },
-        { nome: "Laudo histopatológico", pontos: "Diagnóstico morfológico, classificação de neoplasias e avaliação de margens cirúrgicas." },
-      ],
+      "titulo": "Histopatologia",
+      "rotulo": "H&E",
+      "arte": "tissue",
+      "seed": 23,
+      "resumo": "Análise microscópica de tecidos, padrão para o diagnóstico definitivo de muitas lesões.",
+      "exames": [
+        {
+          "nome": "Biópsia",
+          "pontos": "Incisional ou excisional, fixada em formol a 10% logo após a coleta."
+        },
+        {
+          "nome": "Processamento e coloração",
+          "pontos": "Inclusão em parafina, microtomia e coloração por hematoxilina e eosina (H&E)."
+        },
+        {
+          "nome": "Laudo histopatológico",
+          "pontos": "Diagnóstico morfológico, classificação de neoplasias e avaliação de margens cirúrgicas."
+        }
+      ]
     },
     {
-      titulo: "Urinálise", rotulo: "SEDIM.", arte: "crystal", seed: 79,
-      resumo: "Exame de urina que avalia a função renal e o trato urinário e reflete alterações sistêmicas.",
-      exames: [
-        { nome: "Exame físico", pontos: "Cor, aspecto, odor e densidade urinária." },
-        { nome: "Exame químico", pontos: "Tira reagente: pH, proteína, glicose, corpos cetônicos, sangue oculto e bilirrubina." },
-        { nome: "Sedimentoscopia", pontos: "Células, cilindros, cristais e microrganismos; amostra analisada logo após a coleta." },
-      ],
+      "titulo": "Urinálise",
+      "rotulo": "SEDIM.",
+      "arte": "crystal",
+      "seed": 79,
+      "resumo": "Exame de urina que avalia a função renal e o trato urinário e reflete alterações sistêmicas.",
+      "exames": [
+        {
+          "nome": "Exame físico",
+          "pontos": "Cor, aspecto, odor e densidade urinária."
+        },
+        {
+          "nome": "Exame químico",
+          "pontos": "Tira reagente: pH, proteína, glicose, corpos cetônicos, sangue oculto e bilirrubina."
+        },
+        {
+          "nome": "Sedimentoscopia",
+          "pontos": "Células, cilindros, cristais e microrganismos; amostra analisada logo após a coleta."
+        }
+      ]
     },
     {
-      titulo: "Parasitologia", rotulo: "LUGOL", arte: "egg", seed: 97,
-      resumo: "Identificação de parasitas internos e externos e da carga parasitária dos animais.",
-      exames: [
-        { nome: "Coproparasitológico", pontos: "Técnicas de flutuação e sedimentação para ovos, oocistos e larvas." },
-        { nome: "OPG", pontos: "Contagem de ovos por grama de fezes, usada no controle de verminoses em rebanhos." },
-        { nome: "Raspado cutâneo", pontos: "Pesquisa de ácaros como Demodex e Sarcoptes." },
-      ],
+      "titulo": "Parasitologia",
+      "rotulo": "LUGOL",
+      "arte": "egg",
+      "seed": 97,
+      "resumo": "Identificação de parasitas internos e externos e da carga parasitária dos animais.",
+      "exames": [
+        {
+          "nome": "Coproparasitológico",
+          "pontos": "Técnicas de flutuação e sedimentação para ovos, oocistos e larvas."
+        },
+        {
+          "nome": "OPG",
+          "pontos": "Contagem de ovos por grama de fezes, usada no controle de verminoses em rebanhos."
+        },
+        {
+          "nome": "Raspado cutâneo",
+          "pontos": "Pesquisa de ácaros como Demodex e Sarcoptes."
+        }
+      ]
     },
     {
-      titulo: "Microbiologia", rotulo: "ÁGAR", arte: "plate", seed: 131,
-      resumo: "Isolamento e identificação de bactérias e fungos para orientar o tratamento.",
-      exames: [
-        { nome: "Cultura e isolamento", pontos: "Bacteriana e fúngica, a partir de amostras coletadas de forma asséptica." },
-        { nome: "Coloração de Gram", pontos: "Classificação inicial em Gram-positivas e Gram-negativas." },
-        { nome: "Antibiograma", pontos: "Teste de sensibilidade aos antimicrobianos, base para o uso racional de antibióticos." },
-      ],
-    },
+      "titulo": "Microbiologia",
+      "rotulo": "ÁGAR",
+      "arte": "plate",
+      "seed": 131,
+      "resumo": "Isolamento e identificação de bactérias e fungos para orientar o tratamento.",
+      "exames": [
+        {
+          "nome": "Cultura e isolamento",
+          "pontos": "Bacteriana e fúngica, a partir de amostras coletadas de forma asséptica."
+        },
+        {
+          "nome": "Coloração de Gram",
+          "pontos": "Classificação inicial em Gram-positivas e Gram-negativas."
+        },
+        {
+          "nome": "Antibiograma",
+          "pontos": "Teste de sensibilidade aos antimicrobianos, base para o uso racional de antibióticos."
+        }
+      ]
+    }
   ],
-
-  /* ---------------- PROCESSO SELETIVO ----------------
-     status: "em-breve" | "aberto" | "encerrado" | "resultado"          */
-  selecao: {
-    status: "em-breve",
-    titulo: "Processo Seletivo 2027.1",
-    previsao: "Previsto para o semestre 2027.1",
-    linkInscricao: "",                      // link do Google Forms
-    edital: "",                             // ex.: "docs/edital-2027-1.pdf"
-    resultado: "",                          // ex.: "docs/resultado-2027-1.pdf"
-    etapas: [
-      { titulo: "Edital", texto: "Publicação do edital com vagas, cronograma e critérios aqui no site e no Instagram." },
-      { titulo: "Inscrição", texto: "Preenchimento do formulário e envio dos documentos exigidos no edital." },
-      { titulo: "Avaliação", texto: "Etapas de avaliação definidas no edital." },
-      { titulo: "Resultado", texto: "Divulgação da lista de aprovados aqui no site e no Instagram." },
-      { titulo: "Integração", texto: "Início das atividades com os ligantes." },
+  "selecao": {
+    "semestre": "2027.1",
+    "status": "em-breve",
+    "titulo": "Processo Seletivo 2027.1",
+    "previsao": "Previsto para o semestre 2027.1",
+    "linkInscricao": "",
+    "edital": "",
+    "resultado": "",
+    "etapas": [
+      {
+        "titulo": "Edital",
+        "texto": "Publicação do edital com vagas, cronograma e critérios aqui no site e no Instagram."
+      },
+      {
+        "titulo": "Inscrição",
+        "texto": "Preenchimento do formulário e envio dos documentos exigidos no edital."
+      },
+      {
+        "titulo": "Avaliação",
+        "texto": "Etapas de avaliação definidas no edital."
+      },
+      {
+        "titulo": "Resultado",
+        "texto": "Divulgação da lista de aprovados aqui no site e no Instagram."
+      },
+      {
+        "titulo": "Integração",
+        "texto": "Início das atividades com os ligantes."
+      }
     ],
-    // TODO: conferir com o edital
-    requisitos: [
+    "requisitos": [
       "Estar regularmente matriculado(a) no curso de Medicina Veterinária da UFPI",
       "Cumprir os critérios de período e disciplinas definidos no edital",
-      "Ter disponibilidade para as reuniões e atividades da liga",
+      "Ter disponibilidade para as reuniões e atividades da liga"
     ],
-    // TODO: conferir com o edital
-    beneficios: [
+    "beneficios": [
       "Certificado de horas complementares",
       "Capacitação teórica e prática em análises clínicas",
       "Participação em pesquisa, extensão e eventos científicos",
-      "Contato com a rotina laboratorial",
-    ],
+      "Contato com a rotina laboratorial"
+    ]
   },
-
-  /* ---------------- EQUIPE ---------------- */
-  orientadores: [
+  "orientadores": [
     {
-      nome: "Prof.ª Dra. Janaina de Fátima Saraiva Cardoso",
-      cargo: "Orientadora",
-      foto: "assets/img/equipe/janaina-cardoso.webp",
-      formacao: [
+      "nome": "Prof.ª Dra. Janaina de Fátima Saraiva Cardoso",
+      "cargo": "Orientadora",
+      "foto": "assets/img/equipe/janaina-cardoso.webp",
+      "formacao": [
         "Médica Veterinária pela Universidade Estadual do Ceará (UECE)",
         "Mestre em Ciências Veterinárias (Sanidade e Reprodução Animal) pelo Programa de Pós-Graduação em Ciências Veterinárias da UECE",
-        "Doutora pela Rede Nordeste de Biotecnologia (RENORBIO)",
+        "Doutora pela Rede Nordeste de Biotecnologia (RENORBIO)"
       ],
-      atuacao: "Professora associada e chefe do Departamento de Clínica e Cirurgia Veterinária do Centro de Ciências Agrárias da UFPI, onde leciona Patologia Clínica Veterinária e Bioquímica Clínica Veterinária. Chefe do Laboratório de Patologia Clínica Veterinária do HVU/UFPI Teresina.",
-      lattes: "http://lattes.cnpq.br/8058580165551218",
-      email: "",
+      "atuacao": "Professora associada e chefe do Departamento de Clínica e Cirurgia Veterinária do Centro de Ciências Agrárias da UFPI, onde leciona Patologia Clínica Veterinária e Bioquímica Clínica Veterinária. Chefe do Laboratório de Patologia Clínica Veterinária do HVU/UFPI Teresina.",
+      "lattes": "http://lattes.cnpq.br/8058580165551218",
+      "email": ""
+    }
+  ],
+  "diretoria": [
+    {
+      "nome": "Anderson César",
+      "cargo": "Presidente",
+      "foto": "assets/img/equipe/anderson-cesar.webp"
     },
+    {
+      "nome": "Marília Lula",
+      "cargo": "Vice-presidente",
+      "foto": "assets/img/equipe/marilia-lula.webp"
+    },
+    {
+      "nome": "Giovanna Maria",
+      "cargo": "Secretaria",
+      "foto": "assets/img/equipe/giovanna-maria.webp"
+    },
+    {
+      "nome": "Maria Cecília",
+      "cargo": "Diretoria de Pesquisa e Extensão",
+      "foto": "assets/img/equipe/maria-cecilia.webp"
+    },
+    {
+      "nome": "Ingrid Milena",
+      "cargo": "Diretoria de Pesquisa e Extensão",
+      "foto": "assets/img/equipe/ingrid.webp"
+    },
+    {
+      "nome": "Ana Caroline",
+      "cargo": "Diretoria de Marketing",
+      "foto": "assets/img/equipe/ana-caroline.webp"
+    },
+    {
+      "nome": "Lara Machado",
+      "cargo": "Diretoria de Marketing",
+      "foto": "assets/img/equipe/lara-machado.webp"
+    },
+    {
+      "nome": "Maria Clara",
+      "cargo": "Diretoria de Eventos",
+      "foto": "assets/img/equipe/maria-clara.webp"
+    }
   ],
-
-  diretoria: [
-    { nome: "Anderson César", cargo: "Presidente", foto: "assets/img/equipe/anderson-cesar.webp" },
-    { nome: "Marília Lula", cargo: "Vice-presidente", foto: "assets/img/equipe/marilia-lula.webp" },
-    { nome: "Giovanna Maria", cargo: "Secretaria", foto: "assets/img/equipe/giovanna-maria.webp" },
-    { nome: "Maria Cecília", cargo: "Diretoria de Pesquisa e Extensão", foto: "assets/img/equipe/maria-cecilia.webp" },
-    { nome: "Ingrid Milena", cargo: "Diretoria de Pesquisa e Extensão", foto: "assets/img/equipe/ingrid.webp" },        
-    { nome: "Ana Caroline", cargo: "Diretoria de Marketing", foto: "assets/img/equipe/ana-caroline.webp" },
-    { nome: "Lara Machado", cargo: "Diretoria de Marketing", foto: "assets/img/equipe/lara-machado.webp" },
-    { nome: "Maria Clara", cargo: "Diretoria de Eventos", foto: "assets/img/equipe/maria-clara.webp" },
+  "membros": [
+    {
+      "nome": "",
+      "foto": ""
+    },
+    {
+      "nome": "",
+      "foto": ""
+    },
+    {
+      "nome": "",
+      "foto": ""
+    },
+    {
+      "nome": "",
+      "foto": ""
+    },
+    {
+      "nome": "",
+      "foto": ""
+    },
+    {
+      "nome": "",
+      "foto": ""
+    },
+    {
+      "nome": "",
+      "foto": ""
+    },
+    {
+      "nome": "",
+      "foto": ""
+    },
+    {
+      "nome": "",
+      "foto": ""
+    },
+    {
+      "nome": "",
+      "foto": ""
+    },
+    {
+      "nome": "",
+      "foto": ""
+    },
+    {
+      "nome": "",
+      "foto": ""
+    }
   ],
-
-  // 12 vagas de ligantes — preencha nome/foto quando houver
-  membros: Array.from({ length: 12 }, () => ({ nome: "", foto: "" })),
-
-  /* ---------------- AGENDA ----------------
-     Vazio = mostra "Em breve".
-     Exemplo: { data: "2027-03-20", hora: "18h30", titulo: "Aula inaugural", tipo: "Palestra", local: "Auditório do CCA", link: "" } */
-  eventos: [],
-
-  /* ---------------- GALERIA ----------------
-     Coloque as fotos em assets/img/galeria/ e liste aqui.            */
-  galeria: [
-    // { src: "assets/img/galeria/aula-inaugural.webp", legenda: "Aula inaugural" },
-  ],
-
-  /* ---------------- TRANSPARÊNCIA ---------------- */
-  documentos: [
-    { titulo: "Estatuto", descricao: "Natureza, finalidades, estrutura e regras gerais da liga.", arquivo: "docs/estatuto-lapac.pdf" },
-    { titulo: "Regimento Interno", descricao: "Funcionamento da liga, cargos, frequência, carga horária e certificação.", arquivo: "docs/regimento-interno-lapac.pdf" },
-    { titulo: "Edital do Processo Seletivo", descricao: "Vagas, cronograma, etapas e critérios da seleção 2027.1.", arquivo: "" },
-  ],
+  "eventos": [],
+  "galeria": [],
+  "documentos": [
+    {
+      "titulo": "Estatuto",
+      "descricao": "Natureza, finalidades, estrutura e regras gerais da liga.",
+      "arquivo": "docs/estatuto-lapac.pdf"
+    },
+    {
+      "titulo": "Regimento Interno",
+      "descricao": "Funcionamento da liga, cargos, frequência, carga horária e certificação.",
+      "arquivo": "docs/regimento-interno-lapac.pdf"
+    },
+    {
+      "titulo": "Edital do Processo Seletivo",
+      "descricao": "Vagas, cronograma, etapas e critérios da seleção 2027.1.",
+      "arquivo": ""
+    }
+  ]
 };

@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#2a1236" />
+  <title>Painel LAPAC</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="stylesheet" href="/admin/admin.css?v=1" />
+</head>
+<body>
+  <!-- Login -->
+  <main class="login" id="login" hidden>
+    <form class="login__card" id="login-form">
+      <img src="/assets/img/emblema-96.png" alt="" width="64" height="58" />
+      <h1>Painel da LAPAC</h1>
+      <p>Área da diretoria para atualizar o site.</p>
+      <label class="fld">
+        <span>Senha</span>
+        <input type="password" id="login-pass" autocomplete="current-password" required />
+      </label>
+      <button class="btn btn--primary" type="submit">Entrar</button>
+      <p class="login__msg" id="login-msg" role="alert"></p>
+      <a class="login__back" href="/">← Voltar para o site</a>
+    </form>
+  </main>
+
+  <!-- Painel -->
+  <div class="app" id="app" hidden>
+    <header class="top">
+      <div class="top__brand"><img src="/assets/img/emblema-96.png" alt="" width="34" height="31" /><strong>Painel LAPAC</strong></div>
+      <div class="top__actions">
+        <a class="btn btn--ghost btn--sm" href="/" target="_blank" rel="noopener">Ver site ↗</a>
+        <button class="btn btn--ghost btn--sm" id="logout" type="button">Sair</button>
+      </div>
+    </header>
+    <nav class="tabs" id="tabs" aria-label="Seções"></nav>
+    <main class="panel" id="panel"></main>
+    <footer class="bar" id="bar">
+      <span class="bar__status" id="status" role="status" aria-live="polite">Tudo publicado.</span>
+      <button class="btn btn--ghost" id="discard" type="button" hidden>Desfazer</button>
+      <button class="btn btn--primary" id="publish" type="button" disabled>Publicar no site</button>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="/admin/admin.js?v=1" defer></script>
+</body>
+</html>

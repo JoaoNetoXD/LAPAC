@@ -246,9 +246,9 @@ html:not(.js) .preloader, .intro-seen .preloader { display: none; }
   overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
   padding: calc(var(--nav-h) + 12px) var(--gutter) max(28px, env(safe-area-inset-bottom));
   clip-path: inset(0 0 100% 0); visibility: hidden;
-  transition: clip-path 0.8s var(--ease-in-out), visibility 0s 0.8s;
+  transition: clip-path 0.45s var(--ease-in-out), visibility 0s 0.45s;
 }
-.mobile-menu.is-open { clip-path: inset(0 0 0 0); visibility: visible; transition: clip-path 0.8s var(--ease-in-out), visibility 0s; }
+.mobile-menu.is-open { clip-path: inset(0 0 0 0); visibility: visible; transition: clip-path 0.45s var(--ease-in-out), visibility 0s; }
 body.menu-open .nav { background: transparent; box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none; transform: none; }
 body.menu-open .nav__brand-text { color: #fff; }
 body.menu-open .nav__toggle { background: var(--ouro); color: var(--roxo-950); }
@@ -257,10 +257,10 @@ body.menu-open .nav__toggle { background: var(--ouro); color: var(--roxo-950); }
 .mobile-menu__links a { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line-light); font-family: var(--f-body); font-weight: 500; font-size: 1.2rem; letter-spacing: 0.01em; line-height: 1.2; transform: translateY(40px); opacity: 0; transition: transform 0.7s var(--ease-out), opacity 0.5s; }
 .mobile-menu__links a span { font-family: var(--f-mono); font-size: 0.72rem; color: var(--rosa); }
 .mobile-menu.is-open .mobile-menu__links a { transform: none; opacity: 1; }
-.mobile-menu__links a:nth-child(1) { transition-delay: 0.25s; } .mobile-menu__links a:nth-child(2) { transition-delay: 0.29s; }
-.mobile-menu__links a:nth-child(3) { transition-delay: 0.33s; } .mobile-menu__links a:nth-child(4) { transition-delay: 0.37s; }
-.mobile-menu__links a:nth-child(5) { transition-delay: 0.41s; } .mobile-menu__links a:nth-child(6) { transition-delay: 0.45s; }
-.mobile-menu__links a:nth-child(7) { transition-delay: 0.49s; } .mobile-menu__links a:nth-child(8) { transition-delay: 0.53s; }
+.mobile-menu__links a:nth-child(1) { transition-delay: 0.105s; } .mobile-menu__links a:nth-child(2) { transition-delay: 0.130s; }
+.mobile-menu__links a:nth-child(3) { transition-delay: 0.155s; } .mobile-menu__links a:nth-child(4) { transition-delay: 0.180s; }
+.mobile-menu__links a:nth-child(5) { transition-delay: 0.205s; } .mobile-menu__links a:nth-child(6) { transition-delay: 0.230s; }
+.mobile-menu__links a:nth-child(7) { transition-delay: 0.255s; } .mobile-menu__links a:nth-child(8) { transition-delay: 0.280s; }
 .mobile-menu__foot { position: relative; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; padding-top: 18px; border-top: 1px solid var(--line-light); color: rgba(255,255,255,0.6); }
 .social-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #fff; }
 @media (min-width: 1000px) { .mobile-menu { display: none; } }
@@ -820,7 +820,7 @@ button.film__item { cursor: zoom-in; }
 
 /* ---------- Ajustes de robustez e acessibilidade ---------- */
 .person__name, .person__role, .mentor__name { overflow-wrap: break-word; hyphens: manual; -webkit-hyphens: manual; word-break: normal; }
-@media (max-width: 719px) { .person__role { letter-spacing: 0.04em; font-size: 0.62rem; line-height: 1.5; } }
+@media (max-width: 719px) { .person__role { letter-spacing: 0.04em; font-size: 0.68rem; line-height: 1.5; } }
 /* áreas de toque de pelo menos 44px */
 .btn--sm { --bh: 44px; }
 .person__links a { width: 44px; height: 44px; }
@@ -854,3 +854,31 @@ button.film__item { cursor: zoom-in; }
 
 /* foco programático (troca de página) sem moldura visível */
 [tabindex="-1"]:focus, [tabindex="-1"]:focus-visible { outline: none; }
+
+/* ---------- ajustes da auditoria de usabilidade ---------- */
+/* celular: sem textura de papel (camada fixa com mistura pesa na rolagem) */
+@media (hover: none), (max-width: 959px) { .grain { display: none; } }
+/* dica do carrossel */
+.hint-touch { display: none; }
+@media (max-width: 959px) { .hint-desk { display: none; } .hint-touch { display: inline; } }
+/* "hover" grudado depois do toque no celular */
+@media (hover: none) {
+  .doc:hover, a.doc:hover { transform: none; }
+  .doc:hover::after { transform: rotate(-1.5deg); height: 23px; }
+  .slide:hover .glass { transform: none; }
+  .slide:hover .specimen { transform: none; }
+  .person:hover .person__photo img { transform: none; }
+  .btn:hover > span { transform: none; }
+  .btn:hover .lucide { transform: none; }
+  .tile:hover { transform: none; }
+}
+/* menu do celular com mais itens */
+.mobile-menu__links a { padding: 11px 0; }
+/* ligantes ainda sem nomes */
+.team-soon { grid-column: 1 / -1; display: grid; justify-items: start; gap: 12px; padding: 28px 0; }
+/* página da logo sem sobra embaixo no celular */
+@media (max-width: 719px) { .logo-sec { padding-bottom: 32px; } }
+/* abertura no celular: texto um pouco mais compacto */
+@media (max-width: 719px) { .hero__lead { font-size: 0.95rem; line-height: 1.55; } }
+.form-copy { padding: 0; border: 0; background: none; color: var(--magenta); font: inherit; text-decoration: underline; cursor: pointer; }
+.form-note a { color: var(--magenta); }
