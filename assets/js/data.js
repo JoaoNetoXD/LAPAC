@@ -286,7 +286,24 @@ window.LAPAC = {
     }
   ],
   "eventos": [],
-  "galeria": [],
+  "galeria": [
+    {
+      "src": "assets/img/galeria/metarrubricitos-neutrofilo.webp",
+      "legenda": "3 metarrubricitos e 1 neutrófilo"
+    },
+    {
+      "src": "assets/img/galeria/neutrofilo-dohle-lentz.webp",
+      "legenda": "Neutrófilo com corpúsculos de Döhle e Lentz"
+    },
+    {
+      "src": "assets/img/galeria/haemonchus.webp",
+      "legenda": "Haemonchus"
+    },
+    {
+      "src": "assets/img/galeria/microfilaria.webp",
+      "legenda": "Microfilária"
+    }
+  ],
   "documentos": [
     {
       "titulo": "Estatuto",

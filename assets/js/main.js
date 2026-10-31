@@ -370,9 +370,16 @@
       rows = [[0, 1, 2, 3, 4, 5].map(tile).join(""), [6, 7, 8, 9, 10, 11].map(tile).join("")];
     } else {
       const item = (f, i) => `<button class="film__item" data-index="${i}" data-cursor="ampliar" aria-label="Ampliar foto: ${esc(f.legenda || "")}"><img src="${safeUrl(f.src)}" alt="${esc(f.legenda || "Foto da LAPAC")}" loading="lazy" />${f.legenda ? `<span class="film__caption mono">${esc(f.legenda)}</span>` : ""}</button>`;
-      const a = [], b = [];
-      fotos.forEach((f, i) => (i % 2 ? b : a).push(item(f, i)));
-      rows = [a.join(""), (b.length ? b : a).join("")];
+      // com poucas fotos, todas entram nas duas faixas (em ordens diferentes) para não repetir lado a lado
+      const all = fotos.map(item);
+      if (fotos.length < 8) {
+        const half = Math.ceil(all.length / 2);
+        rows = [all.join(""), [...all.slice(half), ...all.slice(0, half)].reverse().join("")];
+      } else {
+        const a = [], b = [];
+        all.forEach((h, i) => (i % 2 ? b : a).push(h));
+        rows = [a.join(""), b.join("")];
+      }
     }
     el.innerHTML = rows.map((r) => `<div class="film__row"><div class="film__inner">${r}</div></div>`).join("");
 

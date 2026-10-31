@@ -882,3 +882,5 @@ button.film__item { cursor: zoom-in; }
 @media (max-width: 719px) { .hero__lead { font-size: 0.95rem; line-height: 1.55; } }
 .form-copy { padding: 0; border: 0; background: none; color: var(--magenta); font: inherit; text-decoration: underline; cursor: pointer; }
 .form-note a { color: var(--magenta); }
+
+.film__caption { max-width: calc(100% - 24px); text-align: left; line-height: 1.4; }
