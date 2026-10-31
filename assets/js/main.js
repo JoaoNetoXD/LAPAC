@@ -357,6 +357,7 @@
   }
 
   function renderGaleria() {
+    const fonte = (f) => String(f.fonte ?? "Arquivo pessoal").trim();
     const el = $('[data-render="galeria"]');
     if (!el) return;
     const fotos = D.galeria || [];
@@ -369,7 +370,7 @@
       };
       rows = [[0, 1, 2, 3, 4, 5].map(tile).join(""), [6, 7, 8, 9, 10, 11].map(tile).join("")];
     } else {
-      const item = (f, i) => `<button class="film__item" data-index="${i}" data-cursor="ampliar" aria-label="Ampliar foto: ${esc(f.legenda || "")}"><img src="${safeUrl(f.src)}" alt="${esc(f.legenda || "Foto da LAPAC")}" loading="lazy" />${f.legenda ? `<span class="film__caption mono">${esc(f.legenda)}</span>` : ""}</button>`;
+      const item = (f, i) => `<button class="film__item" data-index="${i}" data-cursor="ampliar" aria-label="Ampliar foto: ${esc(f.legenda || "")}"><img src="${safeUrl(f.src)}" alt="${esc(f.legenda || "Foto da LAPAC")}" loading="lazy" />${f.legenda || fonte(f) ? `<span class="film__caption mono">${esc(f.legenda || "")}${fonte(f) ? `<small class="film__fonte">Fonte: ${esc(fonte(f))}</small>` : ""}</span>` : ""}</button>`;
       // com poucas fotos, todas entram nas duas faixas (em ordens diferentes) para não repetir lado a lado
       const all = fotos.map(item);
       if (fotos.length < 8) {
@@ -390,7 +391,7 @@
       if (!btn) return;
       const f = fotos[+btn.dataset.index];
       $("img", dlg).src = f.src; $("img", dlg).alt = f.legenda || "";
-      $(".lightbox__caption", dlg).textContent = f.legenda || "";
+      $(".lightbox__caption", dlg).textContent = [f.legenda, fonte(f) && `Fonte: ${fonte(f)}`].filter(Boolean).join(" — ");
       dlg.showModal();
     });
     $(".lightbox__close", dlg).addEventListener("click", () => dlg.close());

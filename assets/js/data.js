@@ -289,23 +289,28 @@ window.LAPAC = {
   "galeria": [
     {
       "src": "assets/img/galeria/metarrubricitos-neutrofilo.webp",
-      "legenda": "3 metarrubricitos e 1 neutrófilo"
+      "legenda": "3 metarrubricitos e 1 neutrófilo",
+      "fonte": "Arquivo pessoal"
     },
     {
       "src": "assets/img/galeria/neutrofilo-dohle-lentz.webp",
-      "legenda": "Neutrófilo com corpúsculos de Döhle e Lentz"
+      "legenda": "Neutrófilo com corpúsculos de Döhle e Lentz",
+      "fonte": "Arquivo pessoal"
     },
     {
       "src": "assets/img/galeria/haemonchus.webp",
-      "legenda": "Haemonchus"
+      "legenda": "Haemonchus",
+      "fonte": "Arquivo pessoal"
     },
     {
       "src": "assets/img/galeria/microfilaria.webp",
-      "legenda": "Microfilária"
+      "legenda": "Microfilária",
+      "fonte": "Arquivo pessoal"
     },
     {
       "src": "assets/img/galeria/babesia.webp",
-      "legenda": "Babesia sp."
+      "legenda": "Babesia sp.",
+      "fonte": "Arquivo pessoal"
     }
   ],
   "documentos": [

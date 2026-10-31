@@ -884,3 +884,5 @@ button.film__item { cursor: zoom-in; }
 .form-note a { color: var(--magenta); }
 
 .film__caption { max-width: calc(100% - 24px); text-align: left; line-height: 1.4; }
+
+.film__fonte { display: block; margin-top: 2px; font-size: 0.85em; letter-spacing: 0.06em; opacity: 0.7; text-transform: none; }

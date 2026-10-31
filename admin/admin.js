@@ -59,8 +59,8 @@
     {
       id: "galeria", label: "Galeria", hint: "Fotos de “Registros de bancada”. São reduzidas automaticamente para carregar rápido.",
       fields: [
-        { key: "galeria", type: "array", label: "Fotos", add: "Adicionar foto", title: (it) => it.legenda || "Foto", blank: { src: "", legenda: "" },
-          item: [{ key: "src", type: "image", pasta: "galeria", wide: true, label: "Foto" }, { key: "legenda", label: "Legenda" }] },
+        { key: "galeria", type: "array", label: "Fotos", add: "Adicionar foto", title: (it) => it.legenda || "Foto", blank: { src: "", legenda: "", fonte: "Arquivo pessoal" },
+          item: [{ key: "src", type: "image", pasta: "galeria", wide: true, label: "Foto" }, { key: "legenda", label: "Legenda" }, { key: "fonte", label: "Fonte", help: "Ex.: Arquivo pessoal. Deixe vazio para não mostrar." }] },
       ],
     },
     {
