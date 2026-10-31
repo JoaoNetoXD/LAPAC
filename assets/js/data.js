@@ -302,6 +302,10 @@ window.LAPAC = {
     {
       "src": "assets/img/galeria/microfilaria.webp",
       "legenda": "Microfilária"
+    },
+    {
+      "src": "assets/img/galeria/babesia.webp",
+      "legenda": "Babesia sp."
     }
   ],
   "documentos": [
