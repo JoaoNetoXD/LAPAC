@@ -247,6 +247,37 @@
       </article>`;
   }
 
+  /** Diretoria agrupada por área: "Diretoria de X" vira o grupo X; demais cargos formam a coordenação geral */
+  const GROUP_ICONS = {
+    coordenacao: icon("crown"), pesquisa: icon("flask-conical"), extensao: icon("hand-heart"), ensino: icon("book-open-text"),
+    marketing: icon("megaphone"), comunicacao: icon("megaphone"), eventos: icon("calendar-days"), financeiro: icon("wallet"), tesouraria: icon("wallet"),
+  };
+  const norm = (t) => String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  function diretoriaGroups(list) {
+    const groups = [];
+    list.forEach((p, i) => {
+      const m = String(p.cargo || "").match(/^diretoria\s+(?:de|da|do|dos|das)\s+(.+)$/i);
+      const name = m ? m[1].charAt(0).toUpperCase() + m[1].slice(1) : "Coordenação geral";
+      let g = groups.find((x) => x.name === name);
+      if (!g) groups.push((g = { name, dept: !!m, people: [] }));
+      g.people.push({ p, i });
+    });
+    return groups.map((g) => {
+      const key = norm(g.dept ? g.name : "coordenacao");
+      const ic = Object.entries(GROUP_ICONS).find(([k]) => key.includes(k));
+      const n = g.people.length;
+      return `
+        <section class="dir-group" style="--n:${Math.min(n, 4)}">
+          <header class="dir-group__head">
+            <span class="dir-group__icon">${ic ? ic[1] : icon("users")}</span>
+            <div><p class="dir-group__kicker mono">${g.dept ? "Diretoria de" : "Mesa diretora"}</p><h3 class="dir-group__name">${esc(g.name)}</h3></div>
+            <span class="dir-group__count mono">${n} ${n === 1 ? "integrante" : "integrantes"}</span>
+          </header>
+          <div class="team dir-group__team">${g.people.map(({ p, i }) => personCard(g.dept ? { ...p, cargo: "" } : p, "D", i)).join("")}</div>
+        </section>`;
+    }).join("");
+  }
+
   /** Orientadora: card largo com currículo */
   function mentorCard(p) {
     const nome = (p.nome || "").trim() || "Em breve";
@@ -271,7 +302,7 @@
     const or = $('[data-render="orientadores"]');
     if (or) or.innerHTML = (D.orientadores || []).map(mentorCard).join("");
     const dir = $('[data-render="diretoria"]');
-    if (dir) dir.innerHTML = (D.diretoria || []).map((p, i) => personCard(p, "D", i)).join("");
+    if (dir) dir.innerHTML = diretoriaGroups(D.diretoria || []);
     const mem = $('[data-render="membros"]');
     const reais = (D.membros || []).filter((p) => (p.nome || "").trim());
     if (mem) mem.innerHTML = reais.length
